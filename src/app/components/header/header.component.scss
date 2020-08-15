@@ -1,0 +1,21 @@
+mat-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+i {
+	vertical-align: text-bottom;
+}
+
+h2 {
+	margin: 0 20px 0 10px;
+}
+
+.little-group {
+	display: flex;
+	justify-content: space-between;
+}
+.menu-pane-header {
+	cursor: pointer;
+}
