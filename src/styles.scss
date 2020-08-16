@@ -9,3 +9,7 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgba(77, 43, 79, 0.6);
+}
