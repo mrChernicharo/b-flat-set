@@ -7,7 +7,6 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
-    "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
@@ -16,5 +15,11 @@
       "es2018",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true,
+    "experimentalDecorators": true,
+    "allowJs": true
   }
 }

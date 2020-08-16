@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HeaderService } from '../header/header.service';
 
 @Component({
   selector: 'app-nav',
@@ -6,13 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
-  opened = false;
+  opened: boolean;
 
 
-  constructor() { }
+  constructor(
+    private headerService: HeaderService
+  ) { }
 
   ngOnInit(): void {
+    this.headerService.sideMenuOpen.subscribe(bool => {
+      console.log(bool);
+      this.opened = bool;
+    })
   }
+
+
 
 }
 
