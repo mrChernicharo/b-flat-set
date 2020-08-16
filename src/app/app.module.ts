@@ -17,18 +17,21 @@ import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignUpFormComponent } from './pages/sign-up-form/sign-up-form.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavComponent } from './components/nav/nav.component';
+import { AuthFormComponent } from './components/auth-form/auth-form.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpFormComponent,
     HeaderComponent,
     FooterComponent,
-    NavComponent
+    NavComponent,
+    AuthFormComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,10 @@ import { NavComponent } from './components/nav/nav.component';
     MatOptionModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
