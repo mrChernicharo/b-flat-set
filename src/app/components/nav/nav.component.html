@@ -9,8 +9,8 @@
   >
     <div class="offset" style="height: 70px;"></div>
     <mat-nav-list class="nav-list">
-      <a mat-list-item *ngIf="currentPage === 'auth'"> <i class="material-icons">lock_open</i> Autenticação </a>
-      <a mat-list-item> <i class="material-icons">home</i> Dashboard </a>
+      <a mat-list-item routerLink='/auth' > <i class="material-icons">lock_open</i> Autenticação </a>
+      <a mat-list-item routerLink='/'> <i class="material-icons">home</i> Dashboard </a>
       <a mat-list-item> <i class="material-icons">queue_music</i> Sets </a>
       <a mat-list-item> <i class="material-icons">music_note</i> Songs </a>
     </mat-nav-list>
@@ -18,9 +18,12 @@
 
   <mat-sidenav-content class="content">
     <!-- As páginas serão carregadas aqui -->
-    <app-auth routerLink='/auth'></app-auth>
+    <!-- <app-auth routerLink='/auth'></app-auth>
+    <app-dashboad routerLink='/'></app-dashboad> -->
 
+    <!-- *ngIf="currentPage === 'auth'" -->
 
+      <router-outlet></router-outlet>
 
   </mat-sidenav-content>
 </mat-sidenav-container>

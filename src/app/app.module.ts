@@ -24,6 +24,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     NavComponent,
-    AuthComponent
+    AuthComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
