@@ -8,6 +8,7 @@ import { HeaderService } from '../header/header.service';
 })
 export class NavComponent implements OnInit {
   opened: boolean;
+  currentPage: string = 'auth';
 
 
   constructor(

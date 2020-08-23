@@ -20,7 +20,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavComponent } from './components/nav/nav.component';
-import { AuthFormComponent } from './components/auth-form/auth-form.component';
+import { AuthComponent } from './pages/auth/auth.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -31,7 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     NavComponent,
-    AuthFormComponent
+    AuthComponent
   ],
   imports: [
     BrowserModule,
