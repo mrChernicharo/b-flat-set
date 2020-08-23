@@ -25,6 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { SetsComponent } from './pages/sets/sets.component';
+import { SongsComponent } from './pages/songs/songs.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     FooterComponent,
     NavComponent,
     AuthComponent,
-    DashboardComponent
+    DashboardComponent,
+    SetsComponent,
+    SongsComponent
   ],
   imports: [
     BrowserModule,
