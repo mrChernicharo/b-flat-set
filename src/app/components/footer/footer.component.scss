@@ -6,24 +6,39 @@ mat-toolbar {
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
+
+  .red {
+    color: rgb(227, 96, 100);
+  }
+
+  .v-middle {
+    vertical-align: middle;
+  }
+
+  a.link {
+    color: #7d389d;
+    text-decoration: none;
+    font-size: 14px;
+    vertical-align: bottom;
+    transition: 0.3s;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  a.love {
+    margin-left: 10px;
+  }
+
 }
 
-.red {
-  color: rgb(227, 96, 100);
-}
+@media only screen and (max-width: 628px) {
+  mat-toolbar {
+    height: 100px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
 
-.v-middle {
-  vertical-align: middle;
-}
-
-a.link {
-  color: #7d389d;
-  text-decoration: none;
-  font-size: 14px;
-  vertical-align: bottom;
-  transition: 0.3s;
-
-  &:hover {
-    opacity: 0.6;
   }
 }
