@@ -1,0 +1,26 @@
+.container {
+  margin: 100px auto;
+  width: 100vw;
+  // border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .full-width-table {
+    width: 700px;
+  }
+
+  mat-paginator {
+    width: 700px;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .full-width-table {
+      width: 100vw;
+    }
+
+    mat-paginator {
+      width: 100vw;
+    }
+  }
+}

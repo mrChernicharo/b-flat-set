@@ -27,6 +27,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SetsComponent } from './pages/sets/sets.component';
 import { SongsComponent } from './pages/songs/songs.component';
+import { SongListComponent } from './pages/songs/song-list/song-list.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,8 @@ import { SongsComponent } from './pages/songs/songs.component';
     AuthComponent,
     DashboardComponent,
     SetsComponent,
-    SongsComponent
+    SongsComponent,
+    SongListComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +60,10 @@ import { SongsComponent } from './pages/songs/songs.component';
     MatListModule,
     MatSelectModule,
     MatRadioModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
