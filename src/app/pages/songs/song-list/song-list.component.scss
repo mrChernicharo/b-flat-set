@@ -6,12 +6,34 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   .full-width-table {
     width: 700px;
   }
 
   mat-paginator {
     width: 700px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span.title {
+      font-size: 28px;
+      margin: 0 20px;
+    }
+
+    button.add,
+    button.add > i {
+      font-size: 30px;
+      height: 80px;
+      margin: 10px 10px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
   }
 
   @media only screen and (max-width: 700px) {

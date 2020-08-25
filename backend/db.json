@@ -1,0 +1,36 @@
+{
+	"songs": [
+		{
+			"id": 0,
+			"name": "Aflitos",
+			"composer": "F.Chernicharo",
+			"style": "Maracatu-Baião",
+			"key": "Gm",
+			"tempo": 90
+		},
+		{
+			"id": 1,
+			"name": "Loro",
+			"composer": "Egberto Gismonti",
+			"style": "Baião-Jazz",
+			"key": "Eb",
+			"tempo": 80
+		},
+		{
+			"id": 2,
+			"name": "Feira de Mangaio",
+			"composer": "Sivuca",
+			"style": "Baião",
+			"key": "Am",
+			"tempo": 110
+		},
+		{
+			"id": 3,
+			"name": "Um tom pra Jobim",
+			"composer": "Sivuca",
+			"style": "Choro-Baião",
+			"key": "G",
+			"tempo": 100
+		}
+	]
+}

@@ -7,10 +7,10 @@ import { SongsComponent } from './pages/songs/songs.component';
 import { SetsComponent } from './pages/sets/sets.component';
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent},
-  {path: 'auth', component: AuthComponent},
-  {path: 'sets', component: SetsComponent},
-  {path: 'songs', component: SongsComponent},
+  { path: '', component: DashboardComponent, pathMatch: 'full' },
+  { path: 'auth', component: AuthComponent },
+  { path: 'sets', component: SetsComponent },
+  { path: 'songs', component: SongsComponent },
 ];
 
 @NgModule({

@@ -31,6 +31,8 @@ import { SongListComponent } from './pages/songs/song-list/song-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -42,9 +44,10 @@ import { MatSortModule } from '@angular/material/sort';
     DashboardComponent,
     SetsComponent,
     SongsComponent,
-    SongListComponent
+    SongListComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

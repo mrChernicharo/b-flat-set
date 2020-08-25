@@ -12,7 +12,7 @@ export class HeaderService {
   screenWidth: number;
   screenHeight: number;
 
-  constructor() { 
+  constructor() {
     this.getScreenSize();
   }
 
