@@ -22,28 +22,57 @@
         <td mat-cell *matCellDef="let row">{{ row.name }}</td>
       </ng-container>
 
-      <!-- Composer Column -->
-      <ng-container matColumnDef="composer">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-        <td mat-cell *matCellDef="let row">{{ row.composer }}</td>
+      <!-- Action Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let row">
+          <!-- <a
+            [routerLink]="['update', row.id]"
+            matTooltip="atualizar produto"
+            matTooltipPosition="below"
+            matTooltipShowDelay="1500"
+          > -->
+          <a>
+            <i class="material-icons edit">
+              build
+            </i>
+          </a>
+          <!-- <a
+            routerLink="/products/delete/{{ row.id }}"
+            matTooltip="excluir produto"
+            matTooltipPosition="after"
+            matTooltipShowDelay="1500"
+          > -->
+          <a>
+            <i class="material-icons delete">
+              delete
+            </i>
+          </a>
+        </td>
       </ng-container>
 
       <!-- Key Column -->
       <ng-container matColumnDef="key">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Key</th>
         <td mat-cell *matCellDef="let row">{{ row.key }}</td>
       </ng-container>
 
       <!-- Tempo Column -->
       <ng-container matColumnDef="tempo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tempo</th>
         <td mat-cell *matCellDef="let row">{{ row.tempo }}</td>
       </ng-container>
 
       <!-- Style Column -->
       <ng-container matColumnDef="style">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Style</th>
         <td mat-cell *matCellDef="let row">{{ row.style }}</td>
+      </ng-container>
+
+      <!-- Composer Column -->
+      <ng-container matColumnDef="composer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Composer</th>
+        <td mat-cell *matCellDef="let row">{{ row.composer }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

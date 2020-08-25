@@ -18,7 +18,7 @@ export class SongListComponent implements AfterViewInit, OnInit {
   dataSource: SongListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'composer', 'key', 'tempo', 'style'];
+  displayedColumns = ['name', 'actions', 'key', 'tempo', 'style', 'composer'];
 
   constructor(private songsService: SongsService) { }
 
