@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
+import { MatCardModule, MatCard } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +32,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { HttpClientModule } from '@angular/common/http';
+import { SongAddComponent } from './pages/songs/song-add/song-add.component';
+import { MatFormField } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -45,14 +48,15 @@ import { HttpClientModule } from '@angular/common/http';
     SetsComponent,
     SongsComponent,
     SongListComponent,
+    SongAddComponent
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatCardModule,
     MatDatepickerModule,
     MatExpansionModule,
     MatIconModule,
@@ -63,10 +67,15 @@ import { HttpClientModule } from '@angular/common/http';
     MatListModule,
     MatSelectModule,
     MatRadioModule,
-    ReactiveFormsModule,
+    // ReactiveFormsModule,
     MatTableModule,
+    // MatFormField,
+    // MatCard,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

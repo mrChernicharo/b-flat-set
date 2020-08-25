@@ -1,0 +1,88 @@
+<div class="container">
+  <mat-card class="mat-elevation-z2">
+    <mat-card-header>
+      <mat-card-title>Novo Produto</mat-card-title>
+      <mat-card-subtitle>produtc-create component</mat-card-subtitle>
+    </mat-card-header>
+
+    <form matForm (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <input
+          name="name"
+          placeholder="Song Name"
+          class="name"
+          [(value)]="song.name"
+          matInput
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          name="composer"
+          placeholder="Composer"
+          [(value)]="song.composer"
+          matInput
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          name="style"
+          placeholder="Style"
+          [(value)]="song.style"
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          name="tempo"
+          type="number"
+          pattern="^\d+(?:\.\d{1,2})?$"
+          placeholder="Tempo"
+          matInput
+          [(value)]="song.tempo"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Key</mat-label>
+        <mat-select
+          name="key"
+          [(value)]="initialKey"
+          placeholder="key"
+          required
+        >
+          <!-- <mat-option></mat-option> -->
+          <mat-option [value]="key" *ngFor="let key of keys">{{
+            key
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <button
+      mat-raised-button
+      (click)="createSong()"
+      color="primary"
+      matTooltip="Clique para criar a música!"
+      matTooltipPosition="below"
+      matTooltipShowDelay="1500"
+    >
+      Create Song
+    </button>
+
+    <button
+      mat-raised-button
+      (click)="cancel()"
+      color="secondary"
+      matTooltip="retornar"
+      matTooltipPosition="below"
+      matTooltipShowDelay="1500"
+    >
+      Cancelar
+    </button>
+  </mat-card>
+</div>
