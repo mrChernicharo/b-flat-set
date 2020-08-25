@@ -5,6 +5,7 @@ import { MatTable } from '@angular/material/table';
 import { SongListDataSource } from './song-list-datasource';
 import { Song } from '../song.model';
 import { SongsService } from '../songs.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-song-list',
@@ -20,7 +21,9 @@ export class SongListComponent implements AfterViewInit, OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'actions', 'key', 'tempo', 'style', 'composer'];
 
-  constructor(private songsService: SongsService) { }
+  constructor(
+    private songsService: SongsService,
+    private router: Router) { }
 
   ngOnInit() {
     this.dataSource = new SongListDataSource(this.songsService);
@@ -33,5 +36,10 @@ export class SongListComponent implements AfterViewInit, OnInit {
       this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
     }, 600);
+  }
+
+
+  onNewSong() {
+    this.router.navigate(['/songs/new'])
   }
 }

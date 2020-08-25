@@ -2,7 +2,12 @@
   <div class="mat-elevation-z8">
     <div class="header">
       <span class="title">Your Songs</span
-      ><button mat-raised-button class="add" color="accent">
+      ><button
+        mat-raised-button
+        class="add"
+        color="accent"
+        (click)="onNewSong()"
+      >
         <i class="material-icons">add</i>New Song
       </button>
     </div>
@@ -26,24 +31,22 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let row">
-          <!-- <a
-            [routerLink]="['update', row.id]"
+          <!-- [routerLink]="['update', row.id]" -->
+          <a
             matTooltip="atualizar produto"
             matTooltipPosition="below"
             matTooltipShowDelay="1500"
-          > -->
-          <a>
+          >
             <i class="material-icons edit">
               build
             </i>
           </a>
-          <!-- <a
-            routerLink="/products/delete/{{ row.id }}"
+          <!-- routerLink="/products/delete/{{ row.id }}" -->
+          <a
             matTooltip="excluir produto"
             matTooltipPosition="after"
             matTooltipShowDelay="1500"
-          > -->
-          <a>
+          >
             <i class="material-icons delete">
               delete
             </i>
