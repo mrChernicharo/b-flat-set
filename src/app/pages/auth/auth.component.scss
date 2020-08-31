@@ -5,6 +5,10 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  .login-content,
+  .signup-content {
+    height: 100%;
+  }
 
   .header-container {
     // border: 1px solid red;
@@ -53,6 +57,8 @@
 
   mat-accordion {
     align-self: center;
+    width: 700px;
+
     margin-bottom: 180px;
     background: #535355;
 

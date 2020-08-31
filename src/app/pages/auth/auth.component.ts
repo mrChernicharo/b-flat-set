@@ -13,6 +13,7 @@ export class AuthComponent implements OnInit {
   loginForm: FormGroup;
   signupForm: FormGroup;
   panelOpenState = false;
+  isLoading = false;
 
   constructor(
     private authService: AuthService
@@ -41,20 +42,20 @@ export class AuthComponent implements OnInit {
   }
 
   handleSignUp() {
-    // console.log(this.signupForm.value);
 
-    // const username = this.loginForm.value['username']
-    // const email = this.signupForm.get('email').value
-    // const password = this.signupForm.get('password').value
     const email = this.signupForm.value['email']
     const password = this.signupForm.value['password']
+    this.isLoading = true;
+
     console.log(email)
     console.log(password)
 
     this.authService.signUp(email, password).subscribe(responseData => {
       console.log(responseData)
+      this.isLoading = false;
     }, error => {
       console.log(error)
+      this.isLoading = false;
     })
     this.signupForm.reset()
 

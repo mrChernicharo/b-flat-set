@@ -21,6 +21,7 @@
 
   <mat-accordion>
     <mat-expansion-panel>
+      <!-- <div class="login-content" *ngIf="!isLoading"> -->
       <mat-expansion-panel-header>
         <mat-panel-title>
           <i class="material-icons">login</i> Login
@@ -30,7 +31,7 @@
         Acessar minha conta
       </mat-panel-description>
 
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" *ngIf="!isLoading">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input type="text" formControlName="email" matInput />
@@ -41,20 +42,27 @@
           <input type="password" formControlName="password" matInput />
         </mat-form-field>
       </form>
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading></app-loading>
+      </div>
       <button
         type="submit"
         (click)="handleLogin()"
         mat-raised-button
         color="accent"
+        [disabled]="!loginForm.valid"
       >
         Login
       </button>
+
+      <!-- </div> -->
     </mat-expansion-panel>
 
     <mat-expansion-panel
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
     >
+      <!-- <div class="signup-content" *ngIf="!isLoading"> -->
       <mat-expansion-panel-header>
         <mat-panel-title>
           <i class="material-icons">how_to_reg</i> Sign up
@@ -64,7 +72,7 @@
         primeira vez por aqui?
       </mat-panel-description>
 
-      <form [formGroup]="signupForm">
+      <form [formGroup]="signupForm" *ngIf="!isLoading">
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
           <input type="text" formControlName="username" matInput />
@@ -80,15 +88,19 @@
           <input type="password" formControlName="password" matInput />
         </mat-form-field>
       </form>
-
+      <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading></app-loading>
+      </div>
       <button
         type="submit"
         (click)="handleSignUp()"
         mat-raised-button
         color="accent"
+        [disabled]="!signupForm.valid"
       >
-        Login
+        Sign Up
       </button>
+      <!-- </div> -->
     </mat-expansion-panel>
   </mat-accordion>
 </div>

@@ -34,6 +34,7 @@ import { SongsComponent } from './pages/songs/songs.component';
 import { SongListComponent } from './pages/songs/song-list/song-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SongAddComponent } from './pages/songs/song-add/song-add.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { SongAddComponent } from './pages/songs/song-add/song-add.component';
     SongsComponent,
     SongListComponent,
     SongAddComponent,
+    LoadingComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
