@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from './auth.service';
 /**
  * @title Basic expansion panel
  */
@@ -13,7 +14,9 @@ export class AuthComponent implements OnInit {
   signupForm: FormGroup;
   panelOpenState = false;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -29,11 +32,31 @@ export class AuthComponent implements OnInit {
 
 
   handleLogin() {
-    console.log(this.loginForm.value)
+    // console.log(this.loginForm.value)
+    // const email = this.loginForm.value['email']
+    // const password = this.loginForm.value['password']
+    // this.authService.login(email, password)
+
+
   }
 
   handleSignUp() {
-    console.log(this.signupForm.value)
+    // console.log(this.signupForm.value);
+
+    // const username = this.loginForm.value['username']
+    // const email = this.signupForm.get('email').value
+    // const password = this.signupForm.get('password').value
+    const email = this.signupForm.value['email']
+    const password = this.signupForm.value['password']
+    console.log(email)
+    console.log(password)
+
+    this.authService.signUp(email, password).subscribe(responseData => {
+      console.log(responseData)
+    }, error => {
+      console.log(error)
+    })
+    this.signupForm.reset()
 
   }
 
