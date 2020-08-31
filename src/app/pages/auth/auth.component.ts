@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 /**
  * @title Basic expansion panel
  */
@@ -16,7 +17,8 @@ export class AuthComponent implements OnInit {
   isLoading = false;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -33,11 +35,23 @@ export class AuthComponent implements OnInit {
 
 
   handleLogin() {
-    // console.log(this.loginForm.value)
-    // const email = this.loginForm.value['email']
-    // const password = this.loginForm.value['password']
-    // this.authService.login(email, password)
 
+    const email = this.loginForm.value['email']
+    const password = this.loginForm.value['password']
+    this.isLoading = true;
+
+    console.log(email)
+    console.log(password)
+
+    this.authService.login(email, password).subscribe(responseData => {
+      console.log(responseData)
+      this.isLoading = false;
+      this.loginForm.reset()
+      this.router.navigate([''])
+    }, error => {
+      console.log(error)
+      this.isLoading = false;
+    })
 
   }
 
