@@ -1,8 +1,13 @@
 <div class="container">
   <mat-card class="mat-elevation-z2">
     <mat-card-header>
-      <mat-card-title>New Song</mat-card-title>
-      <mat-card-subtitle>produtc-create component</mat-card-subtitle>
+      <mat-card-title
+        ><i class="material-icons">add</i> New Song</mat-card-title
+      >
+      <mat-card-subtitle
+        >Enter song information to add a new tune to your
+        songbook</mat-card-subtitle
+      >
     </mat-card-header>
     <!--    (ngSubmit)="onSubmit(form)" #form="ngForm"  -->
     <form [formGroup]="newSongForm" (ngSubmit)="onSubmit()" matForm>
@@ -53,7 +58,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="tempo">
         <input
           name="tempo"
           type="number"
@@ -69,7 +74,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="key">
         <mat-label>Key</mat-label>
         <mat-select name="key" formControlName="key" placeholder="key">
           <mat-option></mat-option>
@@ -80,28 +85,30 @@
       </mat-form-field>
     </form>
 
-    <button
-      mat-raised-button
-      type="submit"
-      color="primary"
-      matTooltip="Clique para criar a música!"
-      matTooltipPosition="below"
-      matTooltipShowDelay="1500"
-      (click)="onSubmit()"
-      [disabled]="!newSongForm.valid"
-    >
-      Create Song
-    </button>
+    <div class="button-group">
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        matTooltip="Clique para criar a música!"
+        matTooltipPosition="below"
+        matTooltipShowDelay="1500"
+        (click)="onSubmit()"
+        [disabled]="!newSongForm.valid"
+      >
+        Create Song
+      </button>
 
-    <button
-      mat-raised-button
-      (click)="cancel()"
-      color="secondary"
-      matTooltip="retornar"
-      matTooltipPosition="below"
-      matTooltipShowDelay="1500"
-    >
-      Cancelar
-    </button>
+      <button
+        mat-raised-button
+        (click)="cancel()"
+        color="secondary"
+        matTooltip="retornar"
+        matTooltipPosition="below"
+        matTooltipShowDelay="1500"
+      >
+        Cancelar
+      </button>
+    </div>
   </mat-card>
 </div>

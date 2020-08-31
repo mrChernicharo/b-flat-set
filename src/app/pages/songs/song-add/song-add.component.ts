@@ -12,15 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./song-add.component.scss']
 })
 export class SongAddComponent implements OnInit {
-  // @ViewChild('form', { static: false }) newSongForm: NgForm
   newSongForm: FormGroup
-  // song: Song = {
-  //   name: '',
-  //   composer: '',
-  //   style: '',
-  //   key: 'C',
-  //   tempo: 100
-  // }
+
   keys = ['A', 'Am', 'Ab', 'Abm', 'G', 'Gm', 'Gb', 'F#m', 'F', 'Fm', 'E', 'Em', 'Eb', 'Ebm', 'D', 'Dm', 'Db', 'C#m', 'C', 'Cm', 'B', 'Bm', 'Bb', 'Bbm']
   initialKey = this.keys[8]
 
@@ -44,7 +37,6 @@ export class SongAddComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.song)
     const formName = capitalize(this.newSongForm.get('name').value)
     const formComposer = capitalize(this.newSongForm.get('composer').value)
     const formStyle = capitalize(this.newSongForm.get('style').value)
@@ -57,10 +49,8 @@ export class SongAddComponent implements OnInit {
     this.songsService.addSong(newSong).subscribe(data => {
       console.log(data)
     })
-    // alert(`${this.song.name} successfuly added to the list`);
-    // const { name, composer, style, tempo, key } = form.value;
-    // const newSong = new Song(name, composer, style, tempo, key)
-    // this.songsService.addSong(newSong);
+    alert(`${formName} successfuly added to the list`);
+    this.router.navigate(['/songs'])
 
   }
 
@@ -68,8 +58,8 @@ export class SongAddComponent implements OnInit {
 }
 
 function capitalize(formField: string): string {
-  const words = formField.split(' ').map(w => {
-    return w.charAt(0).toUpperCase() + w.slice(1)
+  const words = formField.split(' ').map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1)
   })
   return words.join(' ')
 }
