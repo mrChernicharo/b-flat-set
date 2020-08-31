@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { User } from './user.model';
-
+import { Observable, throwError } from 'rxjs';
+import { User } from '../../shared/user.model';
+import { SnackbarService } from '../../shared/snackbar.service';
+import { catchError } from 'rxjs/operators';
 
 
 interface AuthResponseData {
@@ -20,7 +21,11 @@ export class AuthService {
   private apiKey = 'AIzaSyDGgFMchCz5PSiDauo3rxlofHoumhK87MU';
   private endpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private snackbarService: SnackbarService
+  ) { }
+
 
 
   login(email: string, password: string) {
@@ -32,7 +37,19 @@ export class AuthService {
       this.endpoint,
       { email: email, password: password, returnSecureToken: true },
       { responseType: 'json', observe: 'body' }
-    )
+    ).pipe(catchError(errorResponse => {
+      let errorMessage = 'An unknown error has occured';
+      if (!errorResponse.error || !errorResponse.error.error) {
+        return throwError(errorMessage);
+      }
+      switch (errorResponse.error.error.message) {
+        case 'EMAIL_EXISTS':
+          errorMessage = 'Email already in use';
+          this.snackbarService.showErrorMessage(errorMessage)
+      }
+      return throwError(errorMessage)
+    }))
   }
+
 
 }
