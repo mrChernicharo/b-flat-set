@@ -1,7 +1,7 @@
 .container {
   margin: 70px auto;
-  width: 100vw;
-  // border: 1px solid red;
+  // width: 100vw;
+  width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,28 +10,31 @@
   .full-width {
     width: 100%;
   }
+  mat-form-field {
+    margin-bottom: 20px;
 
-  .shipping-card {
-    min-width: 120px;
-    margin: 20px auto;
+    &.name {
+      min-width: 340px;
+      // width: 45%;
+      // margin-right: 10px;
+    }
+    &.composer {
+      min-width: 340px;
+      // right: 0;
+      // width: 45%;
+    }
+    &.style {
+      min-width: 340px;
+    }
   }
 
-  // .mat-radio-button {
-  //   display: block;
-  //   margin: 5px 0;
-  // }
-
-  .row {
-    display: flex;
-    flex-direction: row;
+  mat-hint {
+    color: #f44336;
   }
+}
 
-  .col {
-    flex: 1;
-    margin-right: 20px;
-  }
-
-  .col:last-child {
-    margin-right: 0;
+@media only screen and (max-width: 728px) {
+  .container {
+    width: 100vw;
   }
 }

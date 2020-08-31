@@ -1,38 +1,56 @@
 <div class="container">
   <mat-card class="mat-elevation-z2">
     <mat-card-header>
-      <mat-card-title>Novo Produto</mat-card-title>
+      <mat-card-title>New Song</mat-card-title>
       <mat-card-subtitle>produtc-create component</mat-card-subtitle>
     </mat-card-header>
-
-    <form matForm (ngSubmit)="onSubmit()">
-      <mat-form-field>
+    <!--    (ngSubmit)="onSubmit(form)" #form="ngForm"  -->
+    <form [formGroup]="newSongForm" (ngSubmit)="onSubmit()" matForm>
+      <mat-form-field class="name">
         <input
           name="name"
-          placeholder="Song Name"
-          class="name"
-          [(value)]="song.name"
+          placeholder="New Song"
+          formControlName="name"
           matInput
           required
         />
+        <mat-hint
+          *ngIf="
+            newSongForm.get('name').invalid && newSongForm.get('name').touched
+          "
+          >Song name is required</mat-hint
+        >
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="composer">
         <input
           name="composer"
           placeholder="Composer"
-          [(value)]="song.composer"
+          formControlName="composer"
           matInput
           required
         />
+        <mat-hint
+          *ngIf="
+            newSongForm.get('composer').invalid &&
+            newSongForm.get('composer').touched
+          "
+          >Composer name is required</mat-hint
+        >
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="style">
         <input
           name="style"
           placeholder="Style"
-          [(value)]="song.style"
+          formControlName="style"
           matInput
           required
         />
+        <mat-hint
+          *ngIf="
+            newSongForm.get('style').invalid && newSongForm.get('style').touched
+          "
+          >Style name is required</mat-hint
+        >
       </mat-form-field>
 
       <mat-form-field>
@@ -42,20 +60,19 @@
           pattern="^\d+(?:\.\d{1,2})?$"
           placeholder="Tempo"
           matInput
-          [(value)]="song.tempo"
+          formControlName="tempo"
           required
         />
+        <mat-hint
+          *ngIf="newSongForm.get('tempo').invalid && newSongForm.touched"
+          >Tempo must be greater than 30bpm and smaller than 300bpm</mat-hint
+        >
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Key</mat-label>
-        <mat-select
-          name="key"
-          [(value)]="initialKey"
-          placeholder="key"
-          required
-        >
-          <!-- <mat-option></mat-option> -->
+        <mat-select name="key" formControlName="key" placeholder="key">
+          <mat-option></mat-option>
           <mat-option [value]="key" *ngFor="let key of keys">{{
             key
           }}</mat-option>
@@ -65,11 +82,13 @@
 
     <button
       mat-raised-button
-      (click)="createSong()"
+      type="submit"
       color="primary"
       matTooltip="Clique para criar a música!"
       matTooltipPosition="below"
       matTooltipShowDelay="1500"
+      (click)="onSubmit()"
+      [disabled]="!newSongForm.valid"
     >
       Create Song
     </button>

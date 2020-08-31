@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Song } from './song.model';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class SongsService {
   songs: Song[];
-  private url: string = 'http://localhost:3001/songs';
+  public url: string = 'http://localhost:3001/songs';
   constructor(
     private http: HttpClient
   ) {
@@ -22,8 +22,10 @@ export class SongsService {
     return response;
   }
 
-  public addSong(song: Song): void {
-    this.songs.push(song)
+  public addSong(song: Song): Observable<Song> {
+
+    return this.http.post<Song>(this.url, song, { responseType: 'json', observe: 'body' })
+
   }
 
 
