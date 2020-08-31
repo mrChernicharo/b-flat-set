@@ -56,6 +56,10 @@
     margin-bottom: 180px;
     background: #535355;
 
+    mat-expansion-panel {
+      border-bottom: 2px solid #257bbd;
+    }
+
     mat-form-field {
       width: 100%;
     }

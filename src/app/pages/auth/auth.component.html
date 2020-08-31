@@ -21,7 +21,7 @@
 
   <mat-accordion>
     <mat-expansion-panel>
-      <mat-expansion-panel-header style="height: 60px;">
+      <mat-expansion-panel-header>
         <mat-panel-title>
           <i class="material-icons">login</i> Login
         </mat-panel-title>
@@ -30,18 +30,27 @@
         Acessar minha conta
       </mat-panel-description>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input type="text" matInput required />
-      </mat-form-field>
+      <form [formGroup]="loginForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input type="text" formControlName="email" matInput />
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input type="password" matInput required />
-      </mat-form-field>
-
-      <button mat-raised-button color="accent">Login</button>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input type="password" formControlName="password" matInput />
+        </mat-form-field>
+      </form>
+      <button
+        type="submit"
+        (click)="handleLogin()"
+        mat-raised-button
+        color="accent"
+      >
+        Login
+      </button>
     </mat-expansion-panel>
+
     <mat-expansion-panel
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
@@ -54,22 +63,32 @@
       <mat-panel-description>
         primeira vez por aqui?
       </mat-panel-description>
-      <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input type="text" matInput required />
-      </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input type="text" matInput required />
-      </mat-form-field>
+      <form [formGroup]="signupForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input type="text" formControlName="username" matInput />
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input type="password" matInput required />
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input type="text" formControlName="email" matInput />
+        </mat-form-field>
 
-      <button mat-raised-button color="accent">Login</button>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input type="password" formControlName="password" matInput />
+        </mat-form-field>
+      </form>
+
+      <button
+        type="submit"
+        (click)="handleSignUp()"
+        mat-raised-button
+        color="accent"
+      >
+        Login
+      </button>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
