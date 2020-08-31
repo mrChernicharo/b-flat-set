@@ -63,6 +63,22 @@
       "tempo": 110,
       "key": "Cm",
       "id": 7
+    },
+    {
+      "name": "Cajuina",
+      "composer": "Caetano Veloso",
+      "style": "Xote",
+      "tempo": 80,
+      "key": "Dm",
+      "id": 8
+    },
+    {
+      "name": "Xote Do Almeidinha",
+      "composer": "Hamilton De Holanda",
+      "style": "Xote",
+      "tempo": 84,
+      "key": "Gm",
+      "id": 9
     }
   ]
 }
