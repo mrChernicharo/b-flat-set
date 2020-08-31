@@ -1,36 +1,68 @@
 {
-	"songs": [
-		{
-			"id": 0,
-			"name": "Aflitos",
-			"composer": "F.Chernicharo",
-			"style": "Maracatu-Baião",
-			"key": "Gm",
-			"tempo": 90
-		},
-		{
-			"id": 1,
-			"name": "Loro",
-			"composer": "Egberto Gismonti",
-			"style": "Baião-Jazz",
-			"key": "Eb",
-			"tempo": 80
-		},
-		{
-			"id": 2,
-			"name": "Feira de Mangaio",
-			"composer": "Sivuca",
-			"style": "Baião",
-			"key": "Am",
-			"tempo": 110
-		},
-		{
-			"id": 3,
-			"name": "Um tom pra Jobim",
-			"composer": "Sivuca",
-			"style": "Choro-Baião",
-			"key": "G",
-			"tempo": 100
-		}
-	]
+  "songs": [
+    {
+      "id": 0,
+      "name": "Aflitos",
+      "composer": "F.Chernicharo",
+      "style": "Maracatu-Baião",
+      "key": "Gm",
+      "tempo": 90
+    },
+    {
+      "id": 1,
+      "name": "Loro",
+      "composer": "Egberto Gismonti",
+      "style": "Baião-Jazz",
+      "key": "Eb",
+      "tempo": 80
+    },
+    {
+      "id": 2,
+      "name": "Feira de Mangaio",
+      "composer": "Sivuca",
+      "style": "Baião",
+      "key": "Am",
+      "tempo": 110
+    },
+    {
+      "id": 3,
+      "name": "Um tom pra Jobim",
+      "composer": "Sivuca",
+      "style": "Choro-Baião",
+      "key": "G",
+      "tempo": 100
+    },
+    {
+      "id": 4,
+      "name": "Triste",
+      "composer": "Tom jobim",
+      "style": "Bossa Nova",
+      "key": "Bb",
+      "tempo": 84
+    },
+    {
+      "name": "Samba de uma nota",
+      "composer": "Tom Jobim",
+      "style": "Bossa Nova",
+      "key": "Bb",
+      "tempo": 100,
+      "id": 5
+    },
+    {
+      "name": "Spain",
+      "composer": "Chick Corea",
+      "style": "Latin Jazz",
+      "tempo": 100,
+      "key": "Bm",
+      "id": 6
+    },
+    {
+      "name": "Armando's Rumba",
+      "composer": "Chick Corea",
+      "style": "Latin Jazz",
+      "tempo": 110,
+      "key": "Cm",
+      "id": 7
+    }
+  ]
 }
