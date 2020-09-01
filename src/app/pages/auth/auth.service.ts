@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { User } from '../../shared/user.model';
+import { Observable, throwError, Subject } from 'rxjs';
+import { User } from './user.model';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -25,13 +25,15 @@ import { catchError, tap } from 'rxjs/operators';
 // }
 
 export interface AuthResponseData {
-  kind: string;
-  localId: string;
   email: string;
+  localId: string;
+  idToken: string;
+  expiresIn: string;	// The number of seconds in which the ID token expires.
+  kind: string;
+  registered: boolean;
   displayName?: string;
   refreshToken?: string;
-  idToken: string;
-  registered: boolean;
+
 }
 
 @Injectable({
@@ -41,6 +43,7 @@ export class AuthService {
   private apiKey = 'AIzaSyDGgFMchCz5PSiDauo3rxlofHoumhK87MU';
   private signUpEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`
   private loginEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`
+  public user = new Subject<User>(); // subject User
 
   constructor(
     private http: HttpClient,
@@ -54,36 +57,52 @@ export class AuthService {
       this.loginEndpoint, { email: email, password: password, returnSecureToken: true }, { responseType: 'json', observe: 'body' }
     ).pipe(
       catchError(this.handleError),
-      tap(response => {
-        let successMessage = `Welcome!`
-        this.snackbarService.showSnackBar(successMessage)
-
+      tap(responseData => {
+        this.handleAuthSuccess(responseData.email, responseData.localId, responseData.idToken, +responseData.expiresIn)
         // console.log(response)
       }),
     )
   }
 
 
-  signUp(email: string, password: string): Observable<AuthResponseData> {
+  signUp(email: string, password: string, username: string): Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(
       this.signUpEndpoint, { email: email, password: password, returnSecureToken: true }, { responseType: 'json', observe: 'body' }
     ).pipe(
       catchError(this.handleError),
-      tap(response => {
-        let successMessage = 'Acount successfully created! You may now Login!'
-        this.snackbarService.showSnackBar(successMessage)
-
+      tap(responseData => {
+        this.handleAuthSuccess(responseData.email, responseData.localId, responseData.idToken, +responseData.expiresIn, username)
         // console.log(response)
       })
     )
+  }
+
+
+  public handleAuthSuccess(email: string, localId: string, idToken: string, expiresIn: number, username?: string) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const userName = username ? username : null;
+    const newUser = new User(
+      localId,
+      email,
+      idToken,
+      expirationDate,
+      true,
+      userName
+    );
+    this.user.next(newUser)
+    console.log(newUser)
+
+    userName ?
+      this.snackbarService.showSnackBar('Acount successfully created! You may now Login!') :
+      this.snackbarService.showSnackBar(`Welcome back!`)
 
   }
+
 
   public handleError(errorResponse: HttpErrorResponse) {
     let errorMessage = 'An unknown error has occured';
 
     if (!errorResponse.error || !errorResponse.error.error) {
-
       return throwError(errorMessage);
     }
     switch (errorResponse.error.error.message) {
@@ -96,9 +115,7 @@ export class AuthService {
       case 'EMAIL_NOT_FOUND':
         errorMessage = 'Email address not found'
         break;
-
     }
-
     return throwError(errorMessage)
   }
 

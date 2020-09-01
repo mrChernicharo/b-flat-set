@@ -66,12 +66,13 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     const email = this.signupForm.value['email']
     const password = this.signupForm.value['password']
+    const username = this.signupForm.value['username']
     this.isLoading = true;
 
     console.log(email)
     console.log(password)
 
-    this.authService.signUp(email, password).subscribe(responseData => {
+    this.authService.signUp(email, password, username).subscribe(responseData => {
       console.log(responseData)
       this.isLoading = false;
       this.signupForm.reset()
