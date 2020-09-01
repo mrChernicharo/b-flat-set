@@ -13,7 +13,7 @@
       <a mat-list-item routerLink="/auth" *ngIf="!isAuthenticated">
         <i class="material-icons">lock_open</i> Autenticação
       </a>
-      <a mat-list-item routerLink="/" [disabled]="!isAuthenticated">
+      <a mat-list-item routerLink="/dashboard" [disabled]="!isAuthenticated">
         <i class="material-icons">home</i> Dashboard
       </a>
       <a mat-list-item routerLink="/sets" [disabled]="!isAuthenticated">

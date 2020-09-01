@@ -54,7 +54,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         // console.log(responseData)
         this.isLoading = false;
         this.loginForm.reset()
-        this.router.navigate([''])
+        this.router.navigate(['/dashboard'])
       }
     }, errorMessage => {
       // console.log(errorMessage)

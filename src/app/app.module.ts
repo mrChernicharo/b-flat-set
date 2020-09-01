@@ -36,6 +36,7 @@ import { SongListComponent } from './pages/songs/song-list/song-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SongAddComponent } from './pages/songs/song-add/song-add.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { AuthGuard } from './pages/auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     // MatFormField,
     // MatCard,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
