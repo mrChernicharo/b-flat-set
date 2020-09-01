@@ -52,9 +52,9 @@ export class NavComponent implements OnInit {
   }
 
   logoff() {
-    this.authService.user.next(null);
     this.isAuthenticated = !this.isAuthenticated;
-    this.router.navigate(['/auth']);
+    this.authService.logout()
+    // this.router.navigate(['/auth']);
   }
 
 }

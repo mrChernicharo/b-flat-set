@@ -4,6 +4,7 @@ import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { User } from './user.model';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { catchError, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 // interface SignUpResponseData {
@@ -44,10 +45,12 @@ export class AuthService {
   private signUpEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`
   private loginEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`
   public user = new BehaviorSubject<User>(null); // subject User
+  public tokenExpirationTimer: any;
 
   constructor(
     private http: HttpClient,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private router: Router
   ) { }
 
 
@@ -77,6 +80,19 @@ export class AuthService {
     )
   }
 
+  logout() {
+    this.user.next(null);
+    localStorage.removeItem('userData')
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+    this.router.navigate(['/auth']);
+
+    // this.isAuthenticated = !this.isAuthenticated;
+    // this.authService.user.next(null);
+  }
+
 
   public handleAuthSuccess(email: string, localId: string, idToken: string, expiresIn: number, username?: string) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
@@ -89,15 +105,15 @@ export class AuthService {
       true,
       userName
     );
-    // this.user.next(newUser)
     this.user.next(newUser)
-    console.log(newUser.id)
-    console.log(this.user)
+    // console.log(newUser.id)
+    // console.log(this.user)
 
-    userName ?
+    userName ? // se for singUp, senão, é login
       this.snackbarService.showSnackBar('Acount successfully created! You may now Login!') :
       this.snackbarService.showSnackBar(`Welcome back!`)
 
+    this.autoLogoff(expiresIn * 1000)
     localStorage.setItem('userData', JSON.stringify(newUser))
   }
 
@@ -140,8 +156,16 @@ export class AuthService {
     if (loadedUser.token) {
       this.user.next(loadedUser);
       const expirationTime = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
-      // this.autoLogout(expirationTime);
+      this.autoLogoff(expirationTime);
     }
+  }
+
+  autoLogoff(expirationTime: number) {
+    console.log(`token expiration ${expirationTime}ms`);
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.snackbarService.showErrorSnackBar('token expired! please login again')
+      this.logout();
+    }, expirationTime)
   }
 
 }
