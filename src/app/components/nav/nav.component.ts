@@ -21,15 +21,16 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(`Authenticated -> ${this.isAuthenticated}`)
+
     this.headerService.sideMenuOpen.subscribe(bool => {
-      console.log(bool);
+      // console.log(bool);
       this.opened = bool;
     });
     this.headerService.isMobile.subscribe(bool => {
       this.isMobile = bool;
     })
     this.authService.user.subscribe(user => {
-
       this.isAuthenticated = !!user
       console.log(`Authenticated -> ${this.isAuthenticated}`)
     })

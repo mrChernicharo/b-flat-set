@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge, Subscription } from 'rxjs';
 import { OnInit, Injectable } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
 
 // TODO: Replace this with your own data model type
 // export interface Song {
@@ -34,11 +35,20 @@ export class SongListDataSource implements DataSource<Song> {
   sort: MatSort;
   loadSubs: Subscription;
   changeSubs: Subscription;
+  // userId: string;
 
   constructor(
+    // private authService: AuthService,
     private songsService: SongsService
   ) {
+    // this.authService.user.subscribe(data => {
+    //   this.userId = data.id
+    // })
+
     this.loadSubs = this.songsService.getSongs().subscribe(data => {
+      // if (!data) {
+      //   this.data = [];
+      // }
       this.data = data;
       console.log(data)
     });

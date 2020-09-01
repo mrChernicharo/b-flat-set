@@ -5,12 +5,12 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: "root"
 })
 export class HeaderService {
+  screenWidth: number;
+  screenHeight: number;
   openMenu: boolean = false;
   public sideMenuOpen = new BehaviorSubject<boolean>(this.openMenu);
   mobileSize: boolean = false;
   public isMobile = new BehaviorSubject<boolean>(this.mobileSize);
-  screenWidth: number;
-  screenHeight: number;
 
   constructor() {
     this.getScreenSize();

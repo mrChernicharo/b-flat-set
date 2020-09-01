@@ -6,6 +6,7 @@ import { SongListDataSource } from './song-list-datasource';
 import { Song } from '../song.model';
 import { SongsService } from '../songs.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-song-list',
@@ -17,15 +18,18 @@ export class SongListComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Song>;
   dataSource: SongListDataSource;
+  // userId: string;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'actions', 'key', 'tempo', 'style', 'composer'];
 
   constructor(
+    private authService: AuthService,
     private songsService: SongsService,
     private router: Router) { }
 
   ngOnInit() {
+    // this.authService.user.subscribe(data => this.userId = data.id)
     this.dataSource = new SongListDataSource(this.songsService);
   }
 
