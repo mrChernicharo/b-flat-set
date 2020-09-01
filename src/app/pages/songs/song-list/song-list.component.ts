@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -13,11 +13,14 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './song-list.component.html',
   styleUrls: ['./song-list.component.scss']
 })
-export class SongListComponent implements AfterViewInit, OnInit, OnDestroy {
+
+// AfterViewInit,
+export class SongListComponent implements AfterViewChecked, OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Song>;
   dataSource: SongListDataSource;
+  isLoading = false;
   // userId: string;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -31,13 +34,16 @@ export class SongListComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnInit() {
     // this.authService.user.subscribe(data => this.userId = data.id)
     this.dataSource = new SongListDataSource(this.songsService);
+    this.isLoading = true;
+
   }
 
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
     setTimeout(() => {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
+      this.isLoading = false;
     }, 600);
   }
 

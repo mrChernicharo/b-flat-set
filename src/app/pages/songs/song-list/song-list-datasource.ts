@@ -38,17 +38,11 @@ export class SongListDataSource implements DataSource<Song> {
   // userId: string;
 
   constructor(
-    // private authService: AuthService,
     private songsService: SongsService
+    // private authService: AuthService,
   ) {
-    // this.authService.user.subscribe(data => {
-    //   this.userId = data.id
-    // })
 
     this.loadSubs = this.songsService.getSongs().subscribe(data => {
-      // if (!data) {
-      //   this.data = [];
-      // }
       this.data = data;
       console.log(data)
     });
