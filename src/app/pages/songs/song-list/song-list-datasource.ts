@@ -99,10 +99,10 @@ export class SongListDataSource implements DataSource<Song> {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
         case 'name': return compare(a.name, b.name, isAsc);
-        case 'composer': return compare(+a.composer, +b.composer, isAsc);
-        case 'key': return compare(+a.key, +b.key, isAsc);
+        case 'composer': return compare(a.composer, b.composer, isAsc);
+        case 'key': return compare(a.key, b.key, isAsc);
         case 'tempo': return compare(+a.tempo, +b.tempo, isAsc);
-        case 'style': return compare(+a.style, +b.style, isAsc);
+        case 'style': return compare(a.style, b.style, isAsc);
         default: return 0;
       }
     });
