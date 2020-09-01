@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Song } from './song.model';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class SongsService {
+  public songListChanged = new Subject<Song>()
   private songs: Song[] = [];
   // public url: string = 'http://localhost:3001/songs';
   private url: string = 'https://bflatset.firebaseio.com/';
@@ -33,7 +34,9 @@ export class SongsService {
 
   public addSong(song: Song): Observable<Song> {
 
-    return this.http.post<Song>(`${this.url}${this.user}.json`, song, { responseType: 'json', observe: 'body' })
+    return this.http.post<Song>(`${this.url}${this.user}.json`, song, { responseType: 'json', observe: 'body' }).pipe(tap(song => {
+      this.songListChanged.next()
+    }))
 
   }
 

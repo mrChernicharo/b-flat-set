@@ -4,7 +4,7 @@ import { SongsService } from '../songs.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
+import { Observable, of as observableOf, merge, Subscription } from 'rxjs';
 import { OnInit, Injectable } from '@angular/core';
 
 // TODO: Replace this with your own data model type
@@ -32,15 +32,22 @@ export class SongListDataSource implements DataSource<Song> {
   data: Song[] = [];
   paginator: MatPaginator;
   sort: MatSort;
+  loadSubs: Subscription;
+  changeSubs: Subscription;
 
   constructor(
     private songsService: SongsService
   ) {
-    this.songsService.getSongs().subscribe(data => {
+    this.loadSubs = this.songsService.getSongs().subscribe(data => {
       this.data = data;
       console.log(data)
     });
+
+    this.changeSubs = this.songsService.songListChanged.subscribe(song => {
+      this.data.push(song)
+    })
   }
+
 
   /**
    * Connect this data source to the table. The table will only update when
@@ -65,7 +72,10 @@ export class SongListDataSource implements DataSource<Song> {
    *  Called when the table is being destroyed. Use this function, to clean up
    * any open connections or free any held resources that were set up during connect.
    */
-  disconnect() { }
+  disconnect() {
+    this.loadSubs.unsubscribe();
+    this.changeSubs.unsubscribe();
+  }
 
   /**
    * Paginate the data (client-side). If you're using server-side pagination,

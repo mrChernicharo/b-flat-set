@@ -3,6 +3,7 @@ import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SongsService } from '../songs.service';
 import { Song } from '../song.model';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/shared/snackbar.service';
 
 
 
@@ -19,6 +20,7 @@ export class SongAddComponent implements OnInit {
 
   constructor(
     private songsService: SongsService,
+    private snackbar: SnackbarService,
     private router: Router
   ) { }
 
@@ -49,8 +51,11 @@ export class SongAddComponent implements OnInit {
     this.songsService.addSong(newSong).subscribe(data => {
       console.log(data)
     })
-    alert(`${formName} successfuly added to the list`);
-    this.router.navigate(['/songs'])
+    this.snackbar.showSnackBar(`${formName} successfuly added to the list`);
+
+    setTimeout(() => {
+      this.router.navigate(['/songs'])
+    }, 600)
 
   }
 

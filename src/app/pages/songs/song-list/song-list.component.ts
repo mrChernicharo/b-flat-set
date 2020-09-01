@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './song-list.component.html',
   styleUrls: ['./song-list.component.scss']
 })
-export class SongListComponent implements AfterViewInit, OnInit {
+export class SongListComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Song>;
@@ -31,7 +31,6 @@ export class SongListComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
@@ -41,5 +40,12 @@ export class SongListComponent implements AfterViewInit, OnInit {
 
   onNewSong() {
     this.router.navigate(['/songs/new'])
+  }
+
+  ngOnDestroy() {
+    this.sort = null;
+    this.paginator = null;
+    this.table.dataSource = null;
+    this.dataSource = null;
   }
 }
