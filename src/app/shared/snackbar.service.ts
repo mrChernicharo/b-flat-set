@@ -11,7 +11,7 @@ export class SnackbarService {
 
   ) { }
 
-  showSnackBar(message: string) {
+  public showSnackBar(message: string) {
     this.matSnackbar.open(message, '❌', {
       duration: 3600,
       horizontalPosition: 'end',
@@ -22,7 +22,7 @@ export class SnackbarService {
   }
 
 
-  showErrorMessage(message: string): void {
+  public showErrorSnackBar(message: string): void {
     this.matSnackbar.open(
       message,
       '❌',

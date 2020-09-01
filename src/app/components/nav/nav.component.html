@@ -22,12 +22,14 @@
       <a mat-list-item routerLink="/songs">
         <i class="material-icons">music_note</i> Songs
       </a>
+
+      <a class="logoff" mat-list-item routerLink="/auth">
+        <i class="material-icons">power_settings_new</i> Logoff
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content class="content">
-
     <router-outlet></router-outlet>
-    
   </mat-sidenav-content>
 </mat-sidenav-container>

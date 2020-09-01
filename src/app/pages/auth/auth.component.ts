@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from './auth.service';
+import { AuthService, AuthResponseData } from './auth.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/shared/snackbar.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription, Observable } from 'rxjs';
 /**
  * @title Basic expansion panel
  */
@@ -10,15 +13,17 @@ import { Router } from '@angular/router';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   signupForm: FormGroup;
   panelOpenState = false;
   isLoading = false;
+  authObservable: Observable<AuthResponseData>;
 
   constructor(
+    private router: Router,
     private authService: AuthService,
-    private router: Router
+    private snackbar: SnackbarService
   ) { }
 
   ngOnInit(): void {
@@ -35,22 +40,24 @@ export class AuthComponent implements OnInit {
 
 
   handleLogin() {
-
     const email = this.loginForm.value['email']
     const password = this.loginForm.value['password']
     this.isLoading = true;
 
-    console.log(email)
-    console.log(password)
 
-    this.authService.login(email, password).subscribe(responseData => {
-      console.log(responseData)
+    this.authObservable = this.authService.login(email, password)
+
+    this.authObservable.subscribe(responseData => {
+      if (responseData) {
+        // console.log(responseData)
+        this.isLoading = false;
+        this.loginForm.reset()
+        this.router.navigate([''])
+      }
+    }, errorMessage => {
+      // console.log(errorMessage)
       this.isLoading = false;
-      this.loginForm.reset()
-      this.router.navigate([''])
-    }, error => {
-      console.log(error)
-      this.isLoading = false;
+      this.snackbar.showErrorSnackBar(errorMessage)
     })
 
   }
@@ -67,12 +74,17 @@ export class AuthComponent implements OnInit {
     this.authService.signUp(email, password).subscribe(responseData => {
       console.log(responseData)
       this.isLoading = false;
-    }, error => {
-      console.log(error)
+      this.signupForm.reset()
+      this.panelOpenState = false;
+    }, errorMessage => {
       this.isLoading = false;
-    })
-    this.signupForm.reset()
+      this.snackbar.showErrorSnackBar(errorMessage)
 
+    })
+
+  }
+
+  ngOnDestroy() {
   }
 
 }

@@ -4,6 +4,11 @@ mat-sidenav-content.content {
 mat-nav-list {
   width: 220px;
 }
+
+a.logoff {
+  position: absolute;
+  bottom: 80px;
+}
 @media only screen and (max-width: 628px) {
   mat-sidenav {
     // border: 1px solid red;
@@ -16,7 +21,7 @@ mat-nav-list {
     mat-nav-list {
       width: 100vw;
     }
-    
+
     a {
       display: flex;
       flex-direction: column;
@@ -25,6 +30,8 @@ mat-nav-list {
       align-self: center;
       text-align: center;
     }
-
+  }
+  a.logoff {
+    bottom: 120px;
   }
 }

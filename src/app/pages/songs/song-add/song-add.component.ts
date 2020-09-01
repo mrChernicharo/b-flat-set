@@ -51,7 +51,7 @@ export class SongAddComponent implements OnInit {
     this.songsService.addSong(newSong).subscribe(data => {
       console.log(data)
     })
-    this.snackbar.showSnackBar(`${formName} successfuly added to the list`);
+    this.snackbar.showSnackBar(`${formName.toUpperCase()} successfuly added to the list`);
 
     setTimeout(() => {
       this.router.navigate(['/songs'])
