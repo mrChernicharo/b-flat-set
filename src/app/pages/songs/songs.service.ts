@@ -24,7 +24,7 @@ export class SongsService {
       const finalData: Song[] = []
       for (let k of keys) {
         let song: Song = songsData[k]
-        console.log(song)
+        // console.log(song)
         finalData.push(song)
       }
       return finalData

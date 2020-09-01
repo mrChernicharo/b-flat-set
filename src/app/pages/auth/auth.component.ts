@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/snackbar.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription, Observable } from 'rxjs';
+import { HeaderService } from 'src/app/components/header/header.service';
 /**
  * @title Basic expansion panel
  */
@@ -22,6 +23,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private headerService: HeaderService,
     private authService: AuthService,
     private snackbar: SnackbarService
   ) { }
@@ -76,7 +78,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       console.log(responseData)
       this.isLoading = false;
       this.signupForm.reset()
-      this.panelOpenState = false;
+      // this.panelOpenState = false;
+      // this.headerService.toggleSideMenu()
     }, errorMessage => {
       this.isLoading = false;
       this.snackbar.showErrorSnackBar(errorMessage)

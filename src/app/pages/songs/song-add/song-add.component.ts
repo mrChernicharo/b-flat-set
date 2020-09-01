@@ -49,7 +49,7 @@ export class SongAddComponent implements OnInit {
       formName, formComposer, formStyle, formTempo, formKey
     )
     this.songsService.addSong(newSong).subscribe(data => {
-      console.log(data)
+      // console.log(data)
     })
     this.snackbar.showSnackBar(`${formName.toUpperCase()} successfuly added to the list`);
 

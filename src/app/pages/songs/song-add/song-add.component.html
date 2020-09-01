@@ -11,7 +11,9 @@
     </mat-card-header>
     <!--    (ngSubmit)="onSubmit(form)" #form="ngForm"  -->
     <form [formGroup]="newSongForm" matForm>
-      <mat-form-field class="name">
+      <mat-form-field class="name" appearance="fill">
+        <mat-label>Song Name</mat-label>
+
         <input
           name="name"
           placeholder="New Song"
@@ -26,7 +28,9 @@
           >Song name is required</mat-hint
         >
       </mat-form-field>
-      <mat-form-field class="composer">
+      <mat-form-field class="composer" appearance="fill">
+        <mat-label>Composer</mat-label>
+
         <input
           name="composer"
           placeholder="Composer"
@@ -42,7 +46,9 @@
           >Composer name is required</mat-hint
         >
       </mat-form-field>
-      <mat-form-field class="style">
+      <mat-form-field class="style" appearance="fill">
+        <mat-label>Style</mat-label>
+
         <input
           name="style"
           placeholder="Style"
@@ -58,7 +64,9 @@
         >
       </mat-form-field>
 
-      <mat-form-field class="tempo">
+      <mat-form-field class="tempo" appearance="fill">
+        <mat-label>Tempo</mat-label>
+
         <input
           name="tempo"
           type="number"
@@ -74,7 +82,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field class="key">
+      <mat-form-field class="key" appearance="fill">
         <mat-label>Key</mat-label>
         <mat-select name="key" formControlName="key" placeholder="key">
           <mat-option></mat-option>

@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { HeaderService } from '../header/header.service';
+import { AuthService } from 'src/app/pages/auth/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,9 +11,11 @@ export class NavComponent implements OnInit {
   opened: boolean;
   currentPage: string = 'dashboard';
   isMobile: boolean;
+  isAuthenticated: boolean = false;
 
   constructor(
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private authService: AuthService
   ) {
     this.headerService.getScreenSize();
   }
@@ -25,13 +28,18 @@ export class NavComponent implements OnInit {
     this.headerService.isMobile.subscribe(bool => {
       this.isMobile = bool;
     })
+    this.authService.user.subscribe(user => {
+
+      this.isAuthenticated = !!user
+      console.log(`Authenticated -> ${this.isAuthenticated}`)
+    })
   }
 
   @HostListener('window:resize', ['$event'])
-  getScreen (event?) {
+  getScreen(event?) {
     this.headerService.getScreenSize()
   }
-  
+
 
   mobileClose() {
     console.log('clicou')
