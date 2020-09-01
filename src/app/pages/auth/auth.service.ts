@@ -98,6 +98,7 @@ export class AuthService {
       this.snackbarService.showSnackBar('Acount successfully created! You may now Login!') :
       this.snackbarService.showSnackBar(`Welcome back!`)
 
+    localStorage.setItem('userData', JSON.stringify(newUser))
   }
 
 
@@ -122,6 +123,25 @@ export class AuthService {
   }
 
 
+  autoLogin() {
+    const userData: {
+      email: string,
+      id: string,
+      registered: true,
+      _token: string,
+      _tokenExpirationDate: string,
+    } = JSON.parse(localStorage.getItem('userData'));
 
+    if (!userData) {
+      return;
+    }
+    const loadedUser = new User(userData.id, userData.email, userData._token, new Date(userData._tokenExpirationDate), true);
+
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+      const expirationTime = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+      // this.autoLogout(expirationTime);
+    }
+  }
 
 }

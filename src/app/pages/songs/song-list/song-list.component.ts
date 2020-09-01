@@ -53,9 +53,9 @@ export class SongListComponent implements AfterViewChecked, OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sort = null;
-    this.paginator = null;
-    this.table.dataSource = null;
-    this.dataSource = null;
+    // this.sort = null;
+    // this.paginator = null;
+    // this.table.dataSource = null;
+    // this.dataSource = null;
   }
 }
