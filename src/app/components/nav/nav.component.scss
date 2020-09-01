@@ -35,3 +35,14 @@ a.logoff {
     bottom: 120px;
   }
 }
+a.mat-list-item-disabled {
+  background: #424242;
+  opacity: 0.3;
+  // pointer-events: painted;
+
+  &:hover {
+    cursor: not-allowed;
+  }
+
+  // cursor: crosshair;
+}

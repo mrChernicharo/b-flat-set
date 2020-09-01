@@ -13,13 +13,13 @@
       <a mat-list-item routerLink="/auth" *ngIf="!isAuthenticated">
         <i class="material-icons">lock_open</i> Autenticação
       </a>
-      <a mat-list-item routerLink="/" *ngIf="isAuthenticated">
+      <a mat-list-item routerLink="/" [disabled]="!isAuthenticated">
         <i class="material-icons">home</i> Dashboard
       </a>
-      <a mat-list-item routerLink="/sets" *ngIf="isAuthenticated">
+      <a mat-list-item routerLink="/sets" [disabled]="!isAuthenticated">
         <i class="material-icons">queue_music</i> Sets
       </a>
-      <a mat-list-item routerLink="/songs" *ngIf="isAuthenticated">
+      <a mat-list-item routerLink="/songs" [disabled]="!isAuthenticated">
         <i class="material-icons">music_note</i> Songs
       </a>
 
@@ -28,7 +28,7 @@
         mat-list-item
         routerLink="/auth"
         *ngIf="isAuthenticated"
-        (click)="isAuthenticated = !isAuthenticated"
+        (click)="logoff()"
       >
         <i class="material-icons">power_settings_new</i> Logoff
       </a>

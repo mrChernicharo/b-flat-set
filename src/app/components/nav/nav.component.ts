@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { HeaderService } from '../header/header.service';
 import { AuthService } from 'src/app/pages/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -15,7 +16,8 @@ export class NavComponent implements OnInit {
 
   constructor(
     private headerService: HeaderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.headerService.getScreenSize();
   }
@@ -47,6 +49,12 @@ export class NavComponent implements OnInit {
     this.headerService.toggleSideMenu()
     // this.opened = false;
     // this.headerService.sideMenuOpen.next(false);
+  }
+
+  logoff() {
+    this.authService.user.next(null);
+    this.isAuthenticated = !this.isAuthenticated;
+    this.router.navigate(['/auth']);
   }
 
 }
