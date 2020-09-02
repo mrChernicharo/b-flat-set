@@ -7,7 +7,7 @@ import { AuthService } from '../auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class SongsService {
-  public songListChanged = new Subject<Song>()
+  public newSongAdded = new Subject<Song>()
   public songsUpdated = new Subject<Song[]>()
   // public url: string = 'http://localhost:3001/songs';
   private url: string = 'https://bflatset.firebaseio.com/';
@@ -43,7 +43,7 @@ export class SongsService {
   public addSong(song: Song): Observable<Song> {
 
     return this.http.post<Song>(`${this.url}${this.userId}.json`, song, { responseType: 'json', observe: 'body' }).pipe(tap(song => {
-      this.songListChanged.next()
+      this.newSongAdded.next(song)
     }))
 
   }

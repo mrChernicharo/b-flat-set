@@ -47,7 +47,7 @@ export class SongListDataSource implements DataSource<Song> {
       console.log(data)
     });
 
-    this.changeSubs = this.songsService.songListChanged.subscribe(song => {
+    this.changeSubs = this.songsService.newSongAdded.subscribe(song => {
       this.data.push(song)
     })
   }

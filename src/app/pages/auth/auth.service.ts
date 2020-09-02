@@ -5,6 +5,7 @@ import { User } from './user.model';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SongsService } from '../songs/songs.service';
 
 
 // interface SignUpResponseData {
@@ -50,6 +51,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private snackbarService: SnackbarService,
+    // private songsService: SongsService,
     private router: Router
   ) { }
 
@@ -109,9 +111,12 @@ export class AuthService {
     // console.log(newUser.id)
     // console.log(this.user)
 
-    userName ? // se for singUp, senão, é login
-      this.snackbarService.showSnackBar('Acount successfully created! You may now Login!') :
+    if (userName) {      // se tem username é singUp, senão, é login
+      this.snackbarService.showSnackBar('Acount successfully created! You may now Login!');
+    } else {
+      // this.songsService.getSongs()
       this.snackbarService.showSnackBar(`Welcome back!`)
+    }
 
     this.autoLogoff(expiresIn * 1000)
     localStorage.setItem('userData', JSON.stringify(newUser))
