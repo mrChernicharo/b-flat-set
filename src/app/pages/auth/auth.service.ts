@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, throwError, Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { User } from './user.model';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { catchError, tap } from 'rxjs/operators';
@@ -45,7 +45,7 @@ export class AuthService {
   private apiKey = 'AIzaSyDGgFMchCz5PSiDauo3rxlofHoumhK87MU';
   private signUpEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`
   private loginEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`
-  public user = new BehaviorSubject<User>(null); // subject User
+  public user = new ReplaySubject<User>(null); // subject User
   public tokenExpirationTimer: any;
 
   constructor(

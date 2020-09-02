@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sets',
@@ -38,7 +39,7 @@ export class SetsComponent implements OnInit {
   // sets = [1, 2, 3, 4, 5];
   @Input() cols: number = 2;
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
@@ -52,6 +53,10 @@ export class SetsComponent implements OnInit {
     this.screenWidth = event.target.innerWidth
     this.screenWidth >= 1200 ? this.cols = 2 : this.cols = 1;
 
+  }
+
+  gotoSet() {
+    this.router.navigate(['/sets/new'])
   }
 
 }

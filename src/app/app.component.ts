@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService, private setsService: SetsService, private songsService: SongsService) { }
   ngOnInit() {
+    // this.songsService.getSongs()
     this.authService.autoLogin()
     this.setsService.loadSongs()
   }

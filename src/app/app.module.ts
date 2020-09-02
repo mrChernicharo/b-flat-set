@@ -39,6 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SongAddComponent } from './pages/songs/song-add/song-add.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { AuthGuard } from './pages/auth/auth.guard';
+import { NewSetComponent } from './pages/sets/new-set/new-set.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { AuthGuard } from './pages/auth/auth.guard';
     SongListComponent,
     SongAddComponent,
     LoadingComponent,
+    NewSetComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -63,6 +66,7 @@ import { AuthGuard } from './pages/auth/auth.guard';
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    DragDropModule,
     MatCardModule,
     MatExpansionModule,
     MatIconModule,
