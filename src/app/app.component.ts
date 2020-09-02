@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SetsService } from './pages/sets/sets.service';
 import { AuthService } from './pages/auth/auth.service';
+import { SongsService } from './pages/songs/songs.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +11,10 @@ import { AuthService } from './pages/auth/auth.service';
 export class AppComponent implements OnInit {
   title = 'b-flat-set';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private setsService: SetsService, private songsService: SongsService) { }
   ngOnInit() {
     this.authService.autoLogin()
+    this.songsService.getSongs()
+    this.setsService.loadSongs()
   }
 }

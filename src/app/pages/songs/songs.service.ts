@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Song } from './song.model';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { map, tap, take } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from '../auth/auth.service';
 @Injectable({ providedIn: 'root' })
 export class SongsService {
   public songListChanged = new Subject<Song>()
-  private songs: Song[] = [];
+  public songsUpdated = new Subject<Song[]>()
   // public url: string = 'http://localhost:3001/songs';
   private url: string = 'https://bflatset.firebaseio.com/';
   public userId: string;
@@ -18,7 +18,6 @@ export class SongsService {
   ) { }
 
   public getSongs(): Observable<Song[]> {
-
     this.authService.user.pipe(take(1))
       .subscribe(userData => {
         this.userId = userData.id
@@ -34,7 +33,8 @@ export class SongsService {
             // console.log(song)
             finalData.push(song)
           }
-          return finalData
+          this.songsUpdated.next(finalData);
+          return finalData;
         }
       }));
     }
