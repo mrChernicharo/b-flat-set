@@ -23,6 +23,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormField } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatGridListModule } from '@angular/material/grid-list'
 
 import { NavComponent } from './components/nav/nav.component';
 import { AuthComponent } from './pages/auth/auth.component';
@@ -76,6 +77,7 @@ import { AuthGuard } from './pages/auth/auth.guard';
     MatSelectModule,
     MatSnackBarModule,
     MatSortModule,
+    MatGridListModule,
     // MatRadioModule,
     // MatFormField,
     // MatCard,
