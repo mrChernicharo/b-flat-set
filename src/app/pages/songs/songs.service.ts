@@ -9,6 +9,7 @@ import { AuthService } from '../auth/auth.service';
 export class SongsService {
   public newSongAdded = new Subject<Song>()
   public songsUpdated = new ReplaySubject<Song[]>()
+  public songbook: Song[] = [];
   // public url: string = 'http://localhost:3001/songs';
   private url: string = 'https://bflatset.firebaseio.com/';
   public userId: string;
@@ -25,7 +26,7 @@ export class SongsService {
         this.userId = userData.id
       })
     if (this.userId) {
-      return this.http.get<Song[]>(`${this.url}${this.userId}.json`).pipe(map(data => {
+      return this.http.get<Song[]>(`${this.url}songbook${this.userId}.json`).pipe(map(data => {
         if (data) {
           const songsData = data;
           const keys = Object.keys(data)
@@ -35,17 +36,24 @@ export class SongsService {
             // console.log(song)
             finalData.push(song)
           }
-          console.log(finalData)
+          this.songbook = finalData
           this.songsUpdated.next(finalData);
+          console.log(this.songbook)
           return finalData;
+        }
+        else {
+          return [];
         }
       }));
     }
   }
 
-  public addSong(song: Song): Observable<Song> {
+  public getSongById(id: string): Song {
+    return this.songbook.find(song => song.id === id);
+  }
 
-    return this.http.post<Song>(`${this.url}${this.userId}.json`, song, { responseType: 'json', observe: 'body' }).pipe(tap(song => {
+  public addSong(song: Song): Observable<Song> {
+    return this.http.post<Song>(`${this.url}songbook${this.userId}.json`, song, { responseType: 'json', observe: 'body' }).pipe(tap(song => {
       this.newSongAdded.next(song)
     }))
 

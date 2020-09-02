@@ -15,6 +15,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // this.songsService.getSongs()
     this.authService.autoLogin()
-    this.setsService.loadSongs()
+    // this.setsService.loadSongs()
   }
 }

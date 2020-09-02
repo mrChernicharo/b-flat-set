@@ -3,6 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { SongsService } from '../../songs/songs.service';
 import { Song } from '../../songs/song.model';
 import { Router } from '@angular/router';
+import { SetsService } from '../sets.service';
 
 @Component({
   selector: 'app-new-set',
@@ -11,25 +12,12 @@ import { Router } from '@angular/router';
 })
 export class NewSetComponent implements OnInit, OnChanges {
   songbook: string[] = [];
+  setlist = [];
+  setlistName: string = 'new Setlist';
 
-  set = []
 
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
 
-  done = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
-
-  constructor(private sonsService: SongsService, private router: Router) { }
+  constructor(private sonsService: SongsService, private setsService: SetsService, private router: Router) { }
 
   ngOnInit() {
     this.sonsService.getSongs().subscribe(data => {
@@ -39,14 +27,14 @@ export class NewSetComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.set)
+    console.log(this.setlist)
     console.log(this.songbook)
   }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      console.log(event.container.data); console.log(event.previousIndex); console.log(event.currentIndex)
+      // console.log(event.container.data); console.log(event.previousIndex); console.log(event.currentIndex)
 
 
     } else {
@@ -54,17 +42,25 @@ export class NewSetComponent implements OnInit, OnChanges {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      this.set = event.container.data
-      console.log(event.previousContainer.data); console.log(event.container.data); console.log(event.previousIndex); console.log(event.currentIndex);
-
+      // console.log(`previous ${event.previousContainer.data}`); console.log(`current ${event.container.data}`); console.log(event.previousIndex); console.log(event.currentIndex);
     }
   }
+
   saveSet() {
-    // this.set = event.container.data
-    console.log(this.set)
+    const setListSongs = this.setlist.map(item => {
+      return this.sonsService.getSongById(item.id)
+    })
+    const newSetList = Object.assign({}, { setlistname: this.setlistName, songs: setListSongs });
+    console.log(newSetList)
+
+    this.goBack()
   }
 
   goBack() {
     this.router.navigate(['/sets'])
+  }
+
+  cleanField() {
+    this.setlistName = '';
   }
 }

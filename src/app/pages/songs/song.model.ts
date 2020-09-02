@@ -19,6 +19,9 @@ export class Song {
 	public style: string;
 	public tempo: number;
 	public key: string;
+	public get id() {
+		return this._id
+	}
 
 	constructor(name: string, composer: string, style: string, tempo: number, key: string) {
 		this._id = makeid(16).toString()
