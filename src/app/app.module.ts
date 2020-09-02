@@ -14,6 +14,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { MatSelectModule } from '@angular/material/select';
 // import { MatRadioModule } from '@angular/material/radio';
@@ -21,7 +22,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatFormField } from '@angular/material/form-field';
+// import { MatFormField } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list'
 
@@ -78,6 +79,7 @@ import { AuthGuard } from './pages/auth/auth.guard';
     MatSnackBarModule,
     MatSortModule,
     MatGridListModule,
+    MatDividerModule,
     // MatRadioModule,
     // MatFormField,
     // MatCard,

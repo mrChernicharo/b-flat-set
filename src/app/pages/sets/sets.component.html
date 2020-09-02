@@ -16,10 +16,43 @@
 
   <!-- *ngIf="screenWidth >= 1200" -->
   <mat-grid-list [cols]="cols" rowHeight="300px" gutterSize="10px">
-    <mat-grid-tile *ngFor="let set of sets">
-      <mat-card>
-        <mat-card-title>Set{{ set }}</mat-card-title>
-        {{ set }}
+    <mat-grid-tile *ngFor="let set of sets; let i = index">
+      <mat-card class="card">
+        <mat-card-header>
+          <div mat-card-avatar class="card-header-image"></div>
+          <mat-card-title>Set {{ i }} | {{ sets[i].name }}</mat-card-title>
+          <div class="actions">
+            <a
+              matTooltip="update song"
+              matTooltipPosition="below"
+              matTooltipShowDelay="1500"
+            >
+              <i class="material-icons edit">
+                build
+              </i>
+            </a>
+            <!-- routerLink="/products/delete/{{ row.id }}" -->
+            <a
+              matTooltip="delete song"
+              matTooltipPosition="after"
+              matTooltipShowDelay="1500"
+            >
+              <i class="material-icons delete">
+                delete
+              </i>
+            </a>
+          </div>
+        </mat-card-header>
+
+        <mat-list>
+          <mat-list-item *ngFor="let song of sets[i].songs; let j = index">
+            <mat-divider *ngIf="j < 4"></mat-divider>
+            <mat-card-description *ngIf="j < 4">{{
+              song.name
+            }}</mat-card-description>
+            <mat-card-description *ngIf="j === 4">...</mat-card-description>
+          </mat-list-item>
+        </mat-list>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>

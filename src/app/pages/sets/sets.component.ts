@@ -14,6 +14,9 @@ export class SetsComponent implements OnInit {
       songs: [
         { composer: "Tom Jobim", key: "D", name: "Wave", style: "Bossa Nova", tempo: 86 },
         { composer: "João Donato", key: "Dm", name: "A Rã", style: "Bossa Nova", tempo: 100 },
+        { composer: "Carlos Lyra", key: "C", name: "Influência do Jazz", style: "Bossa Jazz", tempo: 110 },
+        { composer: "Tom Jobim", key: "D", name: "Wave", style: "Bossa Nova", tempo: 86 },
+        { composer: "João Donato", key: "Dm", name: "A Rã", style: "Bossa Nova", tempo: 100 },
         { composer: "Carlos Lyra", key: "C", name: "Influência do Jazz", style: "Bossa Jazz", tempo: 110 }
       ]
     },
