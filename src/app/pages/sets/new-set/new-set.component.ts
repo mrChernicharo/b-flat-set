@@ -4,32 +4,30 @@ import { SongsService } from '../../songs/songs.service';
 import { Song } from '../../songs/song.model';
 import { Router } from '@angular/router';
 import { SetsService } from '../sets.service';
+import { Setlist } from '../setlist.model';
 
 @Component({
   selector: 'app-new-set',
   templateUrl: './new-set.component.html',
   styleUrls: ['./new-set.component.scss'],
 })
-export class NewSetComponent implements OnInit, OnChanges {
+export class NewSetComponent implements OnInit {
   songbook: string[] = [];
   setlist = [];
   setlistName: string = 'new Setlist';
 
 
 
-  constructor(private sonsService: SongsService, private setsService: SetsService, private router: Router) { }
+  constructor(private songsService: SongsService, private setsService: SetsService, private router: Router) { }
 
   ngOnInit() {
-    this.sonsService.getSongs().subscribe(data => {
+    this.songsService.getSongs().subscribe(data => {
       console.log(data)
       this.songbook = data.map(d => d.name)
     })
   }
 
-  ngOnChanges() {
-    console.log(this.setlist)
-    console.log(this.songbook)
-  }
+
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -47,11 +45,14 @@ export class NewSetComponent implements OnInit, OnChanges {
   }
 
   saveSet() {
+    console.log(this.setlist)
     const setListSongs = this.setlist.map(item => {
-      return this.sonsService.getSongById(item.id)
+      // return this.songsService.getSongById(item.id)
+      return this.songsService.getSongByName(item)
     })
-    const newSetList = Object.assign({}, { setlistname: this.setlistName, songs: setListSongs });
-    console.log(newSetList)
+    // const newSetList = Object.assign({}, { setlistname: this.setlistName, songs: setListSongs });
+    console.log(setListSongs)
+    this.setsService.createSet(new Setlist(this.setlistName, setListSongs))
 
     this.goBack()
   }

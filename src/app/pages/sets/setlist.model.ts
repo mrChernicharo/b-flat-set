@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+import { Song } from '../songs/song.model';
 
 import { Md5 } from 'ts-md5/dist/md5';
 
@@ -11,29 +13,20 @@ function makeid(length) {
 	return Md5.hashStr(result);
 }
 
-
-export class Song {
+@Injectable()
+export class Setlist {
 	private _id: string;
-	public name: string;
-	public composer: string;
-	public style: string;
-	public tempo: number;
-	public key: string;
+	public setlistName: string;
+	public songs: Song[];
 
 
-	constructor(name: string, composer: string, style: string, tempo: number, key: string) {
+	constructor(setlistName: string, songs: Song[]) {
+		this.setlistName = setlistName;
+		this.songs = songs;
 		this._id = makeid(16).toString()
-		this.name = name;
-		this.composer = composer;
-		this.style = style;
-		this.tempo = tempo;
-		this.key = key;
 	}
 
-
-	get id() {
-		return this._id
+	public get id() {
+		return this._id;
 	}
 }
-
-

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { SetsService } from './sets.service';
 
 @Component({
   selector: 'app-sets',
@@ -9,40 +10,15 @@ import { Router } from '@angular/router';
 export class SetsComponent implements OnInit {
   screenWidth: number;
   screenHeight: number;
-  sets = [
-    {
-      name: 'Samba',
-      songs: [
-        { composer: "Tom Jobim", key: "D", name: "Wave", style: "Bossa Nova", tempo: 86 },
-        { composer: "João Donato", key: "Dm", name: "A Rã", style: "Bossa Nova", tempo: 100 },
-        { composer: "Carlos Lyra", key: "C", name: "Influência do Jazz", style: "Bossa Jazz", tempo: 110 },
-        { composer: "Tom Jobim", key: "D", name: "Wave", style: "Bossa Nova", tempo: 86 },
-        { composer: "João Donato", key: "Dm", name: "A Rã", style: "Bossa Nova", tempo: 100 },
-        { composer: "Carlos Lyra", key: "C", name: "Influência do Jazz", style: "Bossa Jazz", tempo: 110 }
-      ]
-    },
-    {
-      name: 'Jazz',
-      songs: [
-        {
-          composer: "Pat Metheny", key: "D", name: "Bright Size Life", style: "Jazz Fusion", tempo: 110
-        }
-      ]
-    },
-    {
-      name: 'Forró',
-      songs: [
-        { composer: "Luiz Gonzaga", key: "G", name: "Baião", style: "Baião", tempo: 100 }
-      ]
-    }
-  ];
+  sets = [];
   // sets = [1, 2, 3, 4, 5];
   @Input() cols: number = 2;
 
-  constructor(private router: Router) {
+  constructor(private setsService: SetsService, private router: Router) {
   }
 
   ngOnInit(): void {
+    this.sets = this.setsService.sets
     this.screenWidth = window.innerWidth
     this.screenWidth >= 1200 ? this.cols = 2 : this.cols = 1;
   }

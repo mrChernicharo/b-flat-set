@@ -52,6 +52,10 @@ export class SongsService {
     return this.songbook.find(song => song.id === id);
   }
 
+  public getSongByName(songName: string): Song {
+    return this.songbook.find(song => song.name === songName);
+  }
+
   public addSong(song: Song): Observable<Song> {
     return this.http.post<Song>(`${this.url}songbook${this.userId}.json`, song, { responseType: 'json', observe: 'body' }).pipe(tap(song => {
       this.newSongAdded.next(song)
