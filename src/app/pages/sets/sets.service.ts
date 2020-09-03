@@ -7,24 +7,26 @@ import { AuthService } from '../auth/auth.service';
 import { tap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-interface responseData {
-
+interface ResponseData {
+  [key: string]: Setlist[]
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class SetsService implements OnInit {
+export class SetsService {
   songbook: Song[] = [];
   setlists: Setlist[] = [];
-
+  userId: string = null;
 
   constructor(
     private songsService: SongsService, private http: HttpClient, private authService: AuthService
-  ) { }
-
-  ngOnInit() {
+  ) {
+    this.authService.user.subscribe(userData => {
+      this.userId = userData.id
+    })
   }
+
 
   createSet(setlist: Setlist) {
     this.setlists.push(setlist)
@@ -32,13 +34,13 @@ export class SetsService implements OnInit {
   }
 
 
-  fetchSets(): Observable<any[]> {
-    return this.http.get<any[]>(
-      `${this.songsService.url}setlists${this.songsService.userId}.json`)
+  fetchSets(): Observable<Setlist[]> {
+    return this.http.get<ResponseData[]>(
+      `${this.songsService.url}setlists${this.userId}.json`)
       .pipe(
         map(responseData => {
           const setKeys = Object.keys(responseData)
-          const finalSets = []
+          const finalSets: Setlist[] = []
           for (let [i, j] of setKeys.entries()) {
             // console.log(i)
             // console.log(j)
@@ -57,7 +59,7 @@ export class SetsService implements OnInit {
 
   persistSetlist(setlist: Setlist): Promise<Setlist> {
     return this.http.post<Setlist>(
-      `${this.songsService.url}setlists${this.songsService.userId}.json`, setlist, { responseType: 'json', observe: 'body' })
+      `${this.songsService.url}setlists${this.userId}.json`, setlist, { responseType: 'json', observe: 'body' })
       .pipe(tap(data => { console.log(data) })).toPromise()
   }
 

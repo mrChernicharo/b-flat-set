@@ -2,6 +2,7 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { SetsService } from './sets.service';
 import { Setlist } from './setlist.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-sets',
@@ -12,22 +13,37 @@ export class SetsComponent implements OnInit {
   screenWidth: number;
   screenHeight: number;
   sets: Setlist[] = [];
+  userId: string = null;
   @Input() cols: number = 2;
+  isLoading: boolean = false
 
-  constructor(private setsService: SetsService, private router: Router) {
+  constructor(private setsService: SetsService, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.sets = this.setsService.setlists
+    this.isLoading = true;
+    this.authService.user.subscribe(user => {
+      this.userId = user.id
+    })
+    // this.sets = this.setsService.setlists
     this.screenWidth = window.innerWidth
     this.screenWidth >= 1200 ? this.cols = 2 : this.cols = 1;
-    this.setsService.fetchSets().subscribe(data => {
-      // const setKeys = Object.keys(data)
-      // console.log(setKeys)
-      // const mapped = data.forEach((item, i) => data[setKeys[i]])
-      // console.log(mapped)
+    this.setsService.fetchSets().subscribe(responseData => {
+      this.sets = responseData
+      this.isLoading = false
     })
+
+
+    // (data => {
+    // const setKeys = Object.keys(data)
+    // console.log(setKeys)
+    // const mapped = data.forEach((item, i) => data[setKeys[i]])
+    // console.log(mapped)
+    // })
+    // setTimeout(() => { this.isLoading = false }, 1000)
   }
+
+
 
   @HostListener('window:resize', ['$event']) getScreenResize(event?) {
 

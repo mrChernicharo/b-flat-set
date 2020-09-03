@@ -5,6 +5,7 @@ import { Song } from '../../songs/song.model';
 import { Router } from '@angular/router';
 import { SetsService } from '../sets.service';
 import { Setlist } from '../setlist.model';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-new-set',
@@ -26,6 +27,7 @@ export class NewSetComponent implements OnInit {
       console.log(data)
       this.songbook = data.map(d => d.name)
     })
+
   }
 
 
