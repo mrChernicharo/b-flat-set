@@ -1,9 +1,20 @@
+.outer-container {
+  // border: 1px solid red;
+  width: 100vw;
+  margin: 100px 4px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
 .container {
   width: 400px;
   max-width: 100%;
-  margin: 100px 20px;
+  // margin: 0 20px 100px;
+  // margin: 0 20px;
   display: inline-block;
+  // display: flex;
   vertical-align: top;
+  // border: 1px solid green;
 }
 
 .list {
@@ -28,6 +39,11 @@
 .list-item:last-child {
   border: none;
 }
+.left-group {
+  // border: 1px solid blue;
+  // margin: 100px 20px 0;
+  margin: 0 20px 0 0;
+}
 
 /* Highlight the list item that is being dragged. */
 .cdk-drag-preview {
@@ -49,3 +65,16 @@
 .cdk-drag-placeholder {
   opacity: 0;
 }
+
+// @media only screen and (min-width: 800px) {
+@media only screen and (max-width: 400px) {
+  .outer-container {
+    display: block;
+    height: 100vh;
+  }
+}
+//   .left-group {
+//     border: 1px solid blue;
+//     margin: 100px 20px 0;
+//   }
+// }
