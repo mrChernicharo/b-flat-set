@@ -71,3 +71,13 @@
     }
   }
 }
+
+@media only screen and (max-width: 428px) {
+  .container {
+    width: 440px;
+    mat-paginator,
+    .full-width-table {
+      width: 438px;
+    }
+  }
+}
