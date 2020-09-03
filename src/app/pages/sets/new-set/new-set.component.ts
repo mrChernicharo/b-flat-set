@@ -44,18 +44,18 @@ export class NewSetComponent implements OnInit {
     }
   }
 
-  saveSet() {
+  async saveSet() {
     console.log(this.setlist)
     const setListSongs = this.setlist.map(item => {
-      // return this.songsService.getSongById(item.id)
       return this.songsService.getSongByName(item)
     })
-    // const newSetList = Object.assign({}, { setlistname: this.setlistName, songs: setListSongs });
-    console.log(setListSongs)
-    this.setsService.createSet(new Setlist(this.setlistName, setListSongs))
 
-    this.goBack()
+    const newSetlist = new Setlist(this.setlistName, setListSongs)
+    this.setsService.createSet(newSetlist)
+    await this.setsService.persistSetlist(newSetlist)
+    // this.goBack()
   }
+
 
   goBack() {
     this.router.navigate(['/sets'])

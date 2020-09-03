@@ -11,22 +11,29 @@ export class SongsService {
   public songsUpdated = new ReplaySubject<Song[]>()
   public songbook: Song[] = [];
   // public url: string = 'http://localhost:3001/songs';
-  private url: string = 'https://bflatset.firebaseio.com/';
-  public userId: string;
+  private _url: string = 'https://bflatset.firebaseio.com/';
+  private _userId: string;
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) {
+  ) { }
 
+  get url() {
+    return this._url;
   }
+
+  get userId() {
+    return this._userId;
+  }
+
 
   public getSongs(): Observable<Song[]> {
     this.authService.user.pipe(take(1))
       .subscribe(userData => {
-        this.userId = userData.id
+        this._userId = userData.id
       })
-    if (this.userId) {
-      return this.http.get<Song[]>(`${this.url}songbook${this.userId}.json`).pipe(map(data => {
+    if (this._userId) {
+      return this.http.get<Song[]>(`${this._url}songbook${this._userId}.json`).pipe(map(data => {
         if (data) {
           const songsData = data;
           const keys = Object.keys(data)
@@ -57,7 +64,7 @@ export class SongsService {
   }
 
   public addSong(song: Song): Observable<Song> {
-    return this.http.post<Song>(`${this.url}songbook${this.userId}.json`, song, { responseType: 'json', observe: 'body' }).pipe(tap(song => {
+    return this.http.post<Song>(`${this._url}songbook${this._userId}.json`, song, { responseType: 'json', observe: 'body' }).pipe(tap(song => {
       this.newSongAdded.next(song)
     }))
 

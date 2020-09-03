@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { SetsService } from './sets.service';
+import { Setlist } from './setlist.model';
 
 @Component({
   selector: 'app-sets',
@@ -10,22 +11,23 @@ import { SetsService } from './sets.service';
 export class SetsComponent implements OnInit {
   screenWidth: number;
   screenHeight: number;
-  sets = [];
-  // sets = [1, 2, 3, 4, 5];
+  sets: Setlist[] = [];
   @Input() cols: number = 2;
 
   constructor(private setsService: SetsService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.sets = this.setsService.sets
+    this.sets = this.setsService.setlists
     this.screenWidth = window.innerWidth
     this.screenWidth >= 1200 ? this.cols = 2 : this.cols = 1;
+    this.setsService.fetchSets().subscribe(data => {
+      console.log(data)
+    })
   }
 
   @HostListener('window:resize', ['$event']) getScreenResize(event?) {
-    // console.log(event.target.innerHeight)
-    // console.log(event.target.innerWidth)
+
     this.screenWidth = event.target.innerWidth
     this.screenWidth >= 1200 ? this.cols = 2 : this.cols = 1;
 
