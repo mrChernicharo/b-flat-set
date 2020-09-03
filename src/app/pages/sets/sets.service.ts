@@ -4,8 +4,12 @@ import { Setlist } from './setlist.model';
 import { SongsService } from '../songs/songs.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+interface responseData {
+
+}
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +32,26 @@ export class SetsService implements OnInit {
   }
 
 
-  fetchSets(): Observable<Setlist[]> {
-    return this.http.get<Setlist[]>(
+  fetchSets(): Observable<any[]> {
+    return this.http.get<any[]>(
       `${this.songsService.url}setlists${this.songsService.userId}.json`)
-    // .pipe(tap(responseData => { console.log(responseData) }))  
+      .pipe(
+        map(responseData => {
+          const setKeys = Object.keys(responseData)
+          const finalSets = []
+          for (let [i, j] of setKeys.entries()) {
+            // console.log(i)
+            // console.log(j)
+            // console.log(responseData[j])
+            let newSet = new Setlist(responseData[j].setlistName, responseData[j].songs)
+            finalSets.push(newSet)
+          }
+          console.log(finalSets)
+          this.setlists = finalSets
+          return finalSets;
+        }),
+
+      )
   }
 
 

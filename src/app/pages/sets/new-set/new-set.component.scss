@@ -66,6 +66,20 @@
   opacity: 0;
 }
 
+p.instruction {
+  text-align: center;
+
+  font-size: 16px;
+  color: grey;
+  margin: 18px 0 12px;
+}
+
+.drag-icon {
+  // border: 1px solid black;
+  vertical-align: middle;
+  color: grey;
+}
+
 // @media only screen and (min-width: 800px) {
 @media only screen and (max-width: 400px) {
   .outer-container {
@@ -73,8 +87,52 @@
     height: 100vh;
   }
 }
-//   .left-group {
-//     border: 1px solid blue;
-//     margin: 100px 20px 0;
-//   }
+
+// paragraph animation
+
+@keyframes flickerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes flickerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes flickerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// @-o-keyframes flickerAnimation{
+//   0%   { opacity:1; }
+//   50%  { opacity:0.1; }
+//   100% { opacity:1; }
 // }
+.animate-flicker {
+  -webkit-animation: flickerAnimation 3s infinite;
+  -moz-animation: flickerAnimation 3s infinite;
+  -o-animation: flickerAnimation 3s infinite;
+  animation: flickerAnimation 3s infinite;
+}

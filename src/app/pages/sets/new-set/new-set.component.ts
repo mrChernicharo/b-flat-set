@@ -1,5 +1,5 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { CdkDragDrop, CdkDragEnter, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { SongsService } from '../../songs/songs.service';
 import { Song } from '../../songs/song.model';
 import { Router } from '@angular/router';
@@ -16,7 +16,8 @@ export class NewSetComponent implements OnInit {
   setlist = [];
   setlistName: string = 'new Setlist';
 
-
+  // @Output('cdkDropListEntered') entered: EventEmitter<CdkDragEnter<any>>
+  // @ViewChild('dropContainer') dropContainer: HTMLElement;
 
   constructor(private songsService: SongsService, private setsService: SetsService, private router: Router) { }
 
@@ -53,7 +54,7 @@ export class NewSetComponent implements OnInit {
     const newSetlist = new Setlist(this.setlistName, setListSongs)
     this.setsService.createSet(newSetlist)
     await this.setsService.persistSetlist(newSetlist)
-    // this.goBack()
+    this.goBack()
   }
 
 

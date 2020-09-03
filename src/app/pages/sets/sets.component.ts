@@ -22,7 +22,10 @@ export class SetsComponent implements OnInit {
     this.screenWidth = window.innerWidth
     this.screenWidth >= 1200 ? this.cols = 2 : this.cols = 1;
     this.setsService.fetchSets().subscribe(data => {
-      console.log(data)
+      // const setKeys = Object.keys(data)
+      // console.log(setKeys)
+      // const mapped = data.forEach((item, i) => data[setKeys[i]])
+      // console.log(mapped)
     })
   }
 
