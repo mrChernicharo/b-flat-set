@@ -35,6 +35,9 @@ export class SetsService {
 
 
   fetchSets(): Observable<Setlist[]> {
+    if (!this.userId) {
+      return;
+    }
     return this.http.get<ResponseData[]>(
       `${this.songsService.url}setlists${this.userId}.json`)
       .pipe(
@@ -64,7 +67,3 @@ export class SetsService {
   }
 
 }
-
-//songbook${this._userId}.json`, song, { responseType: 'json', observe: 'body' }).pipe(tap(song => {
-//   this.newSongAdded.next(song)
-// }))

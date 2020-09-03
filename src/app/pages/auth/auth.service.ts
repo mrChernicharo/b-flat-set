@@ -5,7 +5,7 @@ import { User } from './user.model';
 import { SnackbarService } from '../../shared/snackbar.service';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { SongsService } from '../songs/songs.service';
+import { environment } from '../../../environments/environment';
 
 
 // interface SignUpResponseData {
@@ -42,7 +42,8 @@ export interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiKey = 'AIzaSyDGgFMchCz5PSiDauo3rxlofHoumhK87MU';
+  // private apiKey = 'AIzaSyDGgFMchCz5PSiDauo3rxlofHoumhK87MU';
+  private apiKey: string = environment.firebaseAPIKey;
   private signUpEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`
   private loginEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`
   public user = new ReplaySubject<User>(null); // subject User
