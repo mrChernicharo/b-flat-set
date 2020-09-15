@@ -82,7 +82,6 @@ export class SongAddComponent implements OnInit {
       formKey
     );
     this.songsService.addSong(newSong).subscribe((data) => {
-      console.log(data);
       this.songsService.newSongAdded.next(data);
       const subs = this.songsService
         .getSongsFromAPI()

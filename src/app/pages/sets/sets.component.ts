@@ -45,14 +45,6 @@ export class SetsComponent implements OnInit, OnDestroy {
       this.sets = responseData;
       this.isLoading = false;
     });
-
-    // (data => {
-    // const setKeys = Object.keys(data)
-    // console.log(setKeys)
-    // const mapped = data.forEach((item, i) => data[setKeys[i]])
-    // console.log(mapped)
-    // })
-    // setTimeout(() => { this.isLoading = false }, 1000)
   }
 
   @HostListener("window:resize", ["$event"]) getScreenResize(event?) {

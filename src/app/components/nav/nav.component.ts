@@ -1,16 +1,16 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { HeaderService } from '../header/header.service';
-import { AuthService } from 'src/app/pages/auth/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit, HostListener } from "@angular/core";
+import { HeaderService } from "../header/header.service";
+import { AuthService } from "src/app/pages/auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  selector: "app-nav",
+  templateUrl: "./nav.component.html",
+  styleUrls: ["./nav.component.scss"],
 })
 export class NavComponent implements OnInit {
   opened: boolean;
-  currentPage: string = 'dashboard';
+  currentPage: string = "dashboard";
   isMobile: boolean;
   isAuthenticated: boolean = false;
 
@@ -23,42 +23,32 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(`Authenticated -> ${this.isAuthenticated}`)
-
-    this.headerService.sideMenuOpen.subscribe(bool => {
-      // console.log(bool);
+    this.headerService.sideMenuOpen.subscribe((bool) => {
       this.opened = bool;
     });
-    this.headerService.isMobile.subscribe(bool => {
+    this.headerService.isMobile.subscribe((bool) => {
       this.isMobile = bool;
-    })
-    this.authService.user.subscribe(user => {
-      this.isAuthenticated = !!user
-      console.log(`Authenticated -> ${this.isAuthenticated}`)
-    })
+    });
+    this.authService.user.subscribe((user) => {
+      this.isAuthenticated = !!user;
+      console.log(`Authenticated -> ${this.isAuthenticated}`);
+    });
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   getScreen(event?) {
-    this.headerService.getScreenSize()
+    this.headerService.getScreenSize();
   }
-
 
   mobileClose() {
-    console.log('clicou')
-    this.headerService.toggleSideMenu()
-    // this.opened = false;
-    // this.headerService.sideMenuOpen.next(false);
+    this.headerService.toggleSideMenu();
   }
 
   logoff() {
     this.isAuthenticated = !this.isAuthenticated;
-    this.authService.logout()
-    // this.router.navigate(['/auth']);
+    this.authService.logout();
   }
-
 }
-
 
 // setInterval(()=> {
 //  this.opened = !this.opened;

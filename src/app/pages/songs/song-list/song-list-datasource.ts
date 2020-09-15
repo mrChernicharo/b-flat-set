@@ -26,8 +26,6 @@ export class SongListDataSource extends DataSource<Song> {
   }
 
   addData(songs?: Song[], addedSong?: Song): Song[] {
-    // console.log("dataSource addData()");
-
     if (addedSong) {
       const copiedData = songs.slice();
       copiedData.push(addedSong);

@@ -50,14 +50,12 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.authObservable.subscribe(
       (responseData) => {
         if (responseData) {
-          // console.log(responseData)
           this.isLoading = false;
           this.loginForm.reset();
           this.router.navigate(["/dashboard"]);
         }
       },
       (errorMessage) => {
-        // console.log(errorMessage)
         this.isLoading = false;
         this.snackbar.showErrorSnackBar(errorMessage);
       }
@@ -70,16 +68,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     const username = this.signupForm.value["username"];
     this.isLoading = true;
 
-    console.log(email);
-    console.log(password);
-
     this.authService.signUp(email, password, username).subscribe(
       (responseData) => {
         console.log(responseData);
         this.isLoading = false;
         this.signupForm.reset();
-        // this.panelOpenState = false;
-        // this.headerService.toggleSideMenu()
       },
       (errorMessage) => {
         this.isLoading = false;

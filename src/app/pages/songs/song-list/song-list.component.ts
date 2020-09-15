@@ -50,7 +50,6 @@ export class SongListComponent implements AfterViewChecked, OnInit {
 
           this.isLoading = false;
         }
-        console.log("instancie dataSource " + bool);
       });
     this.dataSource = new SongListDataSource(this.songsService);
   }

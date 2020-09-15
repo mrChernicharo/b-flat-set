@@ -13,24 +13,6 @@ import { catchError, tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { environment } from "../../../environments/environment";
 
-// interface SignUpResponseData {
-//   kind: string;
-//   idToken: string;	// A Firebase Auth ID token for the newly created user.
-//   localId: string;	// The uid of the newly created user.
-//   email: string;	// The email for the newly created user.
-//   refreshToken: string;	// A Firebase Auth refresh token for the newly created user.
-//   expiresIn: string;	// The number of seconds in which the ID token expires.
-// }
-
-// interface LoginResponseData {
-//   kind: string;
-//   localId: string;
-//   email: string;
-//   displayName?: string;
-//   idToken: string;
-//   registered: boolean;
-// }
-
 export interface AuthResponseData {
   email: string;
   localId: string;
@@ -46,7 +28,6 @@ export interface AuthResponseData {
   providedIn: "root",
 })
 export class AuthService {
-  // private apiKey = 'AIzaSyDGgFMchCz5PSiDauo3rxlofHoumhK87MU';
   private apiKey: string = environment.firebaseAPIKey;
   private signUpEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`;
   private loginEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`;
@@ -76,7 +57,6 @@ export class AuthService {
             responseData.idToken,
             +responseData.expiresIn
           );
-          // console.log(response)
         })
       );
   }
@@ -102,7 +82,6 @@ export class AuthService {
             +responseData.expiresIn,
             username
           );
-          // console.log(response)
         })
       );
   }
@@ -115,9 +94,6 @@ export class AuthService {
     }
     this.tokenExpirationTimer = null;
     this.router.navigate(["/auth"]);
-
-    // this.isAuthenticated = !this.isAuthenticated;
-    // this.authService.user.next(null);
   }
 
   public handleAuthSuccess(
@@ -138,7 +114,6 @@ export class AuthService {
       userName
     );
     this.user.next(newUser);
-    // console.log(newUser.id)
     console.log(this.user);
 
     if (userName) {
@@ -147,7 +122,6 @@ export class AuthService {
         "Acount successfully created! You may now Login!"
       );
     } else {
-      // this.songsService.getSongs()
       this.snackbarService.showSnackBar(`Welcome back!`);
     }
 

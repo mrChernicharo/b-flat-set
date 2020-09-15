@@ -39,7 +39,6 @@ export class NewSetComponent implements OnInit {
 
   ngOnInit() {
     this.songsService.songsUpdated.subscribe((data) => {
-      console.log(data);
       this.songbook = data.map((d) => d.name);
     });
   }
@@ -51,7 +50,6 @@ export class NewSetComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      // console.log(event.container.data); console.log(event.previousIndex); console.log(event.currentIndex)
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -59,12 +57,10 @@ export class NewSetComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      // console.log(`previous ${event.previousContainer.data}`); console.log(`current ${event.container.data}`); console.log(event.previousIndex); console.log(event.currentIndex);
     }
   }
 
   async saveSet() {
-    console.log(this.setlist);
     const setListSongs = this.setlist.map((item) => {
       return this.songsService.getSongByName(item);
     });

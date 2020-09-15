@@ -73,9 +73,6 @@ export class SongsService {
             return finalData;
           }),
           catchError((err, stream) => {
-            console.log("err-> " + err);
-            console.log("stream-> " + stream);
-
             return throwError(err);
           })
         );
