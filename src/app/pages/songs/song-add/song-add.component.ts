@@ -4,6 +4,7 @@ import { SongsService } from "../songs.service";
 import { Song } from "../song.model";
 import { Router } from "@angular/router";
 import { SnackbarService } from "src/app/shared/snackbar.service";
+import { concatMap, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-song-add",
@@ -62,6 +63,7 @@ export class SongAddComponent implements OnInit {
   }
 
   cancel() {
+    this.songsService.userJustEntered.next(false);
     this.router.navigate(["/songs"]);
   }
 
@@ -80,15 +82,20 @@ export class SongAddComponent implements OnInit {
       formKey
     );
     this.songsService.addSong(newSong).subscribe((data) => {
-      // console.log(data)
+      console.log(data);
+      this.songsService.newSongAdded.next(data);
+      const subs = this.songsService
+        .getSongsFromAPI()
+        .toPromise()
+        .then((data) => {
+          this.songsService.songbook = data;
+          this.songsService.songsUpdated.next(data);
+          this.router.navigate(["/songs"]);
+        });
     });
     this.snackbar.showSnackBar(
       `${formName.toUpperCase()} successfuly added to the list`
     );
-
-    setTimeout(() => {
-      this.router.navigate(["/songs"]);
-    }, 600);
   }
 }
 
