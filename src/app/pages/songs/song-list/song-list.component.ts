@@ -1,58 +1,57 @@
-import { AfterViewInit, Component, OnInit, OnDestroy, ViewChild, AfterViewChecked } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { SongListDataSource } from './song-list-datasource';
-import { Song } from '../song.model';
-import { SongsService } from '../songs.service';
-import { Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTable } from "@angular/material/table";
+import { Router } from "@angular/router";
+import { of } from "rxjs";
+import { AuthService } from "../../auth/auth.service";
+import { Song } from "../song.model";
+import { SongsService } from "../songs.service";
+import { SongListDataSource } from "./song-list-datasource";
 
 @Component({
-  selector: 'app-song-list',
-  templateUrl: './song-list.component.html',
-  styleUrls: ['./song-list.component.scss']
+  selector: "app-song-list",
+  templateUrl: "./song-list.component.html",
+  styleUrls: ["./song-list.component.scss"],
 })
-
-// AfterViewInit,
-export class SongListComponent implements AfterViewChecked, OnInit, OnDestroy {
+export class SongListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Song>;
   dataSource: SongListDataSource;
   isLoading = false;
-  // userId: string;
-
+  data: Song[];
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'actions', 'key', 'tempo', 'style', 'composer'];
+  displayedColumns = ["name", "actions", "key", "tempo", "style", "composer"];
 
   constructor(
     private authService: AuthService,
     private songsService: SongsService,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    // this.authService.user.subscribe(data => this.userId = data.id)
-    this.dataSource = new SongListDataSource(this.songsService);
     this.isLoading = true;
-
+    this.songsService.getSongsFromAPI().subscribe((data) => {
+      this.data = this.loadData(data);
+    });
+    this.dataSource = new SongListDataSource(
+      this.paginator,
+      this.sort,
+      this.table
+    );
+    this.isLoading = false;
   }
 
-  ngAfterViewChecked() {
-    setTimeout(() => {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.table.dataSource = this.dataSource;
-      this.isLoading = false;
-    }, 600);
+  ngAfterViewInit() {
+    // this.table.dataSource = this.data;
   }
 
+  loadData(songs: Song[]) {
+    return this.dataSource.addData(songs);
+  }
 
   onNewSong() {
-    this.router.navigate(['/songs/new'])
-  }
-
-  ngOnDestroy() {
-
+    this.router.navigate(["/songs/new"]);
   }
 }
