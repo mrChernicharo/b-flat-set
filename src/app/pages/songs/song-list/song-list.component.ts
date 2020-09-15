@@ -3,7 +3,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTable } from "@angular/material/table";
 import { Router } from "@angular/router";
-import { of } from "rxjs";
+import { delay } from "rxjs/operators";
 import { AuthService } from "../../auth/auth.service";
 import { Song } from "../song.model";
 import { SongsService } from "../songs.service";
@@ -32,18 +32,27 @@ export class SongListComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.songsService.getSongsFromAPI().subscribe((data) => {
-      this.data = this.loadData(data);
-    });
-    this.dataSource = new SongListDataSource(
-      this.paginator,
-      this.sort,
-      this.table
-    );
-    this.isLoading = false;
+    this.songsService
+      .getSongsFromAPI()
+      .pipe(delay(400))
+      .subscribe((data) => {
+        console.log("heeeey!");
+        this.data = this.loadData(data);
+        this.isLoading = false;
+      });
+    this.dataSource = new SongListDataSource();
+    // this.paginator,
+    // this.sort
+    // this.table
   }
 
   ngAfterViewInit() {
+    setTimeout(() => {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.table.dataSource = this.dataSource;
+    }, 1000);
+    // this.dataSource
     // this.table.dataSource = this.data;
   }
 

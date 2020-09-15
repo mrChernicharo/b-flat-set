@@ -3,35 +3,15 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { map, tap } from "rxjs/operators";
 import { Song } from "../song.model";
-import { Observable, of as observableOf, merge, BehaviorSubject } from "rxjs";
+import {
+  Observable,
+  of as observableOf,
+  merge,
+  BehaviorSubject,
+  of,
+} from "rxjs";
 import { SongsService } from "../songs.service";
 import { MatTable } from "@angular/material/table";
-
-// TODO: Replace this with your own data model type
-
-// TODO: replace this with real data from your application
-let EXAMPLE_DATA: Song[] = [
-  // { id: 1, name: "Hydrogen" },
-  // { id: 2, name: "Helium" },
-  // { id: 3, name: "Lithium" },
-  // { id: 4, name: "Beryllium" },
-  // { id: 5, name: "Boron" },
-  // { id: 6, name: "Carbon" },
-  // { id: 7, name: "Nitrogen" },
-  // { id: 8, name: "Oxygen" },
-  // { id: 9, name: "Fluorine" },
-  // { id: 10, name: "Neon" },
-  // { id: 11, name: "Sodium" },
-  // { id: 12, name: "Magnesium" },
-  // { id: 13, name: "Aluminum" },
-  // { id: 14, name: "Silicon" },
-  // { id: 15, name: "Phosphorus" },
-  // { id: 16, name: "Sulfur" },
-  // { id: 17, name: "Chlorine" },
-  // { id: 18, name: "Argon" },
-  // { id: 19, name: "Potassium" },
-  // { id: 20, name: "Calcium" },
-];
 
 /**
  * Data source for the SongList2 view. This class should
@@ -39,10 +19,8 @@ let EXAMPLE_DATA: Song[] = [
  * (including sorting, pagination, and filtering).
  */
 export class SongListDataSource extends DataSource<Song> {
-  // data: Song[];
-  // paginator: MatPaginator;
-  // sort: MatSort;
-
+  paginator: MatPaginator;
+  sort: MatSort;
   dataStream = new BehaviorSubject<Song[]>([]);
 
   set data(v: Song[]) {
@@ -52,22 +30,20 @@ export class SongListDataSource extends DataSource<Song> {
     return this.dataStream.value;
   }
 
-  constructor(
-    private paginator: MatPaginator,
-    private sort: MatSort,
-    private table: MatTable<Song>
-  ) {
+  constructor() {
     super();
+    console.log(this.data);
   }
 
   addData(songs: Song[], addedSong?: Song) {
+    console.log("dataSource addData()");
     const copiedData = songs.slice();
     if (addedSong) {
       copiedData.push(addedSong);
     }
-    this.data = copiedData;
-    this.dataStream.next(this.data);
-    console.log(this.data);
+    this.dataStream.next(copiedData);
+    // console.log({ "this.data": [...this.data] });
+
     return copiedData;
   }
   /**
@@ -79,13 +55,10 @@ export class SongListDataSource extends DataSource<Song> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
-      this.dataStream,
+      observableOf(this.data),
       this.paginator.page,
       this.sort.sortChange,
-      (this.table.dataSource = this.dataStream),
     ];
-
-    // this.paginator.length = this.data.length;
 
     return merge(...dataMutations).pipe(
       map(() => {
@@ -123,8 +96,14 @@ export class SongListDataSource extends DataSource<Song> {
       switch (this.sort.active) {
         case "name":
           return compare(a.name, b.name, isAsc);
-        case "id":
-          return compare(+a.id, +b.id, isAsc);
+        case "composer":
+          return compare(a.composer, b.composer, isAsc);
+        case "key":
+          return compare(a.key, b.key, isAsc);
+        case "tempo":
+          return compare(+a.tempo, +b.tempo, isAsc);
+        case "style":
+          return compare(a.style, b.style, isAsc);
         default:
           return 0;
       }

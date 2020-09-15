@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from "@angular/core";
 import { Song } from "./song.model";
 import { Observable, of, Subject, BehaviorSubject, ReplaySubject } from "rxjs";
-import { map, tap, take } from "rxjs/operators";
+import { map, tap, take, delay } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "../auth/auth.service";
 
@@ -38,7 +38,6 @@ export class SongsService {
       this._userId = userData.id;
     });
     if (this._userId) {
-      console.log("catando songs do backend");
       return this.http
         .get<Song[]>(`${this._url}songbook${this._userId}.json`)
         .pipe(
@@ -49,7 +48,6 @@ export class SongsService {
               const finalData: Song[] = [];
               for (let k of keys) {
                 let song: Song = songsData[k];
-                // console.log(song)
                 finalData.push(song);
               }
               this.songbook = finalData;

@@ -17,7 +17,7 @@
       [pageIndex]="0"
       [pageSize]="50"
       [pageSizeOptions]="[5, 10, 15, 25, 50, 100, 250]"
-      *ngIf="dataSource.dataStream"
+      *ngIf="data"
     >
     </mat-paginator>
     <div *ngIf="isLoading" style="text-align: center">
@@ -28,7 +28,7 @@
       class="full-width-table"
       matSort
       aria-label="Elements"
-      [dataSource]="dataSource.dataStream"
+      [dataSource]="data"
     >
       <!-- Name Column -->
       <ng-container matColumnDef="name">
