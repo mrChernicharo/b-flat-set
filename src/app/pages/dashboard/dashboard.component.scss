@@ -1,3 +1,6 @@
+$app-blueish-green: #1eca89;
+$app-green: #00ba5a;
+
 .container {
   margin: 100px auto;
   padding: 0 20px;
@@ -24,7 +27,8 @@
       margin-bottom: 20px;
       // font-weight: 200;
       // color: #7b1fa2;
-      color: #7d389d;
+      // color: #7d389d;
+      color: $app-green;
     }
 
     ul {
@@ -43,7 +47,7 @@
     i.done {
       // vertical-align: text-bottom;
       font-size: 12px;
-      color: green;
+      color: $app-green;
       margin-right: 6px;
     }
   }

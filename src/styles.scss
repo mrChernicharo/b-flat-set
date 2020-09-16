@@ -1,9 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "./colors.scss";
+
 html,
 body {
   height: 100%;
-  background: #535355;
+  background: $app-background-light;
   box-sizing: border-box;
 }
 body {
@@ -16,16 +18,16 @@ body {
 }
 
 .mat-snack-message {
-  background: linear-gradient(50deg, #3abd5d, #062924);
+  background: linear-gradient(50deg, $app-green, #062924);
   color: #fff;
   z-index: 3000;
 }
 
 .mat-snack-error {
-  background: linear-gradient(50deg, #ff4081, #062924);
+  background: linear-gradient(50deg, $app-red, #062924);
   color: #fff;
   z-index: 3000;
 }
 .mat-hint {
-  color: #f44336;
+  color: $app-red;
 }

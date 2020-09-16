@@ -1,3 +1,5 @@
+@import "../../../../colors.scss";
+
 .outer-container {
   // border: 1px solid red;
   width: 100vw;
@@ -50,7 +52,7 @@
 
 .left-group {
   border: 1px solid #c4c4c4;
-  background-color: #303030;
+  background-color: $app-background-light;
   padding: 20px 10px 10px 10px;
   z-index: 20;
   position: absolute;
@@ -161,9 +163,9 @@ p.instruction {
     // position: relative;
     width: 50%;
   }
-  .placeholder-left-group {
-    // display: none;
-  }
+  // .placeholder-left-group {
+  //    display: none;
+  // }
 }
 
 // @media only screen and (max-width: 360px) {
@@ -183,17 +185,17 @@ p.instruction {
     font-size: 12px;
   }
 
-  .left-group {
-    .cdk-drop-list.list {
-      // border: 1px solid red;
+  // .left-group {
+  // .cdk-drop-list.list {
+  //     border: 1px solid red;
 
-      // aplicar uma classe aqui
-      // pra quando a lista for maior q X itens
-      // a ideia é facilitar o scroll
+  // aplicar uma classe aqui
+  // pra quando a lista for maior q X itens
+  // a ideia é facilitar o scroll
 
-      // margin-left: 26px;
-    }
-  }
+  //    margin-left: 26px;
+  //    }
+  // }
 }
 
 // ***************************

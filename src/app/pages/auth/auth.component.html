@@ -1,6 +1,8 @@
 <div class="container">
   <mat-card class="header-container">
-    <h1 class="title">Bem vinde ao bFlatSet!</h1>
+    <h1 class="title">
+      Bem vinde ao ⭐️ <span id="logo">bFlatSet!</span> 🎻 🎤 🎸 🎺
+    </h1>
     <h3 class="subtitle">O seu aplicativo de repertórios online</h3>
     <!-- <ul>
       <li>
@@ -27,9 +29,7 @@
           <i class="material-icons">login</i> Login
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-panel-description>
-        Acessar minha conta
-      </mat-panel-description>
+      <mat-panel-description> Acessar minha conta </mat-panel-description>
 
       <form [formGroup]="loginForm" *ngIf="!isLoading">
         <mat-form-field appearance="outline">
@@ -42,7 +42,7 @@
           <input type="password" formControlName="password" matInput />
         </mat-form-field>
       </form>
-      <div *ngIf="isLoading" style="text-align: center;">
+      <div *ngIf="isLoading" style="text-align: center">
         <app-loading></app-loading>
       </div>
       <button
@@ -68,9 +68,7 @@
           <i class="material-icons">how_to_reg</i> Sign up
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-panel-description>
-        primeira vez por aqui?
-      </mat-panel-description>
+      <mat-panel-description> primeira vez por aqui? </mat-panel-description>
 
       <form [formGroup]="signupForm" *ngIf="!isLoading">
         <mat-form-field appearance="outline">
@@ -88,7 +86,7 @@
           <input type="password" formControlName="password" matInput />
         </mat-form-field>
       </form>
-      <div *ngIf="isLoading" style="text-align: center;">
+      <div *ngIf="isLoading" style="text-align: center">
         <app-loading></app-loading>
       </div>
       <button

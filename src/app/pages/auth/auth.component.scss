@@ -1,3 +1,5 @@
+@import "../../../colors.scss";
+
 .container {
   margin: 100px auto;
   padding: 0 20px;
@@ -21,14 +23,14 @@
     h1 {
       text-anchor: start;
       font-size: 32px;
+      span#logo {
+        color: $app-blueish-green;
+      }
     }
 
     h3 {
       line-height: 8px;
       margin-bottom: 20px;
-      // font-weight: 200;
-      // color: #7b1fa2;
-      // color: #7d389d;
     }
 
     ul {
@@ -60,10 +62,10 @@
     width: 730px;
 
     margin-bottom: 180px;
-    background: #535355;
+    background: $app-background-light;
 
     mat-expansion-panel {
-      border-bottom: 2px solid #7bb2dc;
+      border-bottom: 2px solid $app-blueish-green;
     }
 
     mat-form-field {

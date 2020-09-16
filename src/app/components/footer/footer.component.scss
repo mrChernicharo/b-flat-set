@@ -1,3 +1,5 @@
+@import "../../../colors.scss";
+
 mat-toolbar {
   position: fixed;
   bottom: 0;
@@ -8,7 +10,7 @@ mat-toolbar {
   font-size: 12px;
 
   .red {
-    color: rgb(227, 96, 100);
+    color: $app-red;
   }
 
   .v-middle {
@@ -16,7 +18,7 @@ mat-toolbar {
   }
 
   a.link {
-    color: #7d389d;
+    color: $app-deeppurple;
     text-decoration: none;
     font-size: 14px;
     vertical-align: bottom;
@@ -29,7 +31,6 @@ mat-toolbar {
   a.love {
     margin-left: 10px;
   }
-
 }
 
 @media only screen and (max-width: 628px) {
@@ -39,6 +40,5 @@ mat-toolbar {
     flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
-
   }
 }
