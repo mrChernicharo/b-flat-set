@@ -51,9 +51,9 @@
 .left-group {
   border: 1px solid #c4c4c4;
   background-color: #303030;
-  padding: 10px;
+  padding: 20px 10px 10px 10px;
   z-index: 20;
-  position: fixed;
+  position: absolute;
   left: 200px;
   border-radius: 4px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
@@ -65,14 +65,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-
-    button {
-      // margin-bottom: 10px;
-      width: 200px;
-    }
   }
 }
 
+.button-group {
+  button {
+    // margin-bottom: 10px;
+    width: 100%;
+  }
+}
 .right-group {
   // border: 1px solid red;
   text-align: center;
@@ -165,7 +166,8 @@ p.instruction {
   }
 }
 
-@media only screen and (max-width: 360px) {
+// @media only screen and (max-width: 360px) {
+@media only screen and (max-width: 420px) {
   .left-group {
     left: 0;
   }
@@ -173,8 +175,24 @@ p.instruction {
   //   display: block;
   //   height: 100vh;
   // }
+  button {
+    // margin-bottom: 10px;
+    width: 100%;
+  }
   .list-item {
     font-size: 12px;
+  }
+
+  .left-group {
+    .cdk-drop-list.list {
+      // border: 1px solid red;
+
+      // aplicar uma classe aqui
+      // pra quando a lista for maior q X itens
+      // a ideia é facilitar o scroll
+
+      // margin-left: 26px;
+    }
   }
 }
 
