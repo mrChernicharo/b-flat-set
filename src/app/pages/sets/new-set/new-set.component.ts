@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  OnDestroy,
 } from "@angular/core";
 import {
   CdkDragDrop,
@@ -17,8 +18,8 @@ import { Router } from "@angular/router";
 import { SetsService } from "../sets.service";
 import { Setlist } from "../setlist.model";
 import { AuthService } from "../../auth/auth.service";
-import { of } from "rxjs";
-import { switchMap, tap } from "rxjs/operators";
+import { Observable, of } from "rxjs";
+import { delay, switchMap, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-new-set",
@@ -29,7 +30,7 @@ export class NewSetComponent implements OnInit {
   songbook: string[] = [];
   setlist = [];
   setlistName: string = "new Setlist";
-
+  // setObservable: Observable<Setlist>
   // @Output('cdkDropListEntered') entered: EventEmitter<CdkDragEnter<any>>
   // @ViewChild('dropContainer') dropContainer: HTMLElement;
 
@@ -69,22 +70,20 @@ export class NewSetComponent implements OnInit {
     });
 
     const newSetlist = new Setlist(this.setlistName, setListSongs);
+    this.setsService.createSet(newSetlist);
+    this.setsService.persistSetlist(newSetlist);
+
     const setObservable = of(newSetlist).pipe(
       tap((data) => {
-        this.setsService.createSet(data);
-        this.setsService.cacheSetsData([data, ...this.setsService.setlists]);
-        this.setsService.persistSetlist(newSetlist);
-        this.goBack();
-      })
+        this.setsService.setCacheData([data, ...this.setsService.setlists]);
+      }),
+      delay(300)
     );
-    setObservable.subscribe(() => {
-      this.setsService.userJustEntered.next(false);
-    });
+    setObservable.subscribe(() => this.goBack());
   }
 
   goBack() {
     this.setsService.userJustEntered.next(false);
-
     this.router.navigate(["/sets"]);
   }
 

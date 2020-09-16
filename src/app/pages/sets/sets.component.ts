@@ -36,7 +36,7 @@ export class SetsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
     this.authSubs = this.authService.user.subscribe((user) => {
-      this.userId = user?.id;
+      this.userId = user.id;
     });
     // this.sets = this.setsService.setlists
     this.screenWidth = window.innerWidth;
@@ -49,6 +49,8 @@ export class SetsComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         });
       } else {
+        console.log("just Entered?" + bool);
+
         this.sets = this.setsService.getCachedData();
 
         this.isLoading = false;

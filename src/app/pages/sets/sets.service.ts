@@ -69,13 +69,13 @@ export class SetsService {
       )
       .pipe(
         tap((data) => {
-          console.log(data);
+          console.log("persisting " + data);
         })
       )
       .toPromise();
   }
 
-  cacheSetsData(data: Setlist[]) {
+  setCacheData(data: Setlist[]) {
     localStorage.setItem("setlists", JSON.stringify(data));
   }
 

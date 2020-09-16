@@ -4,8 +4,8 @@ import {
   Observable,
   throwError,
   Subject,
+  // BehaviorSubject,
   BehaviorSubject,
-  ReplaySubject,
 } from "rxjs";
 import { User } from "./user.model";
 import { SnackbarService } from "../../shared/snackbar.service";
@@ -32,7 +32,7 @@ export class AuthService {
   private signUpEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`;
   private loginEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`;
   public tokenExpirationTimer: any;
-  public user = new ReplaySubject<User>(); // subject User
+  public user = new BehaviorSubject<User>({} as User); // subject User
 
   constructor(
     private http: HttpClient,
@@ -41,7 +41,7 @@ export class AuthService {
     private router: Router
   ) {}
 
-  login(email: string, password: string) {
+  public login(email: string, password: string): Observable<AuthResponseData> {
     return this.http
       .post<AuthResponseData>(
         this.loginEndpoint,
@@ -61,7 +61,7 @@ export class AuthService {
       );
   }
 
-  signUp(
+  public signUp(
     email: string,
     password: string,
     username: string
@@ -69,12 +69,19 @@ export class AuthService {
     return this.http
       .post<AuthResponseData>(
         this.signUpEndpoint,
-        { email: email, password: password, returnSecureToken: true },
+        {
+          email: email,
+          password: password,
+          username: username,
+          returnSecureToken: true,
+        },
         { responseType: "json", observe: "body" }
       )
       .pipe(
         catchError(this.handleError),
         tap((responseData) => {
+          console.log("1. responseData");
+          console.log(responseData);
           this.handleAuthSuccess(
             responseData.email,
             responseData.localId,
@@ -86,16 +93,6 @@ export class AuthService {
       );
   }
 
-  logout() {
-    this.user.next(null);
-    localStorage.removeItem("userData");
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-    this.tokenExpirationTimer = null;
-    this.router.navigate(["/auth"]);
-  }
-
   public handleAuthSuccess(
     email: string,
     localId: string,
@@ -104,22 +101,22 @@ export class AuthService {
     username?: string
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const userName = username ? username : null;
     const newUser = new User(
       localId,
       email,
       idToken,
       expirationDate,
       true,
-      userName
+      username
     );
+    console.log("2. newUser");
+    console.log(newUser);
     this.user.next(newUser);
-    console.log(this.user);
 
-    if (userName) {
+    if (username) {
       // se tem username é singUp, senão, é login
       this.snackbarService.showSnackBar(
-        "Acount successfully created! You may now Login!"
+        `Conta criada com sucesso! Seja bem-vinde ${username.toUpperCase()}`
       );
     } else {
       this.snackbarService.showSnackBar(`Welcome back!`);
@@ -137,7 +134,9 @@ export class AuthService {
     }
     switch (errorResponse.error.error.message) {
       case "EMAIL_EXISTS":
-        errorMessage = "Email already in use";
+        errorMessage =
+          "Endereço de email já em uso, Por favor use outro email para criar sua conta";
+        // errorMessage = "Email already in use";
         break;
       case "INVALID_PASSWORD":
         errorMessage = "Wrong email/password combination!";
@@ -149,7 +148,17 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
-  autoLogin() {
+  public logout() {
+    this.user.next(null);
+    localStorage.removeItem("userData");
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+    this.router.navigate(["/auth"]);
+  }
+
+  public autoLogin() {
     const userData: {
       email: string;
       id: string;
@@ -179,11 +188,12 @@ export class AuthService {
     }
   }
 
-  autoLogoff(expirationTime: number) {
+  private autoLogoff(expirationTime: number) {
     console.log(`token expiration ${expirationTime}ms`);
     this.tokenExpirationTimer = setTimeout(() => {
       this.snackbarService.showErrorSnackBar(
-        "token expired! please login again"
+        "A Sessão expirou! Por favor faça login novamente"
+        // "token expired! please login again"
       );
       this.logout();
     }, expirationTime);

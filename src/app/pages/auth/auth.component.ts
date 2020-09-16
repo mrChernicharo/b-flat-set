@@ -20,6 +20,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   panelOpenState = false;
   isLoading = false;
   authObservable: Observable<AuthResponseData>;
+  username: string;
 
   constructor(
     private router: Router,
@@ -29,6 +30,9 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.authService.user.subscribe(
+      (user) => (this.username = user.displayName)
+    );
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, Validators.required),
@@ -73,6 +77,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         console.log(responseData);
         this.isLoading = false;
         this.signupForm.reset();
+        this.router.navigate(["/dashboard"]);
       },
       (errorMessage) => {
         this.isLoading = false;
