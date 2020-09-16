@@ -7,14 +7,11 @@
   justify-content: center;
 }
 .container {
+  // border: 1px solid green;
   width: 400px;
   max-width: 100%;
-  // margin: 0 20px 100px;
-  // margin: 0 20px;
   display: inline-block;
-  // display: flex;
   vertical-align: top;
-  border: 1px solid green;
 }
 
 .list {
@@ -23,7 +20,7 @@
   background: white;
   border-radius: 4px;
   display: block;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .list-item {
@@ -39,10 +36,59 @@
 .list-item:last-child {
   border: none;
 }
+
+// L / R
+// ***************************
+// ***************************
+// ***************************
+// ***************************
+
+.placeholder-left-group {
+  // border: 1px solid orange;
+  display: block;
+}
+
 .left-group {
-  // border: 1px solid blue;
-  // margin: 100px 20px 0;
-  margin: 0 20px 0 0;
+  border: 1px solid #c4c4c4;
+  background-color: #303030;
+  padding: 10px;
+  z-index: 20;
+  position: fixed;
+  left: 200px;
+  border-radius: 4px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+
+  .button-group {
+    // border: 1px solid #c4c4c4;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    button {
+      // margin-bottom: 10px;
+      width: 200px;
+    }
+  }
+}
+
+.right-group {
+  // border: 1px solid red;
+  text-align: center;
+  h2 {
+    margin: 10px;
+  }
+}
+
+// ***************************
+// ***************************
+// ***************************
+// ***************************
+
+.cdk-drop-list.list {
+  // border: 1px solid red;
+  margin-top: 14px;
 }
 
 /* Highlight the list item that is being dragged. */
@@ -80,16 +126,62 @@ p.instruction {
   color: grey;
 }
 
-// @media only screen and (min-width: 800px) {
-@media only screen and (max-width: 360px) {
-  .outer-container {
-    display: block;
-    height: 100vh;
+// Responsivo
+// ***************************
+// ***************************
+// ***************************
+// ***************************
+
+// @media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1100px) {
+  .left-group {
+    left: 80px;
   }
+}
+
+// @media only screen and (max-width: 940px) {
+@media only screen and (max-width: 860px) {
+  .left-group {
+    left: 30px;
+  }
+}
+
+// @media only screen and (max-width: 850px) {
+@media only screen and (max-width: 790px) {
+  .left-group {
+    left: 4px;
+  }
+}
+
+// @media only screen and (max-width: 780px) {
+@media only screen and (max-width: 730px) {
+  .left-group {
+    // display: inline-block;
+    // position: relative;
+    width: 50%;
+  }
+  .placeholder-left-group {
+    // display: none;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .left-group {
+    left: 0;
+  }
+  // .outer-container {
+  //   display: block;
+  //   height: 100vh;
+  // }
   .list-item {
     font-size: 12px;
   }
 }
+
+// ***************************
+// ***************************
+// ***************************
+// ***************************
 
 // paragraph animation
 

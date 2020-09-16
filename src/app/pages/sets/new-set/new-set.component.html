@@ -1,5 +1,6 @@
 <div class="outer-container">
   <div class="container left-group">
+    <h2>Setlist</h2>
     <mat-form-field class="set-name" appearance="standard" style="width: 100%">
       <mat-label>Set Name</mat-label>
       <input
@@ -12,28 +13,29 @@
     </mat-form-field>
     <mat-divider></mat-divider>
     <br />
-    <button
-      mat-raised-button
-      color="primary"
-      matTooltip="Clique para salvar o Setlist!"
-      matTooltipPosition="below"
-      matTooltipShowDelay="1000"
-      [disabled]="!setlistName || setlist.length < 1"
-      (click)="saveSet()"
-    >
-      Save Set
-    </button>
-    <button
-      matTooltip="Clique para retornar"
-      matTooltipPosition="below"
-      matTooltipShowDelay="1000"
-      mat-raised-button
-      color="accent"
-      (click)="goBack()"
-    >
-      Go Back
-    </button>
-    <h2>Setlist</h2>
+    <div class="button-group">
+      <button
+        mat-raised-button
+        color="primary"
+        matTooltip="Clique para salvar o Setlist!"
+        matTooltipPosition="below"
+        matTooltipShowDelay="1000"
+        [disabled]="!setlistName || setlist.length < 1"
+        (click)="saveSet()"
+      >
+        Save Set
+      </button>
+      <button
+        matTooltip="Clique para retornar"
+        matTooltipPosition="below"
+        matTooltipShowDelay="1000"
+        mat-raised-button
+        color="accent"
+        (click)="goBack()"
+      >
+        Go Back
+      </button>
+    </div>
     <!-- class="cdk-drag-animating" -->
     <div
       cdkDropList
@@ -52,8 +54,9 @@
       </div>
     </div>
   </div>
+  <div class="container placeholder-left-group"></div>
 
-  <div class="container">
+  <div class="container right-group">
     <h2>Songbook</h2>
 
     <div
