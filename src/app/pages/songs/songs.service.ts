@@ -22,6 +22,7 @@ export class SongsService {
   // public url: string = 'http://localhost:3001/songs';
   private _url: string = "https://bflatset.firebaseio.com/";
   private _userId: string;
+  public username: string;
   constructor(private http: HttpClient, private authService: AuthService) {
     // this.getSongsFromAPI();
   }
@@ -49,6 +50,7 @@ export class SongsService {
   public getSongsFromAPI(): Observable<Song[]> {
     this.authService.user.pipe(take(1)).subscribe((userData) => {
       this._userId = userData.id;
+      this.username = userData.displayName;
     });
     if (this._userId) {
       return this.http
@@ -89,10 +91,14 @@ export class SongsService {
 
   public addSong(song: Song): Observable<Song> {
     return this.http
-      .post<Song>(`${this._url}songbook${this._userId}.json`, song, {
-        responseType: "json",
-        observe: "body",
-      })
+      .post<Song>(
+        `${this._url}songbook${this._userId}${this.username}.json`,
+        song,
+        {
+          responseType: "json",
+          observe: "body",
+        }
+      )
       .pipe(
         tap((song) => {
           this.newSongAdded.next(song);

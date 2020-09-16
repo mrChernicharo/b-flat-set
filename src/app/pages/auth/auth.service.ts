@@ -9,7 +9,7 @@ import {
 } from "rxjs";
 import { User } from "./user.model";
 import { SnackbarService } from "../../shared/snackbar.service";
-import { catchError, tap } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { environment } from "../../../environments/environment";
 
@@ -24,11 +24,19 @@ export interface AuthResponseData {
   refreshToken?: string;
 }
 
+interface IUserData {
+  id: string;
+  username: string;
+  email: string;
+  createdAt: Date;
+}
+
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   private apiKey: string = environment.firebaseAPIKey;
+  private userDataEndpoint: string = "https://bflatset.firebaseio.com/";
   private signUpEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`;
   private loginEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`;
   public tokenExpirationTimer: any;
@@ -90,10 +98,12 @@ export class AuthService {
             username
           );
         })
+        // tap((data) => {
+        // })
       );
   }
 
-  public handleAuthSuccess(
+  public async handleAuthSuccess(
     email: string,
     localId: string,
     idToken: string,
@@ -115,10 +125,12 @@ export class AuthService {
 
     if (username) {
       // se tem username é singUp, senão, é login
+      await this.saveUserData(localId, username, email);
       this.snackbarService.showSnackBar(
         `Conta criada com sucesso! Seja bem-vinde ${username.toUpperCase()}`
       );
     } else {
+      await this.getUserData(localId);
       this.snackbarService.showSnackBar(`Welcome back!`);
     }
 
@@ -188,7 +200,7 @@ export class AuthService {
     }
   }
 
-  private autoLogoff(expirationTime: number) {
+  private autoLogoff(expirationTime: number): void {
     console.log(`token expiration ${expirationTime}ms`);
     this.tokenExpirationTimer = setTimeout(() => {
       this.snackbarService.showErrorSnackBar(
@@ -198,4 +210,85 @@ export class AuthService {
       this.logout();
     }, expirationTime);
   }
+
+  private async saveUserData(
+    id: string,
+    username: string,
+    email: string
+  ): Promise<IUserData> {
+    // const username = username.normalize()
+    const creationDate = new Date();
+    const newUserData = {
+      id: id,
+      username: username,
+      email: email,
+      created_at: creationDate.toUTCString(),
+    };
+    return this.http
+      .post<IUserData>(`${this.userDataEndpoint}user${id}.json`, newUserData, {
+        responseType: "json",
+        observe: "body",
+      })
+      .toPromise();
+  }
+
+  private async getUserData(id: string): Promise<any> {
+    return this.http
+      .get<any>(`${this.userDataEndpoint}user${id}.json`)
+      .pipe(
+        tap((request) => {
+          console.log(request);
+        })
+      )
+      .toPromise()
+      .then((response) => {
+        console.log(response);
+        return response;
+      });
+  }
 }
+
+// .post<Song>(`${this._url}songbook${this._userId}.json`, song, {
+//   responseType: "json",
+//   observe: "body",
+// })
+// .pipe(
+//   tap((song) => {
+//     this.newSongAdded.next(song);
+//   })
+// );
+
+// public getSongsFromAPI(): Observable<Song[]> {
+//   this.authService.user.pipe(take(1)).subscribe((userData) => {
+//     this._userId = userData.id;
+//     this.username = userData.displayName;
+//   });
+//   if (this._userId) {
+//     return this.http
+
+//       .get<Song[]>(`${this._url}songbook${this._userId}.json`)
+//       .pipe(
+//         tap(() => console.log("songsService: getSongsFromAPI()")),
+//         map((data) => {
+//           if (data.length < 1) {
+//             return this.getCachedSongs();
+//           }
+//           const keys = Object.keys(data);
+//           const finalData: Song[] = [];
+//           for (let k of keys) {
+//             const song: Song = data[k];
+//             finalData.push(song);
+//           }
+//           this.songbook = finalData;
+//           this.songsUpdated.next(finalData);
+//           console.log(this.songbook);
+//           // set cache:
+//           localStorage.setItem("songbook", JSON.stringify(finalData));
+//           return finalData;
+//         }),
+//         catchError((err, stream) => {
+//           return throwError(err);
+//         })
+//       );
+//   }
+// }
