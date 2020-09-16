@@ -74,15 +74,17 @@ export class NewSetComponent implements OnInit {
         this.setsService.createSet(data);
         this.setsService.cacheSetsData([data, ...this.setsService.setlists]);
         this.setsService.persistSetlist(newSetlist);
+        this.goBack();
       })
     );
     setObservable.subscribe(() => {
-      this.goBack();
+      this.setsService.userJustEntered.next(false);
     });
   }
 
   goBack() {
     this.setsService.userJustEntered.next(false);
+
     this.router.navigate(["/sets"]);
   }
 

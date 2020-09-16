@@ -42,13 +42,16 @@ export class SetsComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
     this.screenWidth >= 1200 ? (this.cols = 2) : (this.cols = 1);
     this.setsSubs = this.setsService.userJustEntered.subscribe((bool) => {
+      console.log("just Entered?" + bool);
       if (bool) {
         this.setsService.fetchSets().subscribe((responseData) => {
           this.sets = responseData;
           this.isLoading = false;
         });
       } else {
-        this.setsService.getCachedData();
+        this.sets = this.setsService.getCachedData();
+
+        this.isLoading = false;
       }
     });
     // this.setsSubs =
