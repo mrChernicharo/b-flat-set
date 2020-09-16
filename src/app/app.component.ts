@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
     // this.songsService.getSongs()
     this.authService.autoLogin();
     this.songsService.userJustEntered.next(true);
+    this.setsService.userJustEntered.next(true);
 
     // this.setsService.loadSongs()
   }

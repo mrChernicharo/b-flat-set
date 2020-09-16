@@ -36,15 +36,22 @@ export class SetsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading = true;
     this.authSubs = this.authService.user.subscribe((user) => {
-      this.userId = user.id;
+      this.userId = user?.id;
     });
     // this.sets = this.setsService.setlists
     this.screenWidth = window.innerWidth;
     this.screenWidth >= 1200 ? (this.cols = 2) : (this.cols = 1);
-    this.setsSubs = this.setsService.fetchSets().subscribe((responseData) => {
-      this.sets = responseData;
-      this.isLoading = false;
+    this.setsSubs = this.setsService.userJustEntered.subscribe((bool) => {
+      if (bool) {
+        this.setsService.fetchSets().subscribe((responseData) => {
+          this.sets = responseData;
+          this.isLoading = false;
+        });
+      } else {
+        this.setsService.getCachedData();
+      }
     });
+    // this.setsSubs =
   }
 
   @HostListener("window:resize", ["$event"]) getScreenResize(event?) {

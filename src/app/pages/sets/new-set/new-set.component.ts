@@ -17,6 +17,8 @@ import { Router } from "@angular/router";
 import { SetsService } from "../sets.service";
 import { Setlist } from "../setlist.model";
 import { AuthService } from "../../auth/auth.service";
+import { of } from "rxjs";
+import { switchMap, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-new-set",
@@ -61,22 +63,33 @@ export class NewSetComponent implements OnInit {
     }
   }
 
-  async saveSet() {
+  saveSet() {
     const setListSongs = this.setlist.map((item) => {
       return this.songsService.getSongByName(item);
     });
 
     const newSetlist = new Setlist(this.setlistName, setListSongs);
-    this.setsService.createSet(newSetlist);
-    await this.setsService.persistSetlist(newSetlist);
-    this.goBack();
+    const setObservable = of(newSetlist).pipe(
+      tap((data) => {
+        this.setsService.createSet(data);
+        this.setsService.cacheSetsData([data, ...this.setsService.setlists]);
+        this.setsService.persistSetlist(newSetlist);
+      })
+    );
+    setObservable.subscribe(() => {
+      this.goBack();
+    });
   }
 
   goBack() {
+    this.setsService.userJustEntered.next(false);
     this.router.navigate(["/sets"]);
   }
 
   cleanField() {
     this.setlistName = "";
   }
+  // saveSet() {
+
+  // }
 }

@@ -5,7 +5,7 @@ import { SongsService } from "../songs/songs.service";
 import { HttpClient } from "@angular/common/http";
 import { AuthService } from "../auth/auth.service";
 import { tap, map } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 interface ResponseData {
   [key: string]: Setlist[];
@@ -18,6 +18,8 @@ export class SetsService {
   songbook: Song[] = [];
   setlists: Setlist[] = [];
   userId: string = null;
+  setlistsUpdated = new BehaviorSubject<Setlist[]>(null);
+  public userJustEntered = new BehaviorSubject<boolean>(true);
 
   constructor(
     private songsService: SongsService,
@@ -71,5 +73,15 @@ export class SetsService {
         })
       )
       .toPromise();
+  }
+
+  cacheSetsData(data: Setlist[]) {
+    localStorage.setItem("setlists", JSON.stringify(data));
+  }
+
+  getCachedData(): Setlist[] {
+    const cachedData = JSON.parse(localStorage.getItem("setlists"));
+    console.log(cachedData);
+    return cachedData as Setlist[];
   }
 }
