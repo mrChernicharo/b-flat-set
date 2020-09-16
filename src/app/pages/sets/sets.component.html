@@ -15,7 +15,7 @@
     </button>
   </mat-card>
 
-  <div *ngIf="isLoading" style="text-align: center; margin-top: 140px;">
+  <div *ngIf="isLoading" style="text-align: center; margin-top: 140px">
     <app-loading class="dark-bg"></app-loading>
   </div>
   <!-- *ngIf="screenWidth >= 1200" -->
@@ -26,7 +26,7 @@
     gutterSize="10px"
   >
     <mat-grid-tile *ngFor="let set of sets; let i = index">
-      <a routerLink="/" style="text-decoration: none;">
+      <a routerLink="#" style="text-decoration: none">
         <mat-card class="card">
           <mat-card-header>
             <div mat-card-avatar class="card-header-image"></div>
@@ -37,9 +37,7 @@
                 matTooltipPosition="below"
                 matTooltipShowDelay="1500"
               >
-                <i class="material-icons edit">
-                  build
-                </i>
+                <i class="material-icons edit"> build </i>
               </a>
               <!-- routerLink="/products/delete/{{ row.id }}" -->
               <a
@@ -47,20 +45,18 @@
                 matTooltipPosition="after"
                 matTooltipShowDelay="1500"
               >
-                <i class="material-icons delete">
-                  delete
-                </i>
+                <i class="material-icons delete"> delete </i>
               </a>
             </div>
           </mat-card-header>
 
           <mat-list>
             <mat-list-item *ngFor="let song of sets[i].songs; let j = index">
-              <mat-divider *ngIf="j < 4"></mat-divider>
-              <mat-card-description *ngIf="j < 4">{{
+              <mat-divider *ngIf="j < 6"></mat-divider>
+              <mat-card-description *ngIf="j < 6">{{
                 song.name
               }}</mat-card-description>
-              <mat-card-description *ngIf="j === 4">...</mat-card-description>
+              <mat-card-description *ngIf="j === 6">...</mat-card-description>
             </mat-list-item>
           </mat-list>
         </mat-card>
