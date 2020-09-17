@@ -50,7 +50,7 @@ export class SongsService {
   public getSongsFromAPI(): Observable<Song[]> {
     this.authService.user.pipe(take(1)).subscribe((userData) => {
       this._userId = userData.id;
-      this.username = userData.displayName;
+      this.username = userData.username;
     });
     if (this._userId) {
       return this.http

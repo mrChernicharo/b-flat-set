@@ -28,7 +28,7 @@ interface IUserData {
   id: string;
   username: string;
   email: string;
-  createdAt: Date;
+  created_at: Date;
 }
 
 @Injectable({
@@ -111,29 +111,33 @@ export class AuthService {
     username?: string
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const newUser = new User(
-      localId,
-      email,
-      idToken,
-      expirationDate,
-      true,
-      username
-    );
+    const newUser = new User(localId, email, idToken, expirationDate, username);
     console.log("2. newUser");
     console.log(newUser);
     this.user.next(newUser);
 
     if (username) {
-      // se tem username é singUp, senão, é login
+      // se tem username é singUp
       await this.saveUserData(localId, username, email);
       this.snackbarService.showSnackBar(
         `Conta criada com sucesso! Seja bem-vinde ${username.toUpperCase()}`
       );
     } else {
-      const fetched = await this.getUserData(localId);
-      const nextUser = Object.assign(newUser, { username: fetched.username });
+      // se não tem, é login
+      const fetched = await this.getUserData(localId).then((d) => {
+        console.log(d.created_at);
+        return d;
+      });
+      const nextUser = Object.assign(newUser, {
+        username: fetched.username,
+        createdAt: fetched.created_at,
+      });
       this.user.next(nextUser);
-      this.snackbarService.showSnackBar(`Welcome back! ${fetched.username}`);
+      console.log("3. nextUser");
+      console.log(nextUser);
+      this.snackbarService.showSnackBar(
+        `Welcome back! ${fetched.username.toUpperCase()}`
+      );
     }
 
     this.autoLogoff(expiresIn * 1000);
@@ -176,9 +180,10 @@ export class AuthService {
     const userData: {
       email: string;
       id: string;
-      registered: true;
       _token: string;
       _tokenExpirationDate: string;
+      createdAt: string;
+      username: string;
     } = JSON.parse(localStorage.getItem("userData"));
 
     if (!userData) {
@@ -190,15 +195,13 @@ export class AuthService {
       userData.email,
       userData._token,
       new Date(userData._tokenExpirationDate),
-      true
+      userData.username,
+      userData.createdAt
     );
 
     if (loadedUser.token) {
-      const fetched = await this.getUserData(userData.id);
-      const nextUser = Object.assign(loadedUser, {
-        username: fetched.username,
-      });
-      this.user.next(nextUser);
+      // console.log(loadedUser);
+      this.user.next(loadedUser);
       const expirationTime =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
@@ -222,7 +225,6 @@ export class AuthService {
     username: string,
     email: string
   ): Promise<IUserData> {
-    // const username = username.normalize()
     const creationDate = new Date();
     const newUserData = {
       id: id,
@@ -256,48 +258,3 @@ export class AuthService {
       });
   }
 }
-
-// .post<Song>(`${this._url}songbook${this._userId}.json`, song, {
-//   responseType: "json",
-//   observe: "body",
-// })
-// .pipe(
-//   tap((song) => {
-//     this.newSongAdded.next(song);
-//   })
-// );
-
-// public getSongsFromAPI(): Observable<Song[]> {
-//   this.authService.user.pipe(take(1)).subscribe((userData) => {
-//     this._userId = userData.id;
-//     this.username = userData.displayName;
-//   });
-//   if (this._userId) {
-//     return this.http
-
-//       .get<Song[]>(`${this._url}songbook${this._userId}.json`)
-//       .pipe(
-//         tap(() => console.log("songsService: getSongsFromAPI()")),
-//         map((data) => {
-//           if (data.length < 1) {
-//             return this.getCachedSongs();
-//           }
-//           const keys = Object.keys(data);
-//           const finalData: Song[] = [];
-//           for (let k of keys) {
-//             const song: Song = data[k];
-//             finalData.push(song);
-//           }
-//           this.songbook = finalData;
-//           this.songsUpdated.next(finalData);
-//           console.log(this.songbook);
-//           // set cache:
-//           localStorage.setItem("songbook", JSON.stringify(finalData));
-//           return finalData;
-//         }),
-//         catchError((err, stream) => {
-//           return throwError(err);
-//         })
-//       );
-//   }
-// }

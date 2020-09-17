@@ -30,9 +30,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.authService.user.subscribe(
-      (user) => (this.username = user.displayName)
-    );
+    this.authService.user.subscribe((user) => (this.username = user.username));
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, Validators.required),

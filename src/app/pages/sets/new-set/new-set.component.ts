@@ -44,7 +44,7 @@ export class NewSetComponent implements OnInit {
     // this.songsService.songsUpdated.subscribe((data) => {
     //   this.songbook = data.map((d) => d.name);
     // });
-    this.songbook = this.songsService.getCachedSongs().map((d) => d.name);
+    // this.songbook = this.songsService.getCachedSongs().map((d) => d.name);
   }
 
   drop(event: CdkDragDrop<string[]>) {

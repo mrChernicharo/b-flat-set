@@ -20,9 +20,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.songsService.getSongsFromAPI();
     this.setsService.fetchSets();
-    this.authService.user.subscribe(
-      (user) => (this.username = user.displayName)
-    );
+    this.authService.user.subscribe((user) => (this.username = user.username));
 
     // this.authService.user.subscribe((user) => {
     //   this.username = user.displayName;
