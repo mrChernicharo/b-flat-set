@@ -4,8 +4,9 @@ import { AuthService, AuthResponseData } from "./auth.service";
 import { Router } from "@angular/router";
 import { SnackbarService } from "src/app/shared/snackbar.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import { Subscription, Observable } from "rxjs";
+import { Subscription, Observable, Subject } from "rxjs";
 import { HeaderService } from "src/app/components/header/header.service";
+import { tap } from "rxjs/operators";
 /**
  * @title Basic expansion panel
  */
@@ -18,6 +19,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   signupForm: FormGroup;
   panelOpenState = false;
+  panelState = new Subject<boolean>();
   isLoading = false;
   authObservable: Observable<AuthResponseData>;
   username: string;
@@ -30,6 +32,9 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.panelState.subscribe((bool) => {
+      this.panelOpenState = bool;
+    });
     this.authService.user.subscribe((user) => (this.username = user.username));
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -84,5 +89,13 @@ export class AuthComponent implements OnInit, OnDestroy {
     );
   }
 
+  onOpenPanel() {
+    this.panelState.next(true);
+    console.log(this.panelOpenState);
+  }
+  onClosePanel() {
+    this.panelState.next(false);
+    console.log(this.panelOpenState);
+  }
   ngOnDestroy() {}
 }

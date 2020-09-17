@@ -57,10 +57,11 @@
       <!-- </div> -->
     </mat-expansion-panel>
 
-    <mat-expansion-panel
+    <!-- <mat-expansion-panel
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
-    >
+    > -->
+    <mat-expansion-panel (opened)="onOpenPanel()" (closed)="onClosePanel()">
       <!-- <div class="signup-content" *ngIf="!isLoading"> -->
       <mat-expansion-panel-header>
         <mat-panel-title>
