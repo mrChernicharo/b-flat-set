@@ -61,7 +61,12 @@
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
     > -->
-    <mat-expansion-panel (opened)="onOpenPanel()" (closed)="onClosePanel()">
+    <mat-expansion-panel
+      (opened)="onOpenPanel()"
+      (closed)="onClosePanel()"
+      (afterExpand)="handleFocusSingUp(panel)"
+      #panel
+    >
       <!-- <div class="signup-content" *ngIf="!isLoading"> -->
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -73,7 +78,14 @@
       <form [formGroup]="signupForm" *ngIf="!isLoading">
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
-          <input type="text" formControlName="username" matInput />
+          <input
+            type="text"
+            id="username"
+            formControlName="username"
+            matInput
+            #nameInput
+          />
+          <!-- <input type="text"  name="" id="" /> -->
         </mat-form-field>
 
         <mat-form-field appearance="outline">
