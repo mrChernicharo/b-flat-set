@@ -124,23 +124,28 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   focusInput() {
     if (this.panelOpenState) {
-      console.log(this.nameInputRef);
+      // console.log(this.nameInputRef);
       setTimeout(() => this.nameInputRef.nativeElement.focus(), 500);
     } else {
-      console.log(this.emailInputRef);
+      // console.log(this.emailInputRef);
       setTimeout(() => this.emailInputRef.nativeElement.focus(), 500);
     }
-
-    // this.nameInputRef.nativeElement.autofocus = true;
-    // this.nameInputRef.nativeElement.focus();
-    // this.nameInputRef.focus({
-    //   preventScroll: false,
-    // });
   }
 
-  // focusInput() {
+  loginFormSubmitOnKeydown(event) {
+    // console.log(event);
+    if (this.loginForm.valid) {
+      this.handleLogin();
+    }
+  }
 
-  // }
+  signupFormSubmitOnKeydown(event) {
+    // console.log(event);
+    if (this.signupForm.valid) {
+      this.handleSignUp();
+    }
+  }
+
   ngOnDestroy() {}
 }
 

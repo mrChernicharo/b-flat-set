@@ -16,7 +16,11 @@
       </mat-expansion-panel-header>
       <mat-panel-description> Acessar minha conta </mat-panel-description>
 
-      <form [formGroup]="loginForm" *ngIf="!isLoading">
+      <form
+        [formGroup]="loginForm"
+        (keydown.enter)="loginFormSubmitOnKeydown($event)"
+        *ngIf="!isLoading"
+      >
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input type="text" formControlName="email" matInput #emailInput />
@@ -61,7 +65,11 @@
       </mat-expansion-panel-header>
       <mat-panel-description> primeira vez por aqui? </mat-panel-description>
 
-      <form [formGroup]="signupForm" *ngIf="!isLoading">
+      <form
+        [formGroup]="signupForm"
+        (keydown.enter)="signupFormSubmitOnKeydown($event)"
+        *ngIf="!isLoading"
+      >
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
           <input
