@@ -21,7 +21,7 @@ export class SongListDataSource extends DataSource<Song> {
   constructor(private songsService: SongsService) {
     super();
 
-    this.data = this.songsService.getCachedSongs();
+    // this.data = this.songsService.getCachedSongs();
     this.dataStream.next(this.data);
   }
 

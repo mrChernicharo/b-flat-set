@@ -46,7 +46,7 @@ export class SongListComponent implements AfterViewChecked, OnInit {
             });
         } else {
           console.log("just entered? " + bool);
-          this.data = this.songsService.getCachedSongs();
+          // this.data = this.songsService.getCachedSongs();
 
           this.isLoading = false;
         }

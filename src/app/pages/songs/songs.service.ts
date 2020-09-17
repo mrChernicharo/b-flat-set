@@ -8,7 +8,15 @@ import {
   ReplaySubject,
   throwError,
 } from "rxjs";
-import { map, tap, take, delay, catchError, switchMap } from "rxjs/operators";
+import {
+  map,
+  tap,
+  take,
+  delay,
+  catchError,
+  switchMap,
+  first,
+} from "rxjs/operators";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "../auth/auth.service";
 import { error } from "@angular/compiler/src/util";
@@ -35,20 +43,20 @@ export class SongsService {
     return this._userId;
   }
 
-  public getCachedSongs(): Song[] {
-    console.log("songsService: getCahedSongs()");
+  // public getCachedSongs(): Song[] {
+  //   console.log("songsService: getCahedSongs()");
 
-    const cachedData = localStorage.getItem("songbook");
-    if (cachedData) {
-      this.songbook = JSON.parse(cachedData) as Song[];
-      console.log(this.songbook);
-      this.songsUpdated.next(this.songbook);
-      return this.songbook;
-    }
-  }
+  //   const cachedData = localStorage.getItem("songbook");
+  //   if (cachedData) {
+  //     this.songbook = JSON.parse(cachedData) as Song[];
+  //     console.log(this.songbook);
+  //     this.songsUpdated.next(this.songbook);
+  //     return this.songbook;
+  //   }
+  // }
 
   public getSongsFromAPI(): Observable<Song[]> {
-    this.authService.user.pipe(take(1)).subscribe((userData) => {
+    this.authService.user.pipe(first()).subscribe((userData) => {
       this._userId = userData.id;
       this.username = userData.username;
     });
@@ -59,20 +67,21 @@ export class SongsService {
           tap(() => console.log("songsService: getSongsFromAPI()")),
           map((data) => {
             if (data.length < 1) {
-              return this.getCachedSongs();
+              return [];
+            } else {
+              const keys = Object.keys(data);
+              const finalData: Song[] = [];
+              for (let k of keys) {
+                const song: Song = data[k];
+                finalData.push(song);
+              }
+              this.songbook = finalData;
+              this.songsUpdated.next(finalData);
+              console.log(this.songbook);
+              // set cache:
+              // localStorage.setItem("songbook", JSON.stringify(finalData));
+              return finalData;
             }
-            const keys = Object.keys(data);
-            const finalData: Song[] = [];
-            for (let k of keys) {
-              const song: Song = data[k];
-              finalData.push(song);
-            }
-            this.songbook = finalData;
-            this.songsUpdated.next(finalData);
-            console.log(this.songbook);
-            // set cache:
-            localStorage.setItem("songbook", JSON.stringify(finalData));
-            return finalData;
           }),
           catchError((err, stream) => {
             return throwError(err);

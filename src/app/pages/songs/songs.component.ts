@@ -14,7 +14,7 @@ export class SongsComponent implements OnInit {
     this.auth.user.subscribe((data) => console.log(data));
     this.songService.userJustEntered.subscribe((bool) => {
       if (!bool) {
-        this.songService.getCachedSongs();
+        // this.songService.getCachedSongs();
       }
     });
   }
