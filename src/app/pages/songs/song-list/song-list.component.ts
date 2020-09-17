@@ -20,7 +20,7 @@ export class SongListComponent implements AfterViewChecked, OnInit {
   @ViewChild(MatTable) table: MatTable<Song>;
   dataSource: SongListDataSource;
   isLoading = false;
-  data: Song[];
+  data: Song[] = [];
   // i: number = 0;
   displayedColumns = ["name", "actions", "key", "tempo", "style", "composer"];
 
@@ -33,16 +33,24 @@ export class SongListComponent implements AfterViewChecked, OnInit {
   ngOnInit() {
     this.isLoading = true;
 
-    this.songsService
-      .getSongsFromAPI()
-      .pipe(delay(400))
-      .subscribe((data) => {
-        this.data = this.loadData(data);
+    if (this.data.length < 1) {
+      console.log("entrei aqui");
+      this.songsService
+        .getSongsFromAPI()
+        // .pipe(delay(400))
+        .subscribe((data) => {
+          this.data = data;
+          this.isLoading = false;
+        });
+    } else {
+      console.log("entrei embaixo");
+
+      this.songsService.songsUpdated.subscribe((data) => {
+        this.data = data;
         this.isLoading = false;
       });
-
-    this.isLoading = false;
-
+    }
+    // console.log(this.data);
     this.dataSource = new SongListDataSource(this.songsService);
   }
 
