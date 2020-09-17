@@ -29,7 +29,6 @@ export class SongListDataSource extends DataSource<Song> {
     if (addedSong) {
       const copiedData = songs.slice();
       copiedData.push(addedSong);
-      this.songsService.userJustEntered.next(true);
       this.songsService.songsUpdated.next(copiedData);
       this.dataStream.next(copiedData);
       return copiedData;

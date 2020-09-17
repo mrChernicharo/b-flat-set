@@ -11,11 +11,10 @@ export class SongsComponent implements OnInit {
   constructor(private auth: AuthService, private songService: SongsService) {}
 
   ngOnInit(): void {
-    this.auth.user.subscribe((data) => console.log(data));
-    this.songService.userJustEntered.subscribe((bool) => {
-      if (!bool) {
-        // this.songService.getCachedSongs();
-      }
+    this.songService.getSongsFromAPI().subscribe((data) => {
+      console.log(data);
+      this.songService.songbook = data;
     });
+    this.auth.user.subscribe((data) => console.log(data));
   }
 }

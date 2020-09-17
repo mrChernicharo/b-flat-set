@@ -1,38 +1,31 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Song } from "./song.model";
 import {
   Observable,
-  of,
   Subject,
   BehaviorSubject,
   ReplaySubject,
   throwError,
 } from "rxjs";
-import {
-  map,
-  tap,
-  take,
-  delay,
-  catchError,
-  switchMap,
-  first,
-} from "rxjs/operators";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { map, tap, catchError, first } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
 import { AuthService } from "../auth/auth.service";
-import { error } from "@angular/compiler/src/util";
 
 @Injectable({ providedIn: "root" })
 export class SongsService {
   public newSongAdded = new Subject<Song>();
-  public userJustEntered = new BehaviorSubject<boolean>(true);
-  public songsUpdated = new ReplaySubject<Song[]>();
+  // public userJustEntered = new BehaviorSubject<boolean>(true);
+  public songsUpdated = new BehaviorSubject<Song[]>([]);
   public songbook: Song[] = [];
-  // public url: string = 'http://localhost:3001/songs';
   private _url: string = "https://bflatset.firebaseio.com/";
   private _userId: string;
   public username: string;
   constructor(private http: HttpClient, private authService: AuthService) {
     // this.getSongsFromAPI();
+    this.authService.user.subscribe((userData) => {
+      this._userId = userData.id;
+      this.username = userData.username;
+    });
   }
 
   get url() {
@@ -56,38 +49,31 @@ export class SongsService {
   // }
 
   public getSongsFromAPI(): Observable<Song[]> {
-    this.authService.user.pipe(first()).subscribe((userData) => {
-      this._userId = userData.id;
-      this.username = userData.username;
-    });
-    if (this._userId) {
-      return this.http
-        .get<Song[]>(`${this._url}songbook${this._userId}.json`)
-        .pipe(
-          tap(() => console.log("songsService: getSongsFromAPI()")),
-          map((data) => {
-            if (data.length < 1) {
-              return [];
-            } else {
-              const keys = Object.keys(data);
-              const finalData: Song[] = [];
-              for (let k of keys) {
-                const song: Song = data[k];
-                finalData.push(song);
-              }
-              this.songbook = finalData;
-              this.songsUpdated.next(finalData);
-              console.log(this.songbook);
-              // set cache:
-              // localStorage.setItem("songbook", JSON.stringify(finalData));
-              return finalData;
+    return this.http
+      .get<Song[]>(`${this._url}songbook${this._userId}${this.username}.json`)
+      .pipe(
+        tap(() => console.log("songsService: getSongsFromAPI()")),
+        map((data) => {
+          if (!data) {
+            return [];
+          } else {
+            const keys = Object.keys(data);
+            const finalData: Song[] = [];
+            for (let k of keys) {
+              const song: Song = data[k];
+              finalData.push(song);
             }
-          }),
-          catchError((err, stream) => {
-            return throwError(err);
-          })
-        );
-    }
+            this.songsUpdated.next(finalData);
+            console.log(this.songbook);
+            // set cache:
+            // localStorage.setItem("songbook", JSON.stringify(finalData));
+            return finalData;
+          }
+        }),
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
   }
 
   public getSongById(id: string): Song {

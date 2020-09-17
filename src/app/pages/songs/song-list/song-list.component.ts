@@ -32,25 +32,17 @@ export class SongListComponent implements AfterViewChecked, OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.songsService.userJustEntered
-      .pipe(tap((bool) => {}))
-      .subscribe((bool) => {
-        console.log("just entered? " + bool);
-        if (bool) {
-          this.songsService
-            .getSongsFromAPI()
-            .pipe(delay(400))
-            .subscribe((data) => {
-              this.data = this.loadData(data);
-              this.isLoading = false;
-            });
-        } else {
-          console.log("just entered? " + bool);
-          // this.data = this.songsService.getCachedSongs();
 
-          this.isLoading = false;
-        }
+    this.songsService
+      .getSongsFromAPI()
+      .pipe(delay(400))
+      .subscribe((data) => {
+        this.data = this.loadData(data);
+        this.isLoading = false;
       });
+
+    this.isLoading = false;
+
     this.dataSource = new SongListDataSource(this.songsService);
   }
 
