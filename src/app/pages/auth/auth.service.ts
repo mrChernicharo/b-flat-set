@@ -130,8 +130,10 @@ export class AuthService {
         `Conta criada com sucesso! Seja bem-vinde ${username.toUpperCase()}`
       );
     } else {
-      await this.getUserData(localId);
-      this.snackbarService.showSnackBar(`Welcome back!`);
+      const fetched = await this.getUserData(localId);
+      const nextUser = Object.assign(newUser, { username: fetched.username });
+      this.user.next(nextUser);
+      this.snackbarService.showSnackBar(`Welcome back! ${fetched.username}`);
     }
 
     this.autoLogoff(expiresIn * 1000);
@@ -170,7 +172,7 @@ export class AuthService {
     this.router.navigate(["/auth"]);
   }
 
-  public autoLogin() {
+  public async autoLogin() {
     const userData: {
       email: string;
       id: string;
@@ -192,7 +194,11 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      this.user.next(loadedUser);
+      const fetched = await this.getUserData(userData.id);
+      const nextUser = Object.assign(loadedUser, {
+        username: fetched.username,
+      });
+      this.user.next(nextUser);
       const expirationTime =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
@@ -232,7 +238,7 @@ export class AuthService {
       .toPromise();
   }
 
-  private async getUserData(id: string): Promise<any> {
+  private async getUserData(id: string): Promise<IUserData> {
     return this.http
       .get<any>(`${this.userDataEndpoint}user${id}.json`)
       .pipe(
@@ -242,8 +248,11 @@ export class AuthService {
       )
       .toPromise()
       .then((response) => {
-        console.log(response);
-        return response;
+        const key = Object.keys(response)[0];
+        const fetchedData = response[key];
+        console.log("fetchedData");
+        console.log(fetchedData);
+        return fetchedData;
       });
   }
 }
