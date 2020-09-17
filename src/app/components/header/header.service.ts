@@ -1,8 +1,13 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Subject } from "rxjs";
+
+interface IHeaderState {
+  title: string;
+  icon: string;
+}
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class HeaderService {
   screenWidth: number;
@@ -11,6 +16,7 @@ export class HeaderService {
   public sideMenuOpen = new BehaviorSubject<boolean>(this.openMenu);
   mobileSize: boolean = false;
   public isMobile = new BehaviorSubject<boolean>(this.mobileSize);
+  public headerStatus = new Subject<IHeaderState>();
 
   constructor() {
     this.getScreenSize();

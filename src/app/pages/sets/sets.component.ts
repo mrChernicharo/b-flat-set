@@ -12,6 +12,7 @@ import { AuthService } from "../auth/auth.service";
 import { Subscription } from "rxjs";
 import { SongsService } from "../songs/songs.service";
 import { Song } from "../songs/song.model";
+import { HeaderService } from "src/app/components/header/header.service";
 
 @Component({
   selector: "app-sets",
@@ -34,6 +35,7 @@ export class SetsComponent implements OnInit, OnDestroy {
     private setsService: SetsService,
     private authService: AuthService,
     private songsService: SongsService,
+    private headerService: HeaderService,
     private router: Router
   ) {}
 
@@ -52,6 +54,11 @@ export class SetsComponent implements OnInit, OnDestroy {
       console.log("getting songs" + songs);
       console.log(songs);
       this.songsService.songsUpdated.next(songs);
+    });
+
+    this.headerService.headerStatus.next({
+      title: "sets",
+      icon: "queue_music",
     });
 
     this.screenWidth = window.innerWidth;

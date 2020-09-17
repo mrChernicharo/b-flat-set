@@ -1,19 +1,17 @@
 <mat-toolbar class="header mat-elevation-z3">
-      <!-- <img class="logo" src="assets/005-tree.svg" alt="logo" /> -->
+  <!-- <img class="logo" src="assets/005-tree.svg" alt="logo" /> -->
   <span class="little-group">
     <h2>bFlatSet</h2>
     <a>
+      <!-- *ngIf="icon" -->
       <i class="material-icons">
-        home
+        {{ icon | async }}
       </i>
     </a>
   </span>
   <span class="menu-pane-header">
     <a (click)="toggleMenu()">
-      <i class="material-icons">
-        menu
-      </i>
+      <i class="material-icons"> menu </i>
     </a>
   </span>
 </mat-toolbar>
-
