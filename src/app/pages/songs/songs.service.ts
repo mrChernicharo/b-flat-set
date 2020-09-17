@@ -71,6 +71,7 @@ export class SongsService {
               finalData.push(song);
             }
             this.songsUpdated.next(finalData);
+            this.songbook = finalData;
             console.log(this.songbook);
 
             return finalData;

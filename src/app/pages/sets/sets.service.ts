@@ -36,6 +36,8 @@ export class SetsService {
   }
 
   fetchSets(): Observable<Setlist[]> {
+    console.log("fetchSets");
+    console.log(this.userId);
     if (!this.userId) {
       return;
     }
@@ -45,6 +47,8 @@ export class SetsService {
       )
       .pipe(
         map((responseData) => {
+          console.log(responseData);
+
           const setKeys = Object.keys(responseData);
           const finalSets: Setlist[] = [];
           for (let [i, j] of setKeys.entries()) {
@@ -61,6 +65,7 @@ export class SetsService {
   }
 
   persistSetlist(setlist: Setlist): Promise<Setlist> {
+    console.log(setlist);
     return this.http
       .post<Setlist>(
         `${this.songsService.url}setlists${this.userId}.json`,
@@ -75,13 +80,13 @@ export class SetsService {
       .toPromise();
   }
 
-  setCacheData(data: Setlist[]) {
-    localStorage.setItem("setlists", JSON.stringify(data));
-  }
+  // setCacheData(data: Setlist[]) {
+  //   localStorage.setItem("setlists", JSON.stringify(data));
+  // }
 
-  getCachedData(): Setlist[] {
-    const cachedData = JSON.parse(localStorage.getItem("setlists"));
-    console.log(cachedData);
-    return cachedData as Setlist[];
-  }
+  // getCachedData(): Setlist[] {
+  //   const cachedData = JSON.parse(localStorage.getItem("setlists"));
+  //   console.log(cachedData);
+  //   return cachedData as Setlist[];
+  // }
 }

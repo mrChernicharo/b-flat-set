@@ -31,8 +31,8 @@ export class NewSetComponent implements OnInit {
   setlist = [];
   setlistName: string = "new Setlist";
   // setObservable: Observable<Setlist>
-  // @Output('cdkDropListEntered') entered: EventEmitter<CdkDragEnter<any>>
-  // @ViewChild('dropContainer') dropContainer: HTMLElement;
+  @Output("cdkDropListEntered") entered: EventEmitter<CdkDragEnter<any>>;
+  @ViewChild("dropContainer") dropContainer: HTMLElement;
 
   constructor(
     private songsService: SongsService,
@@ -41,10 +41,10 @@ export class NewSetComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.songsService.songsUpdated.subscribe((data) => {
-    //   this.songbook = data.map((d) => d.name);
-    // });
-    // this.songbook = this.songsService.getCachedSongs().map((d) => d.name);
+    this.songsService.songsUpdated.subscribe((data) => {
+      this.songbook = data.map((d) => d.name);
+    });
+    // this.songbook = this.songsService.songbook.map((d) => d.name);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -68,6 +68,7 @@ export class NewSetComponent implements OnInit {
     const setListSongs = this.setlist.map((item) => {
       return this.songsService.getSongByName(item);
     });
+    console.log(setListSongs);
 
     const newSetlist = new Setlist(this.setlistName, setListSongs);
     this.setsService.createSet(newSetlist);
@@ -75,7 +76,7 @@ export class NewSetComponent implements OnInit {
 
     const setObservable = of(newSetlist).pipe(
       tap((data) => {
-        this.setsService.setCacheData([data, ...this.setsService.setlists]);
+        // this.setsService.setCacheData([data, ...this.setsService.setlists]);
       }),
       delay(300)
     );
