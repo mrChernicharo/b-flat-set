@@ -64,7 +64,8 @@ export class AuthService {
             responseData.email,
             responseData.localId,
             responseData.idToken,
-            +responseData.expiresIn
+            +responseData.expiresIn,
+            responseData.displayName
           );
         })
       );
@@ -133,7 +134,9 @@ export class AuthService {
     } else {
       // se não tem, é login
       const fetched = await this.getUserData(localId).then((d) => {
+        console.log("qual é a desse created_at?");
         console.log(d.created_at);
+        console.log(d);
         return d;
       });
       const nextUser = Object.assign(newUser, {
@@ -245,6 +248,7 @@ export class AuthService {
       email: email,
       created_at: creationDate.toUTCString(),
     };
+    console.log(newUserData);
     return this.http
       .post<IUserData>(`${this.userDataEndpoint}user${id}.json`, newUserData, {
         responseType: "json",
@@ -254,6 +258,7 @@ export class AuthService {
   }
 
   private async getUserData(id: string): Promise<IUserData> {
+    // tá dando merda aqui!!!
     return this.http
       .get<any>(`${this.userDataEndpoint}user${id}.json`)
       .pipe(
@@ -263,11 +268,15 @@ export class AuthService {
       )
       .toPromise()
       .then((response) => {
-        const key = Object.keys(response)[0];
-        const fetchedData = response[key];
-        console.log("fetchedData");
-        console.log(fetchedData);
-        return fetchedData;
+        if (response) {
+          const key = Object.keys(response)[0];
+          const fetchedData = response[key];
+          console.log("fetchedData");
+          console.log(fetchedData);
+          return fetchedData;
+        } else {
+          return [];
+        }
       });
   }
 }

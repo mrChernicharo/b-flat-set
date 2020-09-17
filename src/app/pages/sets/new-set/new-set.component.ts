@@ -42,6 +42,8 @@ export class NewSetComponent implements OnInit {
 
   ngOnInit() {
     this.songsService.songsUpdated.subscribe((data) => {
+      console.log(data);
+      console.log("new set");
       this.songbook = data.map((d) => d.name);
     });
     // this.songbook = this.songsService.songbook.map((d) => d.name);

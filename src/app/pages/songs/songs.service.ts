@@ -55,8 +55,10 @@ export class SongsService {
   // }
 
   public getSongsFromAPI(): Observable<Song[]> {
+    console.log("userId");
+    console.log(this._userId);
     return this.http
-      .get<Song[]>(`${this._url}songbook${this._userId}${this.username}.json`)
+      .get<Song[]>(`${this._url}songbook${this._userId}.json`)
       .pipe(
         map((data) => {
           console.log("songsService: getSongsFromAPI()");
@@ -93,14 +95,10 @@ export class SongsService {
 
   public addSong(song: Song): Observable<Song> {
     return this.http
-      .post<Song>(
-        `${this._url}songbook${this._userId}${this.username}.json`,
-        song,
-        {
-          responseType: "json",
-          observe: "body",
-        }
-      )
+      .post<Song>(`${this._url}songbook${this._userId}.json`, song, {
+        responseType: "json",
+        observe: "body",
+      })
       .pipe(
         tap((song) => {
           this.newSongAdded.next(song);

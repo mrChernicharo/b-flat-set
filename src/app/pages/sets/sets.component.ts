@@ -10,6 +10,8 @@ import { SetsService } from "./sets.service";
 import { Setlist } from "./setlist.model";
 import { AuthService } from "../auth/auth.service";
 import { Subscription } from "rxjs";
+import { SongsService } from "../songs/songs.service";
+import { Song } from "../songs/song.model";
 
 @Component({
   selector: "app-sets",
@@ -19,6 +21,7 @@ import { Subscription } from "rxjs";
 export class SetsComponent implements OnInit, OnDestroy {
   screenWidth: number;
   screenHeight: number;
+  songbook: Song[] = [];
   sets: Setlist[] = [];
   userId: string = null;
   @Input() cols: number = 2;
@@ -30,6 +33,7 @@ export class SetsComponent implements OnInit, OnDestroy {
   constructor(
     private setsService: SetsService,
     private authService: AuthService,
+    private songsService: SongsService,
     private router: Router
   ) {}
 
@@ -38,26 +42,22 @@ export class SetsComponent implements OnInit, OnDestroy {
     this.authSubs = this.authService.user.subscribe((user) => {
       this.userId = user.id;
     });
-    // this.sets = this.setsService.setlists
-    this.screenWidth = window.innerWidth;
-    this.screenWidth >= 1200 ? (this.cols = 2) : (this.cols = 1);
-    // this.setsSubs = this.setsService.userJustEntered.subscribe((bool) => {
-    //   console.log("just Entered?" + bool);
-    //   if (bool) {
+
     this.setsService.fetchSets().subscribe((responseData) => {
       this.sets = responseData;
       this.isLoading = false;
     });
-    // }
-    // else {
-    //   console.log("just Entered?" + bool);
 
-    //   this.sets = this.setsService.getCachedData();
+    this.songsService.getSongsFromAPI().subscribe((songs) => {
+      console.log("getting songs" + songs);
+      console.log(songs);
+      this.songsService.songsUpdated.next(songs);
+    });
+
+    this.screenWidth = window.innerWidth;
+    this.screenWidth >= 1200 ? (this.cols = 2) : (this.cols = 1);
 
     this.isLoading = false;
-    // }
-    // });
-    // this.setsSubs =
   }
 
   @HostListener("window:resize", ["$event"]) getScreenResize(event?) {

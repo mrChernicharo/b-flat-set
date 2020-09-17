@@ -17,7 +17,9 @@ export class AppComponent implements OnInit {
     private songsService: SongsService
   ) {}
   ngOnInit() {
-    // this.songsService.getSongs()
+    // this.songsService.getSongsFromAPI().subscribe((songs) => {
+    //   this.songsService.songsUpdated.next(songs);
+    // });
     this.authService.autoLogin();
     // this.setsService.userJustEntered.next(true);
 

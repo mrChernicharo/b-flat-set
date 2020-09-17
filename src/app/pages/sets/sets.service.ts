@@ -5,7 +5,7 @@ import { SongsService } from "../songs/songs.service";
 import { HttpClient } from "@angular/common/http";
 import { AuthService } from "../auth/auth.service";
 import { tap, map } from "rxjs/operators";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, of } from "rxjs";
 
 interface ResponseData {
   [key: string]: Setlist[];
@@ -15,10 +15,10 @@ interface ResponseData {
   providedIn: "root",
 })
 export class SetsService {
-  songbook: Song[] = [];
+  songbook = new BehaviorSubject<Song[]>(null);
   setlists: Setlist[] = [];
   userId: string = null;
-  setlistsUpdated = new BehaviorSubject<Setlist[]>(null);
+  setlistsUpdated = new BehaviorSubject<Setlist[]>([]);
   // public userJustEntered = new BehaviorSubject<boolean>(true);
 
   constructor(
@@ -28,6 +28,13 @@ export class SetsService {
   ) {
     this.authService.user.subscribe((userData) => {
       this.userId = userData.id;
+      this.songsService.songsUpdated.subscribe((songs) => {
+        console.log(songs);
+        this.songbook.next(songs);
+      });
+    });
+    this.fetchSets().subscribe((setlists) => {
+      this.setlistsUpdated.next(setlists);
     });
   }
 
@@ -39,7 +46,7 @@ export class SetsService {
     console.log("fetchSets");
     console.log(this.userId);
     if (!this.userId) {
-      return;
+      return of([]);
     }
     return this.http
       .get<ResponseData[]>(
@@ -47,19 +54,26 @@ export class SetsService {
       )
       .pipe(
         map((responseData) => {
+          console.log("map() => responseData");
           console.log(responseData);
+          if (responseData) {
+            const setKeys = Object.keys(responseData);
+            console.log("setKeys");
+            console.log(setKeys[0]);
 
-          const setKeys = Object.keys(responseData);
-          const finalSets: Setlist[] = [];
-          for (let [i, j] of setKeys.entries()) {
-            let newSet = new Setlist(
-              responseData[j].setlistName,
-              responseData[j].songs
-            );
-            finalSets.push(newSet);
+            const finalSets: Setlist[] = [];
+            for (let [i, j] of setKeys.entries()) {
+              let newSet = new Setlist(
+                responseData[j].setlistName,
+                responseData[j].songs
+              );
+              finalSets.push(newSet);
+            }
+            this.setlists = finalSets;
+            return finalSets;
+          } else {
+            return [];
           }
-          this.setlists = finalSets;
-          return finalSets;
         })
       );
   }
