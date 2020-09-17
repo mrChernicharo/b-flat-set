@@ -1,10 +1,22 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  AfterViewInit,
+  ElementRef,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthService, AuthResponseData } from "./auth.service";
 import { Router } from "@angular/router";
 import { SnackbarService } from "src/app/shared/snackbar.service";
 import { Observable, Subject } from "rxjs";
 import { HeaderService } from "src/app/components/header/header.service";
+import {} from "../../shared/auto-focus.directive";
+import { MatInput } from "@angular/material/input";
+// import { cdkFocusInitial } from "@angular/cdk/text-field";
 /**
  * @title Basic expansion panel
  */
@@ -15,14 +27,19 @@ import { HeaderService } from "src/app/components/header/header.service";
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  loginForm: FormGroup;
-  signupForm: FormGroup;
-  panelOpenState = false;
-  panelState = new Subject<boolean>();
-  screenHeight: number;
-  isLoading = false;
-  authObservable: Observable<AuthResponseData>;
-  username: string;
+  public loginForm: FormGroup;
+  public signupForm: FormGroup;
+  public panelOpenState = false;
+  public panelState = new Subject<boolean>();
+  public screenHeight: number;
+  public isLoading = false;
+  public authObservable: Observable<AuthResponseData>;
+  public username: string;
+  cd: ChangeDetectorRef = null;
+  @ViewChild("nameInput") nameInputRef: ElementRef;
+  @ViewChild("emailInput") emailInputRef: ElementRef;
+
+  // @ViewChild("myElement") firstItem: MatSelect;
 
   constructor(
     private router: Router,
@@ -32,11 +49,12 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.screenHeight = window.innerHeight;
     this.panelState.subscribe((bool) => {
       this.panelOpenState = bool;
     });
+
     this.authService.user.subscribe((user) => (this.username = user.username));
+
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, Validators.required),
@@ -47,7 +65,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       password: new FormControl(null, Validators.required),
     });
   }
-
+  // ngAfterViewInit() {}
   handleLogin() {
     const email = this.loginForm.value["email"];
     const password = this.loginForm.value["password"];
@@ -90,19 +108,39 @@ export class AuthComponent implements OnInit, OnDestroy {
     );
   }
 
-  handleFocusSingUp(panel) {
+  scrollWindowToSingUp(panel) {
     console.log(panel);
     panel._body.nativeElement.scrollIntoView({ behavior: "smooth" });
   }
 
   onOpenPanel() {
     this.panelState.next(true);
-    console.log(this.panelOpenState);
+    this.focusInput();
   }
   onClosePanel() {
     this.panelState.next(false);
-    console.log(this.panelOpenState);
+    this.focusInput();
   }
+
+  focusInput() {
+    if (this.panelOpenState) {
+      console.log(this.nameInputRef);
+      setTimeout(() => this.nameInputRef.nativeElement.focus(), 500);
+    } else {
+      console.log(this.emailInputRef);
+      setTimeout(() => this.emailInputRef.nativeElement.focus(), 500);
+    }
+
+    // this.nameInputRef.nativeElement.autofocus = true;
+    // this.nameInputRef.nativeElement.focus();
+    // this.nameInputRef.focus({
+    //   preventScroll: false,
+    // });
+  }
+
+  // focusInput() {
+
+  // }
   ngOnDestroy() {}
 }
 

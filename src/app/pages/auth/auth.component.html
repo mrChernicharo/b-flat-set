@@ -3,25 +3,11 @@
     <h1 class="title">Bem vinde ao ⭐️ <span id="logo">bFlatSet!</span></h1>
     <h1>🎻 🎤 🎸 🎺 🎷 🎧</h1>
     <h3 class="subtitle">O seu aplicativo de repertórios online</h3>
-    <!-- <ul>
-      <li>
-        <p>
-          <i class="material-icons done">done_outline</i>Cadastre músicas e
-          agrupe-as em repertórios
-        </p>
-      </li>
-      <li>
-        <p>
-          <i class="material-icons done">done_outline</i>Tenha sempre a melhor
-          sequência na hora de tocar!
-        </p>
-      </li>
-    </ul> -->
   </mat-card>
   <h2 class="toggle-hide">Acesse sua conta ou Cadastre-se</h2>
 
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="onClosePanel()">
       <!-- <div class="login-content" *ngIf="!isLoading"> -->
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -33,7 +19,7 @@
       <form [formGroup]="loginForm" *ngIf="!isLoading">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input type="text" formControlName="email" matInput />
+          <input type="text" formControlName="email" matInput #emailInput />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -64,7 +50,7 @@
     <mat-expansion-panel
       (opened)="onOpenPanel()"
       (closed)="onClosePanel()"
-      (afterExpand)="handleFocusSingUp(panel)"
+      (afterExpand)="scrollWindowToSingUp(panel)"
       #panel
     >
       <!-- <div class="signup-content" *ngIf="!isLoading"> -->
@@ -84,8 +70,10 @@
             formControlName="username"
             matInput
             #nameInput
+            appAutoFocus
           />
           <!-- <input type="text"  name="" id="" /> -->
+          <!-- cdkFocusInitial -->
         </mat-form-field>
 
         <mat-form-field appearance="outline">

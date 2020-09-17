@@ -41,7 +41,7 @@ import { LoadingComponent } from "./components/loading/loading.component";
 import { AuthGuard } from "./pages/auth/auth.guard";
 import { NewSetComponent } from "./pages/sets/new-set/new-set.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { AutoFocusDirective } from './shared/auto-focus.directive';
+import { AutoFocusDirective } from "./shared/auto-focus.directive";
 
 @NgModule({
   declarations: [
