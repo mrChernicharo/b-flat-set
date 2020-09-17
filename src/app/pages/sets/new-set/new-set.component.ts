@@ -83,7 +83,7 @@ export class NewSetComponent implements OnInit {
   }
 
   goBack() {
-    this.setsService.userJustEntered.next(false);
+    // this.setsService.userJustEntered.next(false);
     this.router.navigate(["/sets"]);
   }
 

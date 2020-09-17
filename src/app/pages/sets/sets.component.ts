@@ -25,7 +25,7 @@ export class SetsComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
 
   authSubs: Subscription;
-  setsSubs: Subscription;
+  // setsSubs: Subscription;
 
   constructor(
     private setsService: SetsService,
@@ -41,21 +41,22 @@ export class SetsComponent implements OnInit, OnDestroy {
     // this.sets = this.setsService.setlists
     this.screenWidth = window.innerWidth;
     this.screenWidth >= 1200 ? (this.cols = 2) : (this.cols = 1);
-    this.setsSubs = this.setsService.userJustEntered.subscribe((bool) => {
-      console.log("just Entered?" + bool);
-      if (bool) {
-        this.setsService.fetchSets().subscribe((responseData) => {
-          this.sets = responseData;
-          this.isLoading = false;
-        });
-      } else {
-        console.log("just Entered?" + bool);
-
-        this.sets = this.setsService.getCachedData();
-
-        this.isLoading = false;
-      }
+    // this.setsSubs = this.setsService.userJustEntered.subscribe((bool) => {
+    //   console.log("just Entered?" + bool);
+    //   if (bool) {
+    this.setsService.fetchSets().subscribe((responseData) => {
+      this.sets = responseData;
+      this.isLoading = false;
     });
+    // }
+    // else {
+    //   console.log("just Entered?" + bool);
+
+    //   this.sets = this.setsService.getCachedData();
+
+    this.isLoading = false;
+    // }
+    // });
     // this.setsSubs =
   }
 
@@ -70,6 +71,6 @@ export class SetsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authSubs.unsubscribe();
-    this.setsSubs.unsubscribe();
+    // this.setsSubs.unsubscribe();
   }
 }

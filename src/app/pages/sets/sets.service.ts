@@ -19,7 +19,7 @@ export class SetsService {
   setlists: Setlist[] = [];
   userId: string = null;
   setlistsUpdated = new BehaviorSubject<Setlist[]>(null);
-  public userJustEntered = new BehaviorSubject<boolean>(true);
+  // public userJustEntered = new BehaviorSubject<boolean>(true);
 
   constructor(
     private songsService: SongsService,
