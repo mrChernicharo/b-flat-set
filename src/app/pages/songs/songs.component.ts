@@ -16,6 +16,12 @@ export class SongsComponent implements OnInit {
     //   this.songService.songbook = data;
     //   this.
     // });
+    this.auth.userLoggedOut.subscribe((bool) => {
+      console.log("userLoggedOut" + bool);
+      if (bool) {
+        this.songService.destroySongs();
+      }
+    });
     this.auth.user.subscribe((data) => console.log(data));
   }
 }

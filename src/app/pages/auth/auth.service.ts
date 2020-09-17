@@ -41,6 +41,7 @@ export class AuthService {
   private loginEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`;
   public tokenExpirationTimer: any;
   public user = new BehaviorSubject<User>({} as User); // subject User
+  public userLoggedOut = new Subject<boolean>();
 
   constructor(
     private http: HttpClient,
@@ -111,7 +112,14 @@ export class AuthService {
     username?: string
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const newUser = new User(localId, email, idToken, expirationDate, username);
+    const newUser = new User(
+      localId,
+      email,
+      idToken,
+      expirationDate,
+      true,
+      username
+    );
     console.log("2. newUser");
     console.log(newUser);
     this.user.next(newUser);
@@ -166,16 +174,6 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
-  public logout() {
-    this.user.next(null);
-    localStorage.removeItem("userData");
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-    this.tokenExpirationTimer = null;
-    this.router.navigate(["/auth"]);
-  }
-
   public async autoLogin() {
     const userData: {
       email: string;
@@ -195,6 +193,7 @@ export class AuthService {
       userData.email,
       userData._token,
       new Date(userData._tokenExpirationDate),
+      true,
       userData.username,
       userData.createdAt
     );
@@ -207,6 +206,20 @@ export class AuthService {
         new Date().getTime();
       this.autoLogoff(expirationTime);
     }
+  }
+
+  public logout() {
+    localStorage.removeItem("userData");
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+    // this.user.complete();
+    const blankUser = new User("", "", "", null, false, "", "");
+    this.user.next(blankUser);
+    this.userLoggedOut.next(true);
+    // this.user.next(null);
+    this.router.navigate(["/auth"]);
   }
 
   private autoLogoff(expirationTime: number): void {

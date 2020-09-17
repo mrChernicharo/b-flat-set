@@ -4,6 +4,7 @@ export class User {
     public email: string,
     private _token: string,
     private _tokenExpirationDate: Date,
+    public registered: boolean,
     public username?: string,
     public createdAt?: Date | string // public refreshToken?: string,
   ) {}

@@ -30,7 +30,7 @@ export class NavComponent implements OnInit {
       this.isMobile = bool;
     });
     this.authService.user.subscribe((user) => {
-      this.isAuthenticated = !!user;
+      this.isAuthenticated = user.registered;
       console.log(`Authenticated -> ${this.isAuthenticated}`);
     });
   }

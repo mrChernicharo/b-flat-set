@@ -21,7 +21,6 @@ export class SongListComponent implements AfterViewChecked, OnInit {
   dataSource: SongListDataSource;
   isLoading = false;
   data: Song[] = [];
-  // i: number = 0;
   displayedColumns = ["name", "actions", "key", "tempo", "style", "composer"];
 
   constructor(
@@ -32,30 +31,23 @@ export class SongListComponent implements AfterViewChecked, OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.songsService.songsUpdated.subscribe((data) => {
+      this.data = data;
+      this.isLoading = false;
+    });
 
     if (this.data.length < 1) {
       console.log("entrei aqui");
-      this.songsService
-        .getSongsFromAPI()
-        // .pipe(delay(400))
-        .subscribe((data) => {
-          this.data = data;
-          this.isLoading = false;
-        });
-    } else {
-      console.log("entrei embaixo");
-
-      this.songsService.songsUpdated.subscribe((data) => {
+      this.songsService.getSongsFromAPI().subscribe((data) => {
         this.data = data;
         this.isLoading = false;
       });
     }
-    // console.log(this.data);
+
     this.dataSource = new SongListDataSource(this.songsService);
   }
 
   ngAfterViewChecked() {
-    // console.log(`ngAfterViewChecked() ${this.i++}`);
     this.loadData(this.data);
     this.table.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;

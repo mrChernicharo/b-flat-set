@@ -22,10 +22,16 @@ export class SongsService {
   public username: string;
   constructor(private http: HttpClient, private authService: AuthService) {
     // this.getSongsFromAPI();
-    this.authService.user.subscribe((userData) => {
-      this._userId = userData.id;
-      this.username = userData.username;
-    });
+    this.authService.user
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      )
+      .subscribe((userData) => {
+        this._userId = userData.id;
+        this.username = userData.username;
+      });
   }
 
   get url() {
@@ -52,9 +58,10 @@ export class SongsService {
     return this.http
       .get<Song[]>(`${this._url}songbook${this._userId}${this.username}.json`)
       .pipe(
-        tap(() => console.log("songsService: getSongsFromAPI()")),
         map((data) => {
+          console.log("songsService: getSongsFromAPI()");
           if (!data) {
+            console.log("vazio");
             return [];
           } else {
             const keys = Object.keys(data);
@@ -65,8 +72,7 @@ export class SongsService {
             }
             this.songsUpdated.next(finalData);
             console.log(this.songbook);
-            // set cache:
-            // localStorage.setItem("songbook", JSON.stringify(finalData));
+
             return finalData;
           }
         }),
@@ -99,5 +105,10 @@ export class SongsService {
           this.newSongAdded.next(song);
         })
       );
+  }
+
+  public destroySongs() {
+    this.songsUpdated.next([]);
+    this.songbook = [];
   }
 }
