@@ -18,7 +18,7 @@ import { Router } from "@angular/router";
 import { SetsService } from "../sets.service";
 import { Setlist } from "../setlist.model";
 import { AuthService } from "../../auth/auth.service";
-import { Observable, of } from "rxjs";
+import { Observable, of, Subscription } from "rxjs";
 import { delay, switchMap, tap } from "rxjs/operators";
 
 @Component({
@@ -30,6 +30,9 @@ export class NewSetComponent implements OnInit {
   songbook: string[] = [];
   setlist = [];
   setlistName: string = "new Setlist";
+  authSubs: Subscription;
+  userId: string;
+
   // setObservable: Observable<Setlist>
   @Output("cdkDropListEntered") entered: EventEmitter<CdkDragEnter<any>>;
   @ViewChild("dropContainer") dropContainer: HTMLElement;
@@ -37,10 +40,26 @@ export class NewSetComponent implements OnInit {
   constructor(
     private songsService: SongsService,
     private setsService: SetsService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.authSubs = this.authService.user.subscribe((user) => {
+      this.userId = user.id;
+    });
+
+    // this.setsService.fetchSets().subscribe((responseData) => {
+    // this.sets = responseData;
+    // this.isLoading = false;
+    // });
+
+    this.songsService.getSongsFromAPI().subscribe((songs) => {
+      console.log("getting songs" + songs);
+      console.log(songs);
+      this.songsService.songsUpdated.next(songs);
+    });
+
     this.songsService.songsUpdated.subscribe((data) => {
       console.log(data);
       console.log("new set");
