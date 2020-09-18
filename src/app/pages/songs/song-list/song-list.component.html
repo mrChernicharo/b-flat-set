@@ -102,7 +102,7 @@
       <ng-container matColumnDef="expandedDetail">
         <td
           mat-cell
-          *matCellDef="let element"
+          *matCellDef="let element; index"
           [attr.colspan]="displayedColumns.length"
         >
           <div
@@ -139,6 +139,7 @@
                 matTooltip="update song"
                 matTooltipPosition="below"
                 matTooltipShowDelay="1500"
+                (click)="onEditSong($event)"
               >
                 <button mat-raised-button color="accent">
                   <i class="material-icons edit"> edit </i>
@@ -150,6 +151,7 @@
                 matTooltip="delete song"
                 matTooltipPosition="after"
                 matTooltipShowDelay="1500"
+                (click)="onDeleteSong($event)"
               >
                 <button mat-raised-button color="warn">
                   <i class="material-icons delete"> delete </i>

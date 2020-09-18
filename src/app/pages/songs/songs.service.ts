@@ -106,6 +106,14 @@ export class SongsService {
       );
   }
 
+  public editSong(id: string) {
+    console.log(id);
+  }
+
+  public deleteSong(id: string) {
+    console.log(id);
+  }
+
   public destroySongs() {
     this.songsUpdated.next([]);
     this.songbook = [];

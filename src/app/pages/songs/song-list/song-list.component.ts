@@ -24,14 +24,18 @@ import {
     trigger("detailExpand", [
       state(
         "collapsed",
-        style({ height: "0px", opacity: "0", minHeight: "0" })
+        style({ height: "0px", visibility: "hidden", minHeight: "0" })
       ),
-      state("expanded", style({ height: "*", opacity: "1" })),
+      state(
+        "expanded",
+        style({ height: "*", visibility: "visible", opacity: "1" })
+      ),
       transition(
         "expanded <=> collapsed",
-        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
+        animate("495ms cubic-bezier(0.4, 0.0, 0.2, 1)")
       ),
-      transition("expanded <=> collapsed", animate("300ms ease-out")),
+      transition("expanded => collapsed", animate("300ms ease-out")),
+      transition("collapsed => expanded", animate("300ms ease-in")),
     ]),
   ],
 })
@@ -85,10 +89,28 @@ export class SongListComponent implements AfterViewChecked, OnInit {
     this.router.navigate(["/songs/new"]);
   }
 
+  onEditSong(e) {
+    console.log(e);
+    if (this.expandedElement) {
+      const id = this.expandedElement.id;
+      this.songsService.editSong(id);
+    }
+  }
+  onDeleteSong(e) {
+    console.log(e);
+    console.log(this.row);
+    console.log(this.expandedElement);
+
+    if (this.expandedElement) {
+      const id = this.expandedElement.id;
+      this.songsService.deleteSong(id);
+    }
+  }
+
   colapseDetail(event) {
-    console.log(event);
-    console.log(event.target);
-    console.log(event.srcElement.classList[1] === "middle");
+    // console.log(event);
+    // console.log(event.target);
+    // console.log(event.srcElement.classList[1] === "middle");
     if (event.srcElement.classList[1] !== "middle") {
       this.expandedElement = this.expandedElement ? null : this.row;
     }
