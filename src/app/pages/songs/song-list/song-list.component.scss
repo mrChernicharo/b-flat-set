@@ -1,3 +1,5 @@
+@import "../../../../colors.scss";
+
 .container {
   margin: 100px auto;
   width: 100vw;
@@ -18,6 +20,21 @@
   td {
     font-weight: 200;
     font-size: 12px !important;
+
+    .name-row {
+      display: flex;
+      align-items: center;
+      .tiny-circle {
+        width: 10px;
+        height: 10px;
+        margin: 0 8px 1px 0;
+        border-radius: 5px;
+
+        background-color: $app-ultra-violet;
+        border-right: 1px solid $app-mild-purple;
+        border-bottom: 1px solid $app-mild-purple;
+      }
+    }
   }
 
   .header {
@@ -31,25 +48,35 @@
 
     button.add,
     button.add > i {
-      font-size: 30px;
-      height: 80px;
-      margin: 10px 10px;
-
+      font-size: 24px;
+      height: 60px;
+      border-radius: 9px;
+      margin: 10px 22px;
+      // border: 1px solid cadetblue;
+      border-right: 1px solid $app-mild-purple;
+      border-bottom: 2px solid $app-mild-purple;
+      border-top: 1px solid $app-ultra-violet;
       &:hover {
         opacity: 0.8;
+        border: none;
+      }
+      i.add {
+        vertical-align: text-top;
+        font-weight: bold;
+        margin-bottom: 5px;
       }
     }
   }
 
-  i.edit {
-    margin: 0 0 0 8px;
-    color: #3abd5d;
-  }
+  // i.edit {
+  //   margin: 0 0 0 8px;
+  //   color: #3abd5d;
+  // }
 
-  i.delete {
-    margin: 0 8px 0 0;
-    color: #ff4081;
-  }
+  // i.delete {
+  //   margin: 0 8px 0 0;
+  //   color: #ff4081;
+  // }
 
   @media only screen and (max-width: 800px) {
     .full-width-table {
@@ -65,10 +92,10 @@
       font-size: 10px !important;
     }
 
-    i.edit,
-    i.delete {
-      font-size: 18px;
-    }
+    // i.edit,
+    // i.delete {
+    //   font-size: 18px;
+    // }
   }
 }
 

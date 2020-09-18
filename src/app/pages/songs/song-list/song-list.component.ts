@@ -21,7 +21,7 @@ export class SongListComponent implements AfterViewChecked, OnInit {
   dataSource: SongListDataSource;
   isLoading = false;
   data: Song[] = [];
-  displayedColumns = ["name", "actions", "key", "tempo", "style", "composer"];
+  displayedColumns = ["name", "key", "tempo", "style", "composer"];
 
   constructor(
     private authService: AuthService,
