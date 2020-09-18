@@ -1,6 +1,4 @@
-$app-blueish-green: #1eca89;
-$app-green: #00ba5a;
-
+@import "../../../colors.scss";
 .container {
   margin: 100px auto;
   padding: 0 20px;
@@ -9,19 +7,23 @@ $app-green: #00ba5a;
   justify-content: space-around;
   .user-hud {
     .avatar-group {
-      border: 1px solid red;
-      width: 270px;
-      height: 120px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      border-right: 2px solid rgba(255, 255, 255, 0.2);
+      width: 273px;
+      box-sizing: border-box;
+      padding: 6px 10px 0px 0;
+      height: 136px;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
 
       div.circle {
-        position: absolute;
-        right: 22px;
         width: 120px;
         height: 120px;
         border-radius: 72px;
         background-color: $app-blueish-green;
+        border-bottom: 2px solid $app-green;
+        border-right: 2px solid $app-green;
         z-index: 19;
 
         img.avatar {
@@ -35,19 +37,50 @@ $app-green: #00ba5a;
       .username {
         font-size: 22px;
         line-height: normal;
+        display: flex;
+        align-items: center;
+
+        .name-little-circle {
+          z-index: 30;
+          width: 14px;
+          height: 14px;
+          margin: 0 6px 0 8px;
+          border-radius: 8px;
+          background-color: $app-blueish-green;
+          border-bottom: 1px solid $app-mild-green;
+          border-right: 1px solid $app-mild-green;
+        }
       }
     }
 
     .user-info {
-      border: 1px solid green;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      border-right: 2px solid rgba(255, 255, 255, 0.2);
       width: 270px;
-      height: 60px;
+      // margin: 20px 0 0 0;
+      height: 46px;
       display: flex;
-      .little-circle {
-        width: 14px;
-        height: 14px;
+      align-items: center;
+      justify-content: space-around;
+
+      .info-wrapper {
+        display: flex;
+        min-width: 5rem;
         border-radius: 8px;
-        background-color: $app-blueish-green;
+        padding: 1px 6px;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.2);
+        background-color: $app-table-line;
+
+        .little-circle {
+          z-index: 30;
+          width: 14px;
+          height: 14px;
+          border-radius: 8px;
+          background-color: $app-blueish-green;
+        }
       }
     }
   }

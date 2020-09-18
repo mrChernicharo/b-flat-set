@@ -19,23 +19,22 @@
   </mat-card>
   <div class="user-hud">
     <div class="avatar-group">
-      <div class="username">{{ username | titlecase }}</div>
+      <div class="username">
+        <div class="name-little-circle"></div>
+        {{ username | titlecase }}
+      </div>
 
       <div class="circle">
-        <img
-          class="avatar"
-          src="../../../assets/meu_avatar.jpeg"
-          alt="avatar"
-        />
+        <img class="avatar" src="../../../assets/meu_avatar.jpg" alt="avatar" />
       </div>
     </div>
     <div class="user-info">
-      <div class="little-circle"></div>
       <div class="info-wrapper">
+        <div class="little-circle"></div>
         <span>Songs</span><span class="user-info-number">32</span>
       </div>
-      <div class="little-circle"></div>
       <div class="info-wrapper">
+        <div class="little-circle"></div>
         <span>Sets</span><span class="user-info-number">11</span>
       </div>
     </div>
