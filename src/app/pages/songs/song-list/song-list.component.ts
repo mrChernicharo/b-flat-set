@@ -91,9 +91,14 @@ export class SongListComponent implements AfterViewChecked, OnInit {
 
   onEditSong(e) {
     console.log(e);
+    console.log("onEditSong()");
     if (this.expandedElement) {
       const id = this.expandedElement.id;
-      this.songsService.editSong(id);
+      const editingSong = this.songsService.getSongById(id);
+      console.log(editingSong);
+      this.songsService.editingSong.next(editingSong);
+      // this.songsService.editSong(id);
+      this.router.navigate([`songs/edit/${id}`]);
     }
   }
   onDeleteSong(e) {
@@ -109,7 +114,6 @@ export class SongListComponent implements AfterViewChecked, OnInit {
 
   colapseDetail(event) {
     // console.log(event);
-    // console.log(event.target);
     // console.log(event.srcElement.classList[1] === "middle");
     if (event.srcElement.classList[1] !== "middle") {
       this.expandedElement = this.expandedElement ? null : this.row;

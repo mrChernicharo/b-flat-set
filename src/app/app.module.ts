@@ -42,6 +42,7 @@ import { AuthGuard } from "./pages/auth/auth.guard";
 import { NewSetComponent } from "./pages/sets/new-set/new-set.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { AutoFocusDirective } from "./shared/auto-focus.directive";
+import { SongEditComponent } from './pages/songs/song-edit/song-edit.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { AutoFocusDirective } from "./shared/auto-focus.directive";
     LoadingComponent,
     NewSetComponent,
     AutoFocusDirective,
+    SongEditComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

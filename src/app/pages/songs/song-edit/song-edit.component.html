@@ -1,0 +1,127 @@
+<div class="container">
+  <mat-card class="mat-elevation-z2">
+    <mat-card-header>
+      <mat-card-title
+        ><i class="material-icons">add</i> New Song</mat-card-title
+      >
+      <mat-card-subtitle
+        >Enter song information to add a new tune to your
+        songbook</mat-card-subtitle
+      >
+    </mat-card-header>
+    <!--    (ngSubmit)="onSubmit(form)" #form="ngForm"  -->
+    <form
+      [formGroup]="editSongForm"
+      (keydown.enter)="submitFormOnKeydown($event)"
+      matForm
+    >
+      <mat-form-field class="name" appearance="fill">
+        <mat-label>Song Name</mat-label>
+
+        <input
+          name="name"
+          placeholder="New Song"
+          formControlName="name"
+          matInput
+          required
+        />
+        <mat-hint
+          *ngIf="
+            editSongForm.get('name').invalid && editSongForm.get('name').touched
+          "
+          >Song name is required</mat-hint
+        >
+      </mat-form-field>
+
+      <mat-form-field class="tempo" appearance="fill">
+        <mat-label>Tempo</mat-label>
+
+        <input
+          name="tempo"
+          type="number"
+          pattern="^\d+(?:\.\d{1,2})?$"
+          placeholder="Tempo"
+          matInput
+          formControlName="tempo"
+          required
+        />
+        <mat-hint
+          *ngIf="editSongForm.get('tempo').invalid && editSongForm.touched"
+          >Tempo must be greater than 30bpm and smaller than 300bpm</mat-hint
+        >
+      </mat-form-field>
+
+      <mat-form-field class="key" appearance="fill">
+        <mat-label>Key</mat-label>
+        <mat-select name="key" formControlName="key" placeholder="key">
+          <mat-option></mat-option>
+          <mat-option [value]="key" *ngFor="let key of keys">{{
+            key
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="composer" appearance="fill">
+        <mat-label>Composer</mat-label>
+
+        <input
+          name="composer"
+          placeholder="Composer"
+          formControlName="composer"
+          matInput
+          required
+        />
+        <mat-hint
+          *ngIf="
+            editSongForm.get('composer').invalid &&
+            editSongForm.get('composer').touched
+          "
+          >Composer name is required</mat-hint
+        >
+      </mat-form-field>
+      <mat-form-field class="style" appearance="fill">
+        <mat-label>Style</mat-label>
+
+        <input
+          name="style"
+          placeholder="Style"
+          formControlName="style"
+          matInput
+          required
+        />
+        <mat-hint
+          *ngIf="
+            editSongForm.get('style').invalid &&
+            editSongForm.get('style').touched
+          "
+          >Style name is required</mat-hint
+        >
+      </mat-form-field>
+    </form>
+
+    <div class="button-group">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        matTooltip="Clique para criar a música!"
+        matTooltipPosition="below"
+        matTooltipShowDelay="1500"
+        (click)="onSubmit()"
+        [disabled]="!editSongForm.valid"
+      >
+        Confirmar Mudanças
+      </button>
+
+      <button
+        mat-raised-button
+        (click)="onCancel()"
+        color="secondary"
+        matTooltip="retornar"
+        matTooltipPosition="below"
+        matTooltipShowDelay="1500"
+      >
+        Cancelar
+      </button>
+    </div>
+  </mat-card>
+</div>

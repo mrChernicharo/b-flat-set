@@ -14,6 +14,8 @@ import { AuthService } from "../auth/auth.service";
 @Injectable({ providedIn: "root" })
 export class SongsService {
   public newSongAdded = new Subject<Song>();
+  // public editingSong = new Subject<Song>();
+  public editingSong = new BehaviorSubject<Song>({} as Song);
   // public userJustEntered = new BehaviorSubject<boolean>(true);
   public songsUpdated = new BehaviorSubject<Song[]>([]);
   public songbook: Song[] = [];
@@ -86,6 +88,8 @@ export class SongsService {
   }
 
   public getSongById(id: string): Song {
+    console.log(this.songbook);
+    console.log("getSongById() =>");
     return this.songbook.find((song) => song.id === id);
   }
 

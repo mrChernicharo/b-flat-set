@@ -6,6 +6,7 @@ import { SongsComponent } from "./pages/songs/songs.component";
 import { SetsComponent } from "./pages/sets/sets.component";
 import { NewSetComponent } from "./pages/sets/new-set/new-set.component";
 import { SongAddComponent } from "./pages/songs/song-add/song-add.component";
+import { SongEditComponent } from "./pages/songs/song-edit/song-edit.component";
 import { AuthGuard } from "./pages/auth/auth.guard";
 
 const routes: Routes = [
@@ -18,6 +19,11 @@ const routes: Routes = [
   { path: "auth", component: AuthComponent },
   { path: "songs", component: SongsComponent, canActivate: [AuthGuard] },
   { path: "songs/new", component: SongAddComponent, canActivate: [AuthGuard] },
+  {
+    path: "songs/edit/:id",
+    component: SongEditComponent,
+    canActivate: [AuthGuard],
+  },
   { path: "sets", component: SetsComponent, canActivate: [AuthGuard] },
   { path: "sets/new", component: NewSetComponent, canActivate: [AuthGuard] },
 ];
