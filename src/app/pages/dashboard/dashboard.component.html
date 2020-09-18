@@ -1,5 +1,4 @@
 <div class="container">
-  <div class="username">{{ username }}</div>
   <mat-card class="header-container">
     <h1 class="title">Bem vinde ao ⭐️ <span>bFlatSet!</span></h1>
     <h3 class="subtitle">O seu aplicativo de repertórios online</h3>
@@ -18,4 +17,27 @@
       </li>
     </ul>
   </mat-card>
+  <div class="user-hud">
+    <div class="avatar-group">
+      <div class="username">{{ username | titlecase }}</div>
+
+      <div class="circle">
+        <img
+          class="avatar"
+          src="../../../assets/meu_avatar.jpeg"
+          alt="avatar"
+        />
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="little-circle"></div>
+      <div class="info-wrapper">
+        <span>Songs</span><span class="user-info-number">32</span>
+      </div>
+      <div class="little-circle"></div>
+      <div class="info-wrapper">
+        <span>Sets</span><span class="user-info-number">11</span>
+      </div>
+    </div>
+  </div>
 </div>

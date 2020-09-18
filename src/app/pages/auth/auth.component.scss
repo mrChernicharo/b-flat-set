@@ -126,6 +126,15 @@
     }
   }
 }
+.primary {
+  color: $app-green;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid
+  .mat-form-field-outline-thick {
+  color: $app-green;
+  background-color: $app-green;
+}
 
 // tentativa de diminuir a aultura dos form-fields...
 // geral sem sucesso!
