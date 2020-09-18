@@ -10,7 +10,11 @@
       >
     </mat-card-header>
     <!--    (ngSubmit)="onSubmit(form)" #form="ngForm"  -->
-    <form [formGroup]="newSongForm" matForm>
+    <form
+      [formGroup]="newSongForm"
+      (keydown.enter)="loginFormSubmitOnKeydown($event)"
+      matForm
+    >
       <mat-form-field class="name" appearance="fill">
         <mat-label>Song Name</mat-label>
 
@@ -27,6 +31,34 @@
           "
           >Song name is required</mat-hint
         >
+      </mat-form-field>
+
+      <mat-form-field class="tempo" appearance="fill">
+        <mat-label>Tempo</mat-label>
+
+        <input
+          name="tempo"
+          type="number"
+          pattern="^\d+(?:\.\d{1,2})?$"
+          placeholder="Tempo"
+          matInput
+          formControlName="tempo"
+          required
+        />
+        <mat-hint
+          *ngIf="newSongForm.get('tempo').invalid && newSongForm.touched"
+          >Tempo must be greater than 30bpm and smaller than 300bpm</mat-hint
+        >
+      </mat-form-field>
+
+      <mat-form-field class="key" appearance="fill">
+        <mat-label>Key</mat-label>
+        <mat-select name="key" formControlName="key" placeholder="key">
+          <mat-option></mat-option>
+          <mat-option [value]="key" *ngFor="let key of keys">{{
+            key
+          }}</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field class="composer" appearance="fill">
         <mat-label>Composer</mat-label>
@@ -62,34 +94,6 @@
           "
           >Style name is required</mat-hint
         >
-      </mat-form-field>
-
-      <mat-form-field class="tempo" appearance="fill">
-        <mat-label>Tempo</mat-label>
-
-        <input
-          name="tempo"
-          type="number"
-          pattern="^\d+(?:\.\d{1,2})?$"
-          placeholder="Tempo"
-          matInput
-          formControlName="tempo"
-          required
-        />
-        <mat-hint
-          *ngIf="newSongForm.get('tempo').invalid && newSongForm.touched"
-          >Tempo must be greater than 30bpm and smaller than 300bpm</mat-hint
-        >
-      </mat-form-field>
-
-      <mat-form-field class="key" appearance="fill">
-        <mat-label>Key</mat-label>
-        <mat-select name="key" formControlName="key" placeholder="key">
-          <mat-option></mat-option>
-          <mat-option [value]="key" *ngFor="let key of keys">{{
-            key
-          }}</mat-option>
-        </mat-select>
       </mat-form-field>
     </form>
 

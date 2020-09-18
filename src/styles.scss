@@ -21,12 +21,18 @@ body {
   background: linear-gradient(50deg, $app-green, #062924);
   color: #fff;
   z-index: 3000;
+  font-size: 20px;
+  margin: 47px 39px !important;
+  width: 250px !important;
 }
 
 .mat-snack-error {
   background: linear-gradient(50deg, $app-red, #062924);
   color: #fff;
+  font-size: 20px;
   z-index: 3000;
+  margin: 47px 39px !important;
+  width: 250px !important;
 }
 .mat-hint {
   color: $app-red;

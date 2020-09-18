@@ -95,6 +95,12 @@ export class SongAddComponent implements OnInit {
       `${formName.toUpperCase()} successfuly added to the list`
     );
   }
+
+  loginFormSubmitOnKeydown(event) {
+    if (this.newSongForm.valid) {
+      this.onSubmit();
+    }
+  }
 }
 
 function capitalize(formField: string): string {

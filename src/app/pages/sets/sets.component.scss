@@ -1,3 +1,4 @@
+@import "../../../colors.scss";
 // container settings
 
 .container {
@@ -24,9 +25,29 @@
       font-size: 38px;
       margin-left: 20px;
     }
-    button {
-      height: 64px;
-      margin-right: 40px;
+    // button {
+    //   height: 64px;
+    //   margin-right: 40px;
+    // }
+    button.add,
+    button.add > i {
+      font-size: 24px;
+      height: 60px;
+      border-radius: 9px;
+      margin: 10px 22px;
+      // border: 1px solid cadetblue;
+      border-right: 1px solid $app-mild-purple;
+      border-bottom: 2px solid $app-mild-purple;
+      border-top: 1px solid $app-ultra-violet;
+      &:hover {
+        opacity: 0.8;
+        border: none;
+      }
+      i.add {
+        vertical-align: text-top;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
     }
   }
 }
