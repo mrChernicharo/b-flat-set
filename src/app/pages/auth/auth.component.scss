@@ -17,14 +17,15 @@
     width: 700px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
 
     h1 {
       text-anchor: start;
       font-size: 32px;
       span#logo {
         color: $app-blueish-green;
+        // color: $app-deeppurple;
       }
     }
 
@@ -35,25 +36,19 @@
 
     ul {
       list-style: none;
-      // border: 1px solid red;
       padding-left: 0;
     }
 
     p {
       font-size: 12px;
       font-weight: 100;
-      // &:last-child {
-
-      // }
     }
   }
   h2 {
     margin-top: 20px;
   }
-  i.done {
-    // vertical-align: text-bottom;
-    font-size: 12px;
-    color: green;
+
+  i.material-icons {
     margin-right: 6px;
   }
 
@@ -66,16 +61,46 @@
 
     mat-expansion-panel {
       border-bottom: 2px solid $app-blueish-green;
+      font-size: 18px;
     }
 
     mat-form-field {
       width: 100%;
     }
   }
+
+  mat-panel-title.mat-expansion-panel-header-title,
+  .mat-expansion-panel-header-description {
+    align-items: center;
+  }
+
+  // mat-expansion-panel-header[aria-expanded] {
+  //   // border: 1px solid red;
+  // }
+  // mat-expansion-panel-header:not([aria-expanded]) {
+  // }
+  .ng-star-inserted.mat-expanded {
+    border-top: 2px solid $app-green;
+    i.material-icons {
+      color: $app-blueish-green;
+    }
+  }
+
+  // .ng-star-inserted {
+  // border: 1px solid red;
+  // }
+
+  // @media only screen and (max-width: 900px) {
+  //   .header-container {
+  //     width: 540px;
+  //   }
+  // }
+
   @media only screen and (max-width: 728px) {
     .header-container {
       // border: 1px solid red;
-      width: 400px;
+      width: 95%;
+      // margin: 0 20px;
       align-items: center;
       justify-content: center;
     }
@@ -83,4 +108,45 @@
       width: 100%;
     }
   }
+
+  @media only screen and (max-width: 446px) {
+    .header-container {
+      // border: 1px solid red;
+      h1 {
+        span#logo {
+          text-align: end;
+        }
+      }
+      h3 {
+        font-size: 14px;
+      }
+    }
+    h2 {
+      font-size: 15px;
+    }
+  }
 }
+
+// tentativa de diminuir a aultura dos form-fields...
+// geral sem sucesso!
+
+// .mat-form-field-appearance-outline .mat-form-field-outline {
+// }
+// .mat-form-field-outline {
+//   top: 0.65em !important;
+//   height: 45px !important;
+//   padding: 0 !important;
+// }
+// .mat-form-field-outline-start {
+//   top: 0.65em !important;
+//   height: 45px !important;
+//   padding: 0 !important;
+// }
+// ::ng-deep .cranes,
+// .mat-form-field-wrapper,
+// .mat-form-field-flex,
+// .mat-form-field-outline {
+//   top: 0.65em !important;
+//   padding: 0 !important;
+//   height: 45px !important;
+// }

@@ -11,6 +11,7 @@ mat-toolbar {
 
   .red {
     color: $app-red;
+    font-size: 13px;
   }
 
   .v-middle {
@@ -29,16 +30,33 @@ mat-toolbar {
     }
   }
   a.love {
+    line-height: 18px;
     margin-left: 10px;
+  }
+  .legal {
+    line-height: 18px;
   }
 }
 
 @media only screen and (max-width: 628px) {
   mat-toolbar {
-    height: 100px;
+    height: 74px;
+    padding-bottom: 7px;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 446px) {
+  a.love {
+    font-size: 11px;
+  }
+  .legal {
+    font-size: 12px;
+  }
+  .material-icons.red {
+    font-size: 11px;
   }
 }

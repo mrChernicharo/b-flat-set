@@ -64,7 +64,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, Validators.required),
     });
-    this.headerService.headerStatus.next({ title: "auth", icon: "lock_open" });
+    this.headerService.headerStatus.next({ title: "auth", icon: "star" });
   }
   // ngAfterViewInit() {}
   handleLogin() {
