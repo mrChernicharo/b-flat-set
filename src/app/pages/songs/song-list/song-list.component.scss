@@ -1,4 +1,14 @@
 @import "../../../../colors.scss";
+/* @font-face kit by Fonts2u (https://fonts2u.com) */
+@font-face {
+  font-family: "MusicalSymbols";
+  src: url("../../../../assets/MUSICAL.eot?") format("eot"),
+    url("../../../../assets/MUSICAL.woff") format("woff"),
+    url("../../../../assets/MUSICAL.ttf") format("truetype"),
+    url("../../../../assets/MUSICAL.svg#MusicalSymbolsNormal") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
 
 .container {
   margin: 100px auto;
@@ -20,21 +30,21 @@
   td {
     font-weight: 200;
     font-size: 12px !important;
+  }
 
-    .name-row {
-      display: flex;
-      align-items: center;
-      .tiny-circle {
-        width: 10px;
-        height: 10px;
-        margin: 0 8px 1px 0;
-        border-radius: 5px;
+  .name-row {
+    display: flex;
+    align-items: center;
+  }
+  .tiny-circle {
+    width: 10px;
+    height: 10px;
+    margin: 0 8px 1px 0;
+    border-radius: 5px;
 
-        background-color: $app-ultra-violet;
-        border-right: 1px solid $app-mild-purple;
-        border-bottom: 1px solid $app-mild-purple;
-      }
-    }
+    background-color: $app-ultra-violet;
+    border-right: 1px solid $app-mild-purple;
+    border-bottom: 1px solid $app-mild-purple;
   }
 
   .header {
@@ -68,16 +78,6 @@
     }
   }
 
-  // i.edit {
-  //   margin: 0 0 0 8px;
-  //   color: #3abd5d;
-  // }
-
-  // i.delete {
-  //   margin: 0 8px 0 0;
-  //   color: #ff4081;
-  // }
-
   @media only screen and (max-width: 800px) {
     .full-width-table {
       width: 100vw;
@@ -91,11 +91,6 @@
       font-weight: 100;
       font-size: 10px !important;
     }
-
-    // i.edit,
-    // i.delete {
-    //   font-size: 18px;
-    // }
   }
 }
 
@@ -106,5 +101,118 @@
     .full-width-table {
       width: 438px;
     }
+  }
+}
+
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: opacify($color: $app-deeppurple, $amount: 0.3);
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: opacify($color: $app-deeppurple, $amount: 0.3);
+}
+
+tr.mat-row.expanded-row {
+  display: none;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  width: 100%;
+  // border: 2px solid red;
+
+  display: flex;
+}
+
+.element-diagram {
+  // min-width: 80px;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+
+  &:first-child {
+    border-right: 1px solid $app-table-line;
+  }
+
+  &.left {
+    min-width: 156px;
+    justify-content: space-around;
+  }
+
+  &.middle {
+    width: 100%;
+  }
+
+  &.right {
+    width: 100px;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .element-name {
+    font-size: 22px;
+    display: flex;
+  }
+
+  .element-style {
+    span.segno {
+      font-size: 22px;
+      font-family: "MusicalSymbols";
+      vertical-align: bottom;
+      margin-right: 4px;
+    }
+  }
+  .element-tempo {
+    span.bpm {
+      font-size: 22px;
+      font-family: "MusicalSymbols";
+      font-weight: bold;
+      margin-right: 8px;
+    }
+  }
+
+  .element-key {
+    span.cleff {
+      font-size: 19px;
+      font-family: "MusicalSymbols";
+      margin: 0 2px 0 -2px;
+    }
+  }
+}
+
+.element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.element-description {
+  padding: 16px;
+}
+
+.element-description-attribution {
+  opacity: 0.5;
+}
+
+a > button.mat-raised-button {
+  transition: 0.2s;
+  &:hover {
+    opacity: 0.8;
   }
 }

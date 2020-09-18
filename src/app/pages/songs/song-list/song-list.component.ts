@@ -8,11 +8,28 @@ import { AuthService } from "../../auth/auth.service";
 import { Song } from "../song.model";
 import { SongsService } from "../songs.service";
 import { SongListDataSource } from "./song-list-datasource";
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from "@angular/animations";
 
 @Component({
   selector: "app-song-list",
   templateUrl: "./song-list.component.html",
   styleUrls: ["./song-list.component.scss"],
+  animations: [
+    trigger("detailExpand", [
+      state("collapsed", style({ height: "0px", minHeight: "0" })),
+      state("expanded", style({ height: "*" })),
+      transition(
+        "expanded <=> collapsed",
+        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
+      ),
+    ]),
+  ],
 })
 export class SongListComponent implements AfterViewChecked, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -22,6 +39,7 @@ export class SongListComponent implements AfterViewChecked, OnInit {
   isLoading = false;
   data: Song[] = [];
   displayedColumns = ["name", "key", "tempo", "style", "composer"];
+  expandedElement: Song | null;
 
   constructor(
     private authService: AuthService,
