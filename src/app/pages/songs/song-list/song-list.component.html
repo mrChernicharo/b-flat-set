@@ -173,7 +173,13 @@
         mat-row
         *matRowDef="let row; columns: ['expandedDetail']"
         class="detail-row"
+        (click)="colapseDetail($event)"
+        (click)="expandedElement = expandedElement === row ? null : row"
       ></tr>
     </table>
   </div>
 </div>
+
+<!-- 
+[class.expanded-detail]="expandedElement === null"
+(click)="expandedElement = expandedElement === row ? row : null" -->

@@ -22,12 +22,16 @@ import {
   styleUrls: ["./song-list.component.scss"],
   animations: [
     trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
+      state(
+        "collapsed",
+        style({ height: "0px", opacity: "0", minHeight: "0" })
+      ),
+      state("expanded", style({ height: "*", opacity: "1" })),
       transition(
         "expanded <=> collapsed",
         animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
       ),
+      transition("expanded <=> collapsed", animate("300ms ease-out")),
     ]),
   ],
 })
@@ -40,6 +44,7 @@ export class SongListComponent implements AfterViewChecked, OnInit {
   data: Song[] = [];
   displayedColumns = ["name", "key", "tempo", "style", "composer"];
   expandedElement: Song | null;
+  row: any;
 
   constructor(
     private authService: AuthService,
@@ -79,4 +84,23 @@ export class SongListComponent implements AfterViewChecked, OnInit {
   onNewSong() {
     this.router.navigate(["/songs/new"]);
   }
+
+  colapseDetail(event) {
+    console.log(event);
+    console.log(event.target);
+    console.log(event.srcElement.classList[1] === "middle");
+    if (event.srcElement.classList[1] !== "middle") {
+      this.expandedElement = this.expandedElement ? null : this.row;
+    }
+  }
 }
+
+// 0: "mat-row"
+// 1: "cdk-row"
+// 2: "detail-row" / "element-row"
+// 3: "ng-tns-c155-1"
+// 4: "ng-star-inserted"
+
+//mat-row cdk-row detail-row ng-tns-c155-1 ng-star-inserted
+
+//mat-row cdk-row element-row ng-tns-c155-1 ng-star-inserted

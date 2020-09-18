@@ -121,7 +121,9 @@ tr.element-row:not(.expanded-row):active {
 }
 
 tr.mat-row.expanded-row {
+  // display: hidden;
   display: none;
+  transition: 0.8s;
 }
 
 .element-row td {
