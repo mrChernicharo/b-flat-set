@@ -8,6 +8,11 @@
   .user-hud {
     box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.2);
 
+    .top-container {
+      border: 1px solid blue;
+      display: flex;
+    }
+
     .avatar-group {
       background-color: #404040;
 
@@ -20,22 +25,24 @@
       height: 136px;
       display: flex;
       justify-content: space-between;
+      .avatar-container {
+        // border: 1px solid blue;
+        div.circle {
+          width: 120px;
+          height: 120px;
+          border-radius: 72px;
+          background-color: $app-blueish-green;
+          border-bottom: 2px solid $app-green;
+          border-right: 2px solid $app-green;
+          z-index: 19;
 
-      div.circle {
-        width: 120px;
-        height: 120px;
-        border-radius: 72px;
-        background-color: $app-blueish-green;
-        border-bottom: 2px solid $app-green;
-        border-right: 2px solid $app-green;
-        z-index: 19;
-
-        img.avatar {
-          width: 100px;
-          height: 100px;
-          margin: 10px 0px 6px 10px;
-          border-radius: 80px;
-          z-index: 20;
+          img.avatar {
+            width: 100px;
+            height: 100px;
+            margin: 11px 0px 20px 11px;
+            border-radius: 80px;
+            z-index: 20;
+          }
         }
       }
       .username {
@@ -131,7 +138,24 @@
     }
   }
 
+  @media only screen and (min-width: 986px) {
+    .top-container {
+      // border: 1px solid blue;
+      display: flex;
+      width: 90vw;
+      justify-content: space-around;
+    }
+  }
+
   @media only screen and (max-width: 986px) {
+    .top-container {
+      // border: 1px solid blue;
+      height: 52vh;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
   }
 
   @media only screen and (max-width: 600px) {
@@ -142,6 +166,15 @@
       width: 400px !important;
       align-items: center;
       justify-content: center;
+    }
+  }
+  @media only screen and (max-width: 420px) {
+    .header-container {
+      width: 98vw !important;
+      margin-top: 20px;
+    }
+    .user-hud {
+      margin-top: 20px;
     }
   }
 }

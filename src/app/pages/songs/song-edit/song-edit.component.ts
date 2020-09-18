@@ -81,7 +81,9 @@ export class SongEditComponent implements OnInit {
 
   onSubmit() {}
 
-  onCancel() {}
+  onCancel() {
+    this.router.navigate(["/songs"]);
+  }
 
   submitFormOnKeydown(event) {}
 }
